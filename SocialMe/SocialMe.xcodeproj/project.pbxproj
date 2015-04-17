@@ -12,7 +12,6 @@
 		FE8B46881ADCEFEF00FA9EA3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46871ADCEFEF00FA9EA3 /* Images.xcassets */; };
 		FE8B468B1ADCEFEF00FA9EA3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46891ADCEFEF00FA9EA3 /* LaunchScreen.xib */; };
 		FE8B46971ADCEFEF00FA9EA3 /* SocialMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46961ADCEFEF00FA9EA3 /* SocialMeTests.swift */; };
-		FE8B46A31ADCFC1100FA9EA3 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46A21ADCFC1100FA9EA3 /* MapVC.swift */; };
 		FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */; };
 		FE8B46A71ADEE75100FA9EA3 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46A61ADEE75100FA9EA3 /* button.png */; };
 		FE8B46A91ADEE98600FA9EA3 /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46A81ADEE98600FA9EA3 /* button@2x.png */; };
@@ -38,7 +37,6 @@
 		FE8B46901ADCEFEF00FA9EA3 /* SocialMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE8B46951ADCEFEF00FA9EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE8B46961ADCEFEF00FA9EA3 /* SocialMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMeTests.swift; sourceTree = "<group>"; };
-		FE8B46A21ADCFC1100FA9EA3 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMapVC.swift; sourceTree = "<group>"; };
 		FE8B46A61ADEE75100FA9EA3 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		FE8B46A81ADEE98600FA9EA3 /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
@@ -83,7 +81,6 @@
 		FE8B467D1ADCEFEF00FA9EA3 /* SocialMe */ = {
 			isa = PBXGroup;
 			children = (
-				FE8B46A21ADCFC1100FA9EA3 /* MapVC.swift */,
 				FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */,
 				FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */,
 				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
@@ -225,7 +222,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
-				FE8B46A31ADCFC1100FA9EA3 /* MapVC.swift in Sources */,
 				FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +424,7 @@
 				FE8B469C1ADCEFEF00FA9EA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FE8B469D1ADCEFEF00FA9EA3 /* Build configuration list for PBXNativeTarget "SocialMeTests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +433,7 @@
 				FE8B469F1ADCEFEF00FA9EA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
