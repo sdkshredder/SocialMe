@@ -12,13 +12,12 @@ import CoreLocation
 
 class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    var mapView : MKMapView = MKMapView()
+    var mapView  = MKMapView()
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad();
         self.initDisplay()
-        
     }
     
     func initDisplay() {

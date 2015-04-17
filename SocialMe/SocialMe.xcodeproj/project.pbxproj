@@ -15,6 +15,7 @@
 		FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */; };
 		FE8B46A71ADEE75100FA9EA3 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46A61ADEE75100FA9EA3 /* button.png */; };
 		FE8B46A91ADEE98600FA9EA3 /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46A81ADEE98600FA9EA3 /* button@2x.png */; };
+		FEBD86881AE1D05C006452FD /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBD86871AE1D05C006452FD /* SignUpVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMapVC.swift; sourceTree = "<group>"; };
 		FE8B46A61ADEE75100FA9EA3 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		FE8B46A81ADEE98600FA9EA3 /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
+		FEBD86871AE1D05C006452FD /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */,
 				FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */,
 				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
+				FEBD86871AE1D05C006452FD /* SignUpVC.swift */,
 				FE8B46A61ADEE75100FA9EA3 /* button.png */,
 				FE8B46A81ADEE98600FA9EA3 /* button@2x.png */,
 				FE8B46871ADCEFEF00FA9EA3 /* Images.xcassets */,
@@ -222,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
+				FEBD86881AE1D05C006452FD /* SignUpVC.swift in Sources */,
 				FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
