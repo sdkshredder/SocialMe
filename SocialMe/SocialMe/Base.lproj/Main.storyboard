@@ -59,7 +59,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ScQ-9H-M8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-673" y="-729"/>
+            <point key="canvasLocation" x="-703" y="-735"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="aqm-h6-AnL">
@@ -77,7 +77,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49J-76-ffQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-669" y="-21"/>
+            <point key="canvasLocation" x="-703" y="-65"/>
         </scene>
     </scenes>
 </document>
