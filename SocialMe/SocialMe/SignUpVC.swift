@@ -12,17 +12,18 @@ import Parse
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
-        super.viewDidLoad();
-        self.initDisplay()
+        super.viewDidLoad()
+		self.initDisplay()
+		self.hello()
     }
     
     
     //temp
     func hello() {
         let user = PFUser()
-        user.username = "my name"
-        user.password = "my pass"
-        user.email = "email@example.com"
+        user.username = "kelsey"
+        user.password = "1"
+        user.email = "eail@example.com"
         
         // other fields can be set if you want to save more information
         user["phone"] = "650-555-0000"
