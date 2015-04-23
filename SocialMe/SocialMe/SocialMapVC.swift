@@ -70,8 +70,29 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
     }
     
+    func returnToMap(sender: UIButton) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        sender.removeFromSuperview()
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.mapView.frame.origin = CGPointMake(0, 0)
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - 49)
+        }, completion: nil)
+    }
+    
+    func addMapReturnButton() {
+        let returnButton = UIButton(frame: CGRectMake(0, view.frame.height - 50, view.frame.width, 50))
+        returnButton.addTarget(self, action: "returnToMap:", forControlEvents: UIControlEvents.TouchUpInside)
+        returnButton.backgroundColor = UIColor.blackColor()
+        view.addSubview(returnButton)
+    }
+    
     func profileTap(sender : UITapGestureRecognizer) {
-        println("profile")
+        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
+        addMapReturnButton()
+        UIView.animateWithDuration(0.3, animations: {
+            self.mapView.frame.origin = CGPointMake(0, self.view.frame.height - 50)
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
+        })
     }
     
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {

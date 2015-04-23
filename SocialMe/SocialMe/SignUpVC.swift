@@ -20,11 +20,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     }
 
     func initDisplay() {
-        self.addBackButton()
-        self.addLogo()
-        self.usernameInit()
-        self.passwordInit()
-        self.emailInit()
+        initBGTap()
+        addBackButton()
+        addLogo()
+        usernameInit()
+        passwordInit()
+        emailInit()
     }
     
     func usernameInit() {
@@ -33,8 +34,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         username.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.grayColor()])
         username.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         username.delegate = self
-        self.view.addSubview(username)
-        self.addDiv(username)
+        username.autocapitalizationType =  .None
+        view.addSubview(username)
+        addDiv(username)
     }
     
     func passwordInit() {
@@ -199,8 +201,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     func usernameAvailable() {
         if username.text == "" {
-            addX(username)
-            return
+            
         }
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -229,11 +230,10 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
         if textField.placeholder == "Password" {
             usernameAvailable()
+            
         } else if textField.placeholder == "Email" {
             if bg.frame.height == 0 {
                 addSignUpButton()
-            } else if email.text == "" {
-                removeButton()
             }
         } else {
             removeIndicators(username)
@@ -251,6 +251,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     }, completion: nil)
             })
         }
+    }
+    
+    func initBGTap() {
+        let bgTap = UIButton(frame: view.frame)
+        bgTap.addTarget(self, action: "bgTap:", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(bgTap)
     }
     
     func addDiv(tf: UITextField) {
@@ -275,6 +281,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let n = UINavigationItem()
         n.setLeftBarButtonItem(b, animated: true)
         nav.pushNavigationItem(n, animated: true)
+        nav.tintColor = UIColor.grayColor()
         self.view.addSubview(nav)
     }
     
