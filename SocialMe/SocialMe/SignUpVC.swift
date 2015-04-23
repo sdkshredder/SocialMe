@@ -25,8 +25,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         addBackButton()
         addLogo()
         usernameInit()
-        passwordInit()
-        emailInit()
+        //passwordInit()
+        //emailInit()
     }
     
     func usernameInit() {
@@ -176,7 +176,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             
         } else if textField.placeholder == "Email" {
             if bg.frame.height == 0 {
-                addSignUpButton()
+               // addSignUpButton()
             }
         } else {
             removeIndicators(username)

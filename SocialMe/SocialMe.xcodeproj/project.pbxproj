@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048D520E1AE972AC003E1891 /* Profilepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D520D1AE972AC003E1891 /* Profilepage.swift */; };
+		048D52101AE97351003E1891 /* ProfilepageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D520F1AE97351003E1891 /* ProfilepageTableViewCell.swift */; };
 		FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */; };
 		FE8B46861ADCEFEF00FA9EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */; };
 		FE8B46881ADCEFEF00FA9EA3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46871ADCEFEF00FA9EA3 /* Images.xcassets */; };
@@ -77,6 +79,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		048D520D1AE972AC003E1891 /* Profilepage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profilepage.swift; sourceTree = "<group>"; };
+		048D520F1AE97351003E1891 /* ProfilepageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilepageTableViewCell.swift; sourceTree = "<group>"; };
 		FE8B467B1ADCEFEF00FA9EA3 /* SocialMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE8B467F1ADCEFEF00FA9EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 				FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */,
 				FEBD86871AE1D05C006452FD /* SignUpVC.swift */,
 				FEBD878D1AE4F63D006452FD /* LoginVC.swift */,
+				048D520D1AE972AC003E1891 /* Profilepage.swift */,
+				048D520F1AE97351003E1891 /* ProfilepageTableViewCell.swift */,
 				FEBD878B1AE4EF40006452FD /* HomeVC.swift */,
 				FEBD87891AE4CBDD006452FD /* FeedVC.swift */,
 				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
@@ -434,9 +440,11 @@
 				FEBD878A1AE4CBDD006452FD /* FeedVC.swift in Sources */,
 				FEBD878C1AE4EF40006452FD /* HomeVC.swift in Sources */,
 				FEBD878E1AE4F63D006452FD /* LoginVC.swift in Sources */,
+				048D520E1AE972AC003E1891 /* Profilepage.swift in Sources */,
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
 				FEBD86881AE1D05C006452FD /* SignUpVC.swift in Sources */,
 				FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */,
+				048D52101AE97351003E1891 /* ProfilepageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
