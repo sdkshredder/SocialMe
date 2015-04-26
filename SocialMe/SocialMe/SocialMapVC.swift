@@ -99,9 +99,7 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
         })
     }
-    func profileTap(sender : UITapGestureRecognizer) {
-    }
-    
+        
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         presentMainVC()
     }

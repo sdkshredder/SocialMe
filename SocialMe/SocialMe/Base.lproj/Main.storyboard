@@ -26,7 +26,6 @@
         <!--SocialMe-->
         <scene sceneID="AH8-KI-ann">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eA8-HA-rgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="v17-xv-42k" customClass="SocialMapVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aLF-6v-Gqb"/>
@@ -41,6 +40,9 @@
                         <barButtonItem key="leftBarButtonItem" image="contacts.png" id="fDj-7Q-PBd">
                             <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
                             <color key="tintColor" red="0.20715488269999999" green="0.76795706860000001" blue="0.8366499543" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="showProfile:" destination="v17-xv-42k" id="pPs-6w-HcU"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="general.png" id="1ed-mf-Mbp">
                             <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
@@ -48,6 +50,7 @@
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eA8-HA-rgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-659" y="721"/>
         </scene>
