@@ -26,6 +26,7 @@
         <!--SocialMe-->
         <scene sceneID="AH8-KI-ann">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eA8-HA-rgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="v17-xv-42k" customClass="SocialMapVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aLF-6v-Gqb"/>
@@ -36,21 +37,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="SocialMe" id="gsf-iz-ReL">
-                        <barButtonItem key="leftBarButtonItem" image="contacts.png" id="wpB-qZ-CjI">
-                            <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <navigationItem key="navigationItem" title="SocialMe" id="ohR-4G-lDG">
+                        <barButtonItem key="leftBarButtonItem" image="contacts.png" id="fDj-7Q-PBd">
+                            <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
                             <color key="tintColor" red="0.20715488269999999" green="0.76795706860000001" blue="0.8366499543" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="showProfile:" destination="v17-xv-42k" id="Noq-3K-Ebn"/>
-                            </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="general.png" id="rDh-uB-a3l">
-                            <inset key="imageInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                            <color key="tintColor" red="0.20715488269999999" green="0.76795706860000001" blue="0.8366499543" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="rightBarButtonItem" image="general.png" id="1ed-mf-Mbp">
+                            <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
+                            <color key="tintColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eA8-HA-rgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-659" y="721"/>
         </scene>
@@ -239,10 +236,15 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QMp-D3-PHV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
+                            <color key="textColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="v17-xv-42k" kind="relationship" relationship="rootViewController" id="JIy-7s-UvC"/>
+                        <segue destination="v17-xv-42k" kind="relationship" relationship="rootViewController" id="6QI-pP-kUM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cgt-VP-8co" userLabel="First Responder" sceneMemberID="firstResponder"/>
