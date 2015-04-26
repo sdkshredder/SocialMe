@@ -174,11 +174,11 @@
             </objects>
             <point key="canvasLocation" x="-609" y="1579"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Feed-->
         <scene sceneID="Krw-vK-r2g">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ApI-41-2Kd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="favorites.png" id="EUW-Uk-Bpq">
+                    <tabBarItem key="tabBarItem" title="Feed" id="EUW-Uk-Bpq">
                         <inset key="imageInsets" minX="10" minY="17" maxX="10" maxY="5"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -195,11 +195,11 @@
             </objects>
             <point key="canvasLocation" x="147" y="-1061"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Chat-->
         <scene sceneID="fD0-v1-Cnw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kmv-SW-aHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="message.png" id="jer-CQ-dEd">
+                    <tabBarItem key="tabBarItem" title="Chat" id="jer-CQ-dEd">
                         <inset key="imageInsets" minX="5" minY="10" maxX="5" maxY="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -216,11 +216,11 @@
             </objects>
             <point key="canvasLocation" x="959" y="-397"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Map-->
         <scene sceneID="lqZ-xk-JGD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wsc-Tt-CUB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="podcasts.png" id="s07-2W-ano">
+                    <tabBarItem key="tabBarItem" title="Map" id="s07-2W-ano">
                         <inset key="imageInsets" minX="4" minY="12" maxX="4" maxY="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -238,9 +238,4 @@
             <point key="canvasLocation" x="-659" y="35"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="favorites.png" width="60" height="60"/>
-        <image name="message.png" width="58" height="52"/>
-        <image name="podcasts.png" width="50" height="55"/>
-    </resources>
 </document>

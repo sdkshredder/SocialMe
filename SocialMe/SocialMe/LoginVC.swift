@@ -54,6 +54,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     func addNav() {
         let nav = UINavigationBar(frame: CGRectMake(0, 0, view.frame.width, 64))
         let back = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: "back:")
+        back.imageInsets = UIEdgeInsetsMake(5, 3, 5, 4)
         let item = UINavigationItem()
         item.setLeftBarButtonItem(back, animated: true)
         nav.tintColor = UIColor.grayColor()

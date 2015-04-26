@@ -278,6 +278,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let nav = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.width, 64))
         let back = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "barButtonItemClicked:")
         let b = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: "back:")
+        b.imageInsets = UIEdgeInsetsMake(5, 3, 5, 4)
         let n = UINavigationItem()
         n.setLeftBarButtonItem(b, animated: true)
         nav.pushNavigationItem(n, animated: true)

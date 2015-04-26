@@ -15,6 +15,7 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     
     var mapView  = MKMapView()
     let locationManager = CLLocationManager()
+    // let nav = UINavigationBar()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -29,17 +30,28 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     }
     
     func handleNav() {
-        let nav = navigationController?.navigationBar
-        addNavTitle(nav!)
-        addNavProfile(nav!)
-        addNavSettings(nav!)
+        // nav.tintColor = UIColor.grayColor()
+        // addNavTitle(nav)
+        // addNavProfile(nav)
+        // addNavSettings(nav)
+        var nav = navigationController?.navigationBar
+        setupNav(nav!)
+    }
+    
+    func setupNav(nav : UINavigationBar) {
+        let a = UINavigationItem(title: "SocialMe")
+        let b = UIBarButtonItem(image: UIImage(named: "contacts"), style: UIBarButtonItemStyle.Plain, target: self, action: "profileTap:")
+        a.setLeftBarButtonItem(b, animated: false)
+        nav.pushNavigationItem(a, animated: false)
+        //let b = UIBarButtonItem(image: UIImage, landscapeImagePhone: <#UIImage?#>, style: <#UIBarButtonItemStyle#>, target: <#AnyObject?#>, action: <#Selector#>)
     }
     
     func addNavProfile(nav : UINavigationBar) {
-        let profile = UIImageView(frame: CGRectMake(10, 2, 34, 34))
-        profile.image = UIImage(named: "contacts")
-        addProfileAction(profile)
-        nav.addSubview(profile)
+        let item = UINavigationItem()
+        let a = UIBarButtonItem(image: UIImage(named: "contacts"), style: UIBarButtonItemStyle.Plain, target: self, action: "profileTap:")
+        a.imageInsets = UIEdgeInsetsMake(12, 12, 12, 12)
+        item.setLeftBarButtonItem(a, animated: true)
+        nav.pushNavigationItem(item, animated: true)
     }
     
     func addNavSettings(nav : UINavigationBar) {
@@ -76,13 +88,17 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.mapView.frame.origin = CGPointMake(0, 0)
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - 49)
-        }, completion: nil)
+            }, completion: {
+                (value: Bool) in
+                // self.setupNav(self.navigationController!.navigationBar)
+                // self.addNavProfile()
+        })
     }
     
     func addMapReturnButton() {
         let returnButton = UIButton(frame: CGRectMake(0, view.frame.height - 50, view.frame.width, 50))
         returnButton.addTarget(self, action: "returnToMap:", forControlEvents: UIControlEvents.TouchUpInside)
-        returnButton.backgroundColor = UIColor.blackColor()
+        returnButton.backgroundColor = UIColor.clearColor()
         view.addSubview(returnButton)
     }
     
@@ -177,6 +193,7 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         toggle.layer.borderWidth = 1
         toggle.clipsToBounds = true
     }
+    
     /*
     func addBlur() {
         
