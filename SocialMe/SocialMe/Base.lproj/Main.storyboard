@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="1771" y="-397"/>
         </scene>
-        <!--Social MapVC-->
+        <!--SocialMe-->
         <scene sceneID="AH8-KI-ann">
             <objects>
                 <viewController id="v17-xv-42k" customClass="SocialMapVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -36,7 +36,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="e2B-JY-4ya"/>
+                    <navigationItem key="navigationItem" title="SocialMe" id="gsf-iz-ReL">
+                        <barButtonItem key="leftBarButtonItem" image="contacts.png" id="wpB-qZ-CjI">
+                            <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                            <color key="tintColor" red="0.20715488269999999" green="0.76795706860000001" blue="0.8366499543" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="showProfile:" destination="v17-xv-42k" id="Noq-3K-Ebn"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="rDh-uB-a3l"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eA8-HA-rgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -238,4 +247,7 @@
             <point key="canvasLocation" x="-659" y="35"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="contacts.png" width="50" height="50"/>
+    </resources>
 </document>

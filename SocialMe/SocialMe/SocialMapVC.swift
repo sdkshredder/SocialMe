@@ -15,7 +15,6 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     
     var mapView  = MKMapView()
     let locationManager = CLLocationManager()
-    // let nav = UINavigationBar()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -25,25 +24,16 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     func initDisplay() {
         setupLocationManager()
         orientMapView()
-        handleNav()
         handleMap()
     }
+
     
-    func handleNav() {
-        // nav.tintColor = UIColor.grayColor()
-        // addNavTitle(nav)
-        // addNavProfile(nav)
-        // addNavSettings(nav)
-        var nav = navigationController?.navigationBar
-        setupNav(nav!)
-    }
-    
-    func setupNav(nav : UINavigationBar) {
+    func setupNav() {
+        var nav = navigationController!.navigationBar
         let a = UINavigationItem(title: "SocialMe")
         let b = UIBarButtonItem(image: UIImage(named: "contacts"), style: UIBarButtonItemStyle.Plain, target: self, action: "profileTap:")
         a.setLeftBarButtonItem(b, animated: false)
         nav.pushNavigationItem(a, animated: false)
-        //let b = UIBarButtonItem(image: UIImage, landscapeImagePhone: <#UIImage?#>, style: <#UIBarButtonItemStyle#>, target: <#AnyObject?#>, action: <#Selector#>)
     }
     
     func addNavProfile(nav : UINavigationBar) {
@@ -90,8 +80,7 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - 49)
             }, completion: {
                 (value: Bool) in
-                // self.setupNav(self.navigationController!.navigationBar)
-                // self.addNavProfile()
+                
         })
     }
     
@@ -102,13 +91,15 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
         view.addSubview(returnButton)
     }
     
-    func profileTap(sender : UITapGestureRecognizer) {
+    @IBAction func showProfile(sender: UIBarButtonItem) {
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
         addMapReturnButton()
         UIView.animateWithDuration(0.3, animations: {
             self.mapView.frame.origin = CGPointMake(0, self.view.frame.height - 50)
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
         })
+    }
+    func profileTap(sender : UITapGestureRecognizer) {
     }
     
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
