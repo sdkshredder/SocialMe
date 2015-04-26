@@ -44,7 +44,10 @@
                                 <action selector="showProfile:" destination="v17-xv-42k" id="Noq-3K-Ebn"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="rDh-uB-a3l"/>
+                        <barButtonItem key="rightBarButtonItem" image="general.png" id="rDh-uB-a3l">
+                            <inset key="imageInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <color key="tintColor" red="0.20715488269999999" green="0.76795706860000001" blue="0.8366499543" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eA8-HA-rgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -249,5 +252,6 @@
     </scenes>
     <resources>
         <image name="contacts.png" width="50" height="50"/>
+        <image name="general.png" width="58" height="58"/>
     </resources>
 </document>
