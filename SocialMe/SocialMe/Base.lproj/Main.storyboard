@@ -4,6 +4,25 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
+        <!--ProfileVC-->
+        <scene sceneID="Bxt-uE-v6d">
+            <objects>
+                <viewController id="2vW-9m-5N4" customClass="ProfileVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uiE-S6-mOc"/>
+                        <viewControllerLayoutGuide type="bottom" id="w5o-Y8-ebz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="svN-Gl-aKG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Oi2-me-X0f"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7b2-OL-Ggn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1675" y="-1061"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="NZp-St-VvG">
             <objects>
@@ -80,6 +99,9 @@
                             <color key="tintColor" red="0.56777942000000003" green="0.56728548000000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="2vW-9m-5N4" kind="push" identifier="profileSegue" id="vqj-cO-42L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLx-er-pn9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -95,6 +95,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
+        //let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC.self)
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        performSegueWithIdentifier("profileSegue", sender: cell)
+        
+        
+        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -125,6 +132,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func presentMainVC () {
         let vc : UINavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        let cell = sender as! UITableViewCell
+        let path = tableView.indexPathForCell(cell)
+        let destination = segue.destinationViewController as! ProfileVC
+        
+        let user : PFUser = data[path!.row] as! PFUser
+        destination.username = user.username!
+        destination.navigationItem.title = user.username!
+        
     }
 
 }

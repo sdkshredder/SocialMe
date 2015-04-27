@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */; };
 		FE1C1BBB1AED9C260075F689 /* general.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BB81AED9C260075F689 /* general.png */; };
 		FE1C1BBC1AED9C260075F689 /* general@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BB91AED9C260075F689 /* general@2x.png */; };
 		FE1C1BBD1AED9C260075F689 /* general@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BBA1AED9C260075F689 /* general@3x.png */; };
@@ -80,6 +81,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FE1C1BB81AED9C260075F689 /* general.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = general.png; sourceTree = "<group>"; };
 		FE1C1BB91AED9C260075F689 /* general@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "general@2x.png"; sourceTree = "<group>"; };
 		FE1C1BBA1AED9C260075F689 /* general@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "general@3x.png"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				FEBD878D1AE4F63D006452FD /* LoginVC.swift */,
 				FEBD878B1AE4EF40006452FD /* HomeVC.swift */,
 				FEBD87891AE4CBDD006452FD /* FeedVC.swift */,
+				DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */,
 				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
 				FEBD878F1AE55289006452FD /* profile-icon@2x.png */,
 				FEA6B2891AE7138A00D9B9A9 /* button@2x.png */,
@@ -445,6 +448,7 @@
 			files = (
 				FEBD878A1AE4CBDD006452FD /* FeedVC.swift in Sources */,
 				FEBD878C1AE4EF40006452FD /* HomeVC.swift in Sources */,
+				DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */,
 				FEBD878E1AE4F63D006452FD /* LoginVC.swift in Sources */,
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
 				FEBD86881AE1D05C006452FD /* SignUpVC.swift in Sources */,
