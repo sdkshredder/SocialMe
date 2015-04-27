@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="-659" y="721"/>
         </scene>
-        <!--FeedVC-->
+        <!--SocialMe-->
         <scene sceneID="8hB-5N-8gf">
             <objects>
                 <viewController id="iKc-BW-79x" customClass="FeedVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -67,7 +67,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="rsA-G3-PFY"/>
+                    <navigationItem key="navigationItem" title="SocialMe" id="rsA-G3-PFY">
+                        <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Yq5-M4-x5j">
+                            <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
+                            <color key="tintColor" red="0.70980394000000002" green="1" blue="0.80000006999999995" alpha="1" colorSpace="deviceRGB"/>
+                            <connections>
+                                <action selector="ShowProfile:" destination="iKc-BW-79x" id="4tg-5Y-6sB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="general.png" id="IGb-jh-NOo">
+                            <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
+                            <color key="tintColor" red="0.56777942000000003" green="0.56728548000000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLx-er-pn9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -186,6 +198,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7pT-0u-SH1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.84003459999999996" green="0.75899660999999996" blue="0.98547339" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
