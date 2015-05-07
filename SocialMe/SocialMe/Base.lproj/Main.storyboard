@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ykb-z2-sPT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ykb-z2-sPT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
-        <!--ProfileVC-->
+        <!--SocialMe-->
         <scene sceneID="Bxt-uE-v6d">
             <objects>
                 <viewController id="2vW-9m-5N4" customClass="ProfileVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -15,13 +15,57 @@
                     <view key="view" contentMode="scaleToFill" id="svN-Gl-aKG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="49" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EAo-Sf-ULX">
+                                <rect key="frame" x="0.0" y="269" width="600" height="331"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="49" id="Upe-QQ-q8J" customClass="ProfileTVC" customModule="SocialMe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Upe-QQ-q8J" id="YBQ-fn-JIJ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxA-3X-DzS">
+                                                    <rect key="frame" x="342" y="9" width="69" height="30"/>
+                                                    <state key="normal" title="Button">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="fYQ-SS-ho2">
+                                <rect key="frame" x="0.0" y="64" width="600" height="205"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="205" id="JIe-Ff-v7h"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EAo-Sf-ULX" firstAttribute="top" secondItem="fYQ-SS-ho2" secondAttribute="bottom" id="796-dv-uxz"/>
+                            <constraint firstAttribute="trailing" secondItem="EAo-Sf-ULX" secondAttribute="trailing" id="7nm-gk-MCr"/>
+                            <constraint firstItem="fYQ-SS-ho2" firstAttribute="leading" secondItem="svN-Gl-aKG" secondAttribute="leading" id="ExJ-GR-uZU"/>
+                            <constraint firstAttribute="trailing" secondItem="fYQ-SS-ho2" secondAttribute="trailing" id="Uil-RJ-ppc"/>
+                            <constraint firstItem="fYQ-SS-ho2" firstAttribute="top" secondItem="uiE-S6-mOc" secondAttribute="bottom" id="Xhn-Zi-QmB"/>
+                            <constraint firstAttribute="bottom" secondItem="EAo-Sf-ULX" secondAttribute="bottom" id="t8M-Sh-iuz"/>
+                            <constraint firstItem="EAo-Sf-ULX" firstAttribute="leading" secondItem="svN-Gl-aKG" secondAttribute="leading" id="ulK-ht-XN8"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Oi2-me-X0f"/>
+                    <navigationItem key="navigationItem" title="SocialMe" id="pPH-MJ-qh3">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="195-F8-93M"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="profilePic" destination="fYQ-SS-ho2" id="8bc-hu-xJj"/>
+                        <outlet property="tableView" destination="EAo-Sf-ULX" id="odV-oE-dVG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7b2-OL-Ggn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1675" y="-1061"/>
+            <point key="canvasLocation" x="2045" y="-1061"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="NZp-St-VvG">
@@ -41,6 +85,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFe-4p-2Ao" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1771" y="-397"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="eHt-tS-8Li">
+            <objects>
+                <tableViewController id="tXh-hG-gCE" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7GJ-u9-vcz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="tXh-hG-gCE" id="M37-Oo-TU2"/>
+                            <outlet property="delegate" destination="tXh-hG-gCE" id="G6L-W1-lZN"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9fd-0n-iLR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1809" y="264"/>
         </scene>
         <!--SocialMe-->
         <scene sceneID="AH8-KI-ann">
@@ -283,6 +345,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bg.png" width="1242" height="2208"/>
         <image name="contacts.png" width="50" height="50"/>
         <image name="general.png" width="58" height="58"/>
     </resources>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C9CFD51AF45A83006DDD94 /* ProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9CFD41AF45A82006DDD94 /* ProfileTVC.swift */; };
 		DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */; };
 		FE1C1BBB1AED9C260075F689 /* general.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BB81AED9C260075F689 /* general.png */; };
 		FE1C1BBC1AED9C260075F689 /* general@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BB91AED9C260075F689 /* general@2x.png */; };
@@ -81,6 +82,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04C9CFD41AF45A82006DDD94 /* ProfileTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTVC.swift; sourceTree = "<group>"; };
 		DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FE1C1BB81AED9C260075F689 /* general.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = general.png; sourceTree = "<group>"; };
 		FE1C1BB91AED9C260075F689 /* general@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "general@2x.png"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		FE8B467D1ADCEFEF00FA9EA3 /* SocialMe */ = {
 			isa = PBXGroup;
 			children = (
+				04C9CFD41AF45A82006DDD94 /* ProfileTVC.swift */,
 				FEA6B28B1AE73C0600D9B9A9 /* icons */,
 				FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */,
 				FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */,
@@ -360,6 +363,11 @@
 					FE8B467A1ADCEFEF00FA9EA3 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = 3HX2FQ26TJ;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					FE8B468F1ADCEFEF00FA9EA3 = {
 						CreatedOnToolsVersion = 6.3;
@@ -447,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEBD878A1AE4CBDD006452FD /* FeedVC.swift in Sources */,
+				04C9CFD51AF45A83006DDD94 /* ProfileTVC.swift in Sources */,
 				FEBD878C1AE4EF40006452FD /* HomeVC.swift in Sources */,
 				DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */,
 				FEBD878E1AE4F63D006452FD /* LoginVC.swift in Sources */,
