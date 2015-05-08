@@ -62,7 +62,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.layoutMargins = UIEdgeInsetsZero
-        tableView.rowHeight = 150
+        tableView.rowHeight = 240
         view.addSubview(tableView)
     }
     
@@ -88,30 +88,32 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     func styleCell(content: UIView, user: PFUser) {
-        let a = UIView(frame: CGRectMake(10, 10, 350, 150))
-        a.backgroundColor = UIColor.greenColor()
+        let a = UIView(frame: CGRectMake(0, 0, 350, 240))
+        //a.backgroundColor = UIColor.greenColor()
         
         
         let profilePic = UIImageView(image: UIImage(named: "podcasts"))
-        //profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+        profilePic.layer.cornerRadius = profilePic.frame.height/2.0
         profilePic.clipsToBounds = true
-        profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 50, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
+        profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
         a.addSubview(profilePic)
         
-        var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(profilePic.bounds), width: 100, height: 50))
+        var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
         name.text = user.username
+        name.font = UIFont .boldSystemFontOfSize(18.0)
         a.addSubview(name)
-        var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(profilePic.bounds) + 35, width: 100, height: 20))
+        var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
         distance.text = "500 feet"
         a.addSubview(distance)
-        var hometown = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(profilePic.bounds) + 55, width: 100, height: 20))
-        hometown.text = user.objectForKey("Hometown") as? String
-        a.addSubview(hometown)
+        var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
+        occupation.text = user.objectForKey("Occupation") as? String
+        a.addSubview(occupation)
 
         
         
         content.clipsToBounds = true
         content.addSubview(a)
+        content.sendSubviewToBack(a)
         content.bringSubviewToFront(profilePic)
     }
     
