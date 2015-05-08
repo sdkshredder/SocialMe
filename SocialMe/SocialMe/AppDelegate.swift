@@ -10,10 +10,9 @@ import UIKit
 import Parse
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
-
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Parse.setApplicationId("RNVW79HLFeFtAIgI0AzfbLLzRMZHApcxSJjbDCJB", clientKey: "7WTLoQHXQPvlWlNL1PyT0BpYzk9zKoU6u9cVdLJY")
