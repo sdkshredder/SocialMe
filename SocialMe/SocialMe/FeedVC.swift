@@ -12,7 +12,6 @@ import Parse
 class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
-    @IBOutlet weak var tableview: UITableView!
     let tableView = UITableView()
     var data = NSArray()
     
@@ -22,7 +21,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let tab = tabBarController!.tabBar
         UIView.animateWithDuration(0.2, animations: {
             tab.frame.origin = CGPointMake(0, self.view.frame.height)
-            self.tableview.frame.origin = CGPointMake(0, self.view.frame.height - 50)
+            self.tableView.frame.origin = CGPointMake(0, self.view.frame.height - 50)
             
             }, completion: {
                 (value: Bool) in
@@ -58,25 +57,21 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func initTableView() {
-       // tableView.frame = view.frame
-        tableview.delegate = self
-        tableview.dataSource = self
-       // view.addSubview(tableView)
+        tableView.frame = view.frame
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : feedTVC = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell") as! feedTVC //tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell") //tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
         
         let user = data[indexPath.row] as! PFUser
         println(user)
-        
-        cell.nameLabel.text = "hello"
-        /*
         cell.textLabel!.text = user.username
         cell.detailTextLabel!.text = user.email
         cell.imageView?.image = UIImage(named: "podcasts")
         cell.separatorInset = UIEdgeInsetsZero
-*/
         // cell.contentView.backgroundColor = UIColor.grayColor()
         return cell
     }
@@ -86,8 +81,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             
+            let user = PFUser.currentUser()
             var query = PFUser.query()
-            query!.whereKey("username", notEqualTo:"mariam")
+            query!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
             var res : NSArray = query!.findObjects()!
             
             dispatch_async(dispatch_get_main_queue()) {
@@ -143,7 +139,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         let cell = sender as! UITableViewCell
-        let path = tableview.indexPathForCell(cell)
+        let path = tableView.indexPathForCell(cell)
         let destination = segue.destinationViewController as! ProfileVC
         
         let user : PFUser = data[path!.row] as! PFUser

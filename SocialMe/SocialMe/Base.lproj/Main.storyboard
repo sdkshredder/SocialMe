@@ -84,43 +84,7 @@
                     <view key="view" contentMode="scaleToFill" id="PWm-Xk-XU5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Y8V-vP-tLW">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="proto cell" rowHeight="70" id="YJf-HH-Z6p" customClass="feedTVC" customModule="SocialMe" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YJf-HH-Z6p" id="ykq-vk-AQp">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jUr-4K-wmC">
-                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="69"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" restorationIdentifier="lbl id" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81s-yr-EEt">
-                                                    <rect key="frame" x="88" y="8" width="125" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="nameLabel" destination="81s-yr-EEt" id="TRH-NC-SN3"/>
-                                            <outlet property="profilePic" destination="jUr-4K-wmC" id="O9Z-tI-wV7"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Y8V-vP-tLW" secondAttribute="trailing" id="8Zo-R2-CHY"/>
-                            <constraint firstItem="Y8V-vP-tLW" firstAttribute="top" secondItem="PWm-Xk-XU5" secondAttribute="top" id="GIl-a3-Q2I"/>
-                            <constraint firstItem="Y8V-vP-tLW" firstAttribute="leading" secondItem="PWm-Xk-XU5" secondAttribute="leading" id="Qvp-CX-oa2"/>
-                            <constraint firstAttribute="bottom" secondItem="Y8V-vP-tLW" secondAttribute="bottom" id="lTt-Gx-w63"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SocialMe" id="rsA-G3-PFY">
                         <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Yq5-M4-x5j">
@@ -136,7 +100,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableview" destination="Y8V-vP-tLW" id="Psf-V4-ppT"/>
                         <segue destination="2vW-9m-5N4" kind="push" identifier="profileSegue" id="vqj-cO-42L"/>
                     </connections>
                 </viewController>

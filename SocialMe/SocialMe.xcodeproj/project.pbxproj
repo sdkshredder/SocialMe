@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DDE757021AF4621E0090B35D /* feedTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE757011AF4621E0090B35D /* feedTVC.swift */; };
 		DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */; };
 		FE1C1BBB1AED9C260075F689 /* general.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BB81AED9C260075F689 /* general.png */; };
 		FE1C1BBC1AED9C260075F689 /* general@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE1C1BB91AED9C260075F689 /* general@2x.png */; };
@@ -82,7 +81,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DDE757011AF4621E0090B35D /* feedTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = feedTVC.swift; sourceTree = "<group>"; };
 		DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FE1C1BB81AED9C260075F689 /* general.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = general.png; sourceTree = "<group>"; };
 		FE1C1BB91AED9C260075F689 /* general@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "general@2x.png"; sourceTree = "<group>"; };
@@ -215,7 +213,6 @@
 				FEBD87891AE4CBDD006452FD /* FeedVC.swift */,
 				DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */,
 				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
-				DDE757011AF4621E0090B35D /* feedTVC.swift */,
 				FEBD878F1AE55289006452FD /* profile-icon@2x.png */,
 				FEA6B2891AE7138A00D9B9A9 /* button@2x.png */,
 				FEBD86891AE1FD06006452FD /* swag-60@2x.png */,
@@ -450,7 +447,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEBD878A1AE4CBDD006452FD /* FeedVC.swift in Sources */,
-				DDE757021AF4621E0090B35D /* feedTVC.swift in Sources */,
 				FEBD878C1AE4EF40006452FD /* HomeVC.swift in Sources */,
 				DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */,
 				FEBD878E1AE4F63D006452FD /* LoginVC.swift in Sources */,
