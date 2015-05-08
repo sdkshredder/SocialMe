@@ -124,8 +124,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             let user = PFUser.currentUser()
             var query = PFUser.query()
-            query!.whereKey("username", notEqualTo:"blah")
-            // Crashed if not connected to internet
+            query!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
             var res : NSArray = query!.findObjects()!
             
             dispatch_async(dispatch_get_main_queue()) {
