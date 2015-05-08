@@ -81,6 +81,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             
+            let user = PFUser.currentUser()
             var query = PFUser.query()
             query!.whereKey("username", notEqualTo:"blah")
             // Crashed if not connected to internet
