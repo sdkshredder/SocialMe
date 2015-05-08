@@ -60,6 +60,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.frame = view.frame
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.layoutMargins = UIEdgeInsetsZero
+        tableView.rowHeight = 240
         view.addSubview(tableView)
     }
     
@@ -68,12 +71,50 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let user = data[indexPath.row] as! PFUser
         println(user)
+        /*
         cell.textLabel!.text = user.username
         cell.detailTextLabel!.text = user.email
         cell.imageView?.image = UIImage(named: "podcasts")
         cell.separatorInset = UIEdgeInsetsZero
+        
+        cell.layoutMargins = UIEdgeInsetsZero
+*/
+        styleCell(cell.contentView, user: user)
+        
         // cell.contentView.backgroundColor = UIColor.grayColor()
+        
         return cell
+    }
+
+    
+    func styleCell(content: UIView, user: PFUser) {
+        let a = UIView(frame: CGRectMake(0, 0, 350, 240))
+        //a.backgroundColor = UIColor.greenColor()
+        
+        
+        let profilePic = UIImageView(image: UIImage(named: "podcasts"))
+        profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+        profilePic.clipsToBounds = true
+        profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
+        a.addSubview(profilePic)
+        
+        var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
+        name.text = user.username
+        name.font = UIFont .boldSystemFontOfSize(18.0)
+        a.addSubview(name)
+        var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
+        distance.text = "500 feet"
+        a.addSubview(distance)
+        var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
+        occupation.text = user.objectForKey("Occupation") as? String
+        a.addSubview(occupation)
+
+        
+        
+        content.clipsToBounds = true
+        content.addSubview(a)
+        content.sendSubviewToBack(a)
+        content.bringSubviewToFront(profilePic)
     }
     
     func getAllUsers() {
@@ -99,6 +140,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         println(indexPath.row)
         //let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC.self)
         
+        
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         performSegueWithIdentifier("profileSegue", sender: cell)
         
@@ -107,7 +149,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return 80
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
