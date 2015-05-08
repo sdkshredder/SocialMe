@@ -9,72 +9,42 @@
 import UIKit
 import Parse
 
-class SignUpVC: UIViewController, UITextFieldDelegate {
+class SignUpVC: UIViewController {
     
-    var (username, password, email) = (UITextField(), UITextField(), UITextField())
-    let (circle, check, x, bg, label, info) = (UIImageView(), UIImageView(), UIImageView(), UIView(), UILabel(), UILabel())
-
+    @IBOutlet weak var usernameTF: UITextField!
+    @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var emailTF: UITextField!
+    @IBOutlet weak var signUpButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad();
-        self.initDisplay()
+        //navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
-    func initDisplay() {
-        initBGTap()
-        addBackButton()
-        addLogo()
-        usernameInit()
-        passwordInit()
-        emailInit()
+    @IBAction func signUpNewUser(sender: UIButton) {
+        var user = PFUser()
+        (user.username, user.password, user.email) =
+            (usernameTF.text, passwordTF.text, emailTF.text)
+        
+        user.signUpInBackgroundWithBlock {
+            (succeeded, error) -> Void in
+            if error == nil {
+                println("success for user \(user.username)")
+                //self.performSegueWithIdentifier("signup", sender: self)
+                
+            } else {
+                let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
+                alert.show()
+            }
+        }
     }
     
-    func usernameInit() {
-        var inset = self.view.frame.width/10.0
-        username.frame = CGRectMake(inset, 66, self.view.frame.width - inset * 2, 60)
-        username.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.grayColor()])
-        username.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        username.delegate = self
-        username.autocapitalizationType =  .None
-        view.addSubview(username)
-        addDiv(username)
-    }
-    
-    func passwordInit() {
-        var inset = self.view.frame.width/10.0
-        password.frame = CGRectMake(inset, 126, self.view.frame.width - inset * 2, 60)
-        password.attributedPlaceholder = NSAttributedString(string:"Password",
-            attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        password.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        password.delegate = self
-        password.secureTextEntry = true
-        self.view.addSubview(password)
-        self.addDiv(password)
-    }
-    
-    func emailInit() {
-        var inset = self.view.frame.width/10.0
-        email.frame = CGRectMake(inset, 186, self.view.frame.width - inset * 2, 60)
-        email.attributedPlaceholder = NSAttributedString(string:"Email",
-            attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        email.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        email.delegate = self
-        self.view.addSubview(email)
-        self.addDiv(email)
-    }
     
     func age() {
         
     }
     
-    
-    func formatLabel(frame: CGRect) {
-        label.frame = frame
-        label.text = "SIGN UP"
-        label.textColor = UIColor.blackColor()
-        label.textAlignment = .Center
-        label.alpha = 0
-        label.userInteractionEnabled = true
-    }
+    /*
     
     func addSignUpButton() {
         var frame = CGRectMake(0, 247, self.view.frame.width, 66)
@@ -239,7 +209,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             removeIndicators(username)
         }
     }
-    
+
     func removeButton() {
         if (password.text == "" && label.frame.height != 0) {
             UIView.animateWithDuration(0.1, animations: {
@@ -252,42 +222,5 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             })
         }
     }
-    
-    func initBGTap() {
-        let bgTap = UIButton(frame: view.frame)
-        bgTap.addTarget(self, action: "bgTap:", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(bgTap)
-    }
-    
-    func addDiv(tf: UITextField) {
-        let div = UIView(frame: CGRectMake(0, tf.frame.origin.y + tf.frame.size.height, self.view.frame.width, 1))
-        div.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(div)
-    }
-    
-    func addLogo() {
-        let logo = UILabel(frame: CGRectMake(self.view.frame.width/2 - 80, 0, 160, 80))
-        logo.text = "SocialMe"
-        logo.textColor = UIColor.grayColor()
-        logo.font = UIFont(name: "HelveticaNeue-Light", size: 33)
-        logo.textAlignment = .Center
-        self.view.addSubview(logo)
-    }
-    
-    func addBackButton() {
-        let nav = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.width, 64))
-        let back = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "barButtonItemClicked:")
-        let b = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: "back:")
-        b.imageInsets = UIEdgeInsetsMake(5, 3, 5, 4)
-        let n = UINavigationItem()
-        n.setLeftBarButtonItem(b, animated: true)
-        nav.pushNavigationItem(n, animated: true)
-        nav.tintColor = UIColor.grayColor()
-        self.view.addSubview(nav)
-    }
-    
-    func back(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
+    */
 }
