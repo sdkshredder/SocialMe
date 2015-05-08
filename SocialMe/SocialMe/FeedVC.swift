@@ -95,15 +95,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
-        //let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC.self)
+		let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC())
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+		let cell = tableView.cellForRowAtIndexPath(indexPath)
+			
         performSegueWithIdentifier("profileSegue", sender: cell)
-        
+		
         
         
     }
-    
+	
+
+	
+	
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60
     }
@@ -121,6 +125,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         initTableView()
         getAllUsers()
+		
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -140,11 +145,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = sender as! UITableViewCell
         let path = tableView.indexPathForCell(cell)
         let destination = segue.destinationViewController as! ProfileVC
-        
-        let user : PFUser = data[path!.row] as! PFUser
-        destination.username = user.username!
-        destination.navigationItem.title = user.username!
-        
+		if let indexPath = self.tableView.indexPathForSelectedRow() {
+			let user : PFUser = data[path!.row] as! PFUser
+			destination.username = user.username!
+			destination.navigationItem.title = user.username!
+			destination.userPic = UIImage(named: "podcasts")!
+
+		}
+
+		
     }
 
 }

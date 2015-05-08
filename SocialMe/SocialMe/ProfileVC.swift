@@ -12,14 +12,28 @@ import Foundation
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
     
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var userProfPic: UIImageView!
+	//@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var profilePic: UIImageView!
     var username = NSString()
-	// let tableView = UITableView()
+	var userPic : UIImage?
+	
+	let tableView = UITableView()
 	var data = NSArray()
+	//set width and height by click.....ctrl drag on the center vertically to set it on the blue line
+	func tableView(tableView: UITableView, heightForRowAtIndexPath: NSIndexPath) -> CGFloat {
+		return 62
+	}
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 1
+	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell : ProfileTVC = tableView.dequeueReusableCellWithIdentifier("profileCell") as! ProfileTVC
+		let cell : ProfileTVC = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! ProfileTVC
+		cell.layoutMargins = UIEdgeInsetsZero
+		cell.separatorInset = UIEdgeInsetsZero
+		cell.textLabel?.text = "Hi Kelsey"
+		
 		//tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
 		
 		//let user = data[indexPath.row] as! PFUser
@@ -48,7 +62,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 	
 	
 	func initTableView() {
-		//tableView.frame = view.frame
+		tableView.frame = view.frame
 		tableView.delegate = self
 		tableView.dataSource = self
 		//view.addSubview(tableView)
@@ -67,6 +81,9 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 			}
 		}
 	}
+	func drawProfile() {
+		profilePic.image = userPic!
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +92,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 		initTableView()
 		//getUserInfo()
         // Do any additional setup after loading the view.
-		
+		//drawProfile()
     }
 
 	
