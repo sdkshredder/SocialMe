@@ -10,10 +10,9 @@ import UIKit
 
 class ProfileTVC: UITableViewCell, UITextFieldDelegate {
 	//weak dissappears if there is not a pointer to it anymore
-	@IBOutlet weak var attrTextField: UITextField!
-	
+
+	@IBOutlet weak var inputLabel: UILabel!
 	@IBOutlet weak var attrLabel: UILabel!
-	
 	@IBAction func hello(sender: UIButton) {
 		println("hello")
 	}

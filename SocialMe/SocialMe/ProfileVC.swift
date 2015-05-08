@@ -12,14 +12,13 @@ import Foundation
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
     
-	@IBOutlet weak var userProfPic: UIImageView!
-	//@IBOutlet weak var tableView: UITableView!
-	@IBOutlet weak var profilePic: UIImageView!
-    var username = NSString()
-	var userPic : UIImage?
+	@IBOutlet weak var userProfilePic: UIImageView!
+	@IBOutlet weak var tableView: UITableView!
 	
-	let tableView = UITableView()
-	var data = NSArray()
+	var userPic : UIImage?
+	var username = "cory"
+	var userData = [("Hometown","Los Angeles"),("Occupation","Football"),("School","Stanford University"),("Birthday","1/1/1994")]
+	
 	//set width and height by click.....ctrl drag on the center vertically to set it on the blue line
 	func tableView(tableView: UITableView, heightForRowAtIndexPath: NSIndexPath) -> CGFloat {
 		return 62
@@ -29,10 +28,12 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell : ProfileTVC = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! ProfileTVC
+		var cell = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! ProfileTVC
+		let (attr, input)  = userData[indexPath.row]
 		cell.layoutMargins = UIEdgeInsetsZero
 		cell.separatorInset = UIEdgeInsetsZero
-		cell.textLabel?.text = "Hi Kelsey"
+		cell.attrLabel?.text = attr
+		//cell.inputLabel?.text = input
 		
 		//tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
 		
@@ -53,46 +54,38 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 		//let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC.self)
 		
 		let cell = tableView.cellForRowAtIndexPath(indexPath)
-		performSegueWithIdentifier("profileSegue", sender: cell)
+	//	performSegueWithIdentifier("profileSegue", sender: cell)
 	}
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 5
+		return userData.count
 	}
 	
 	
-	func initTableView() {
-		tableView.frame = view.frame
-		tableView.delegate = self
-		tableView.dataSource = self
-		//view.addSubview(tableView)
-	}
-	
+/*
+	//TODO: Need to debug for empty resulting array
 	func getUserInfo() {
-		let value = NSArray()
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
-		var res = NSArray()
-		//var predicateFormat: String { "username = @self.username"}
-		//var attrData:PFQuery = PFQuery(className: "Attributes", predicate: predicateFormat)
+			var query = PFUser.query()
+			query!.whereKey("username", notEqualTo: "blah")
+			var res : NSArray = query!.findObjects()!
 			dispatch_async(dispatch_get_main_queue()) {
-				self.data = res
+				self.userData = res
 				self.tableView.reloadData()
 			}
 		}
 	}
-	func drawProfile() {
-		profilePic.image = userPic!
-	}
+*/
+
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let title = UINavigationItem(title: (username as! String))
-		//navigationController?.navigationBar.pushNavigationItem(title, animated: true)
-		initTableView()
+        let title = UINavigationItem(title: (self.username as String))
+		navigationController?.navigationBar.pushNavigationItem(title, animated: true)
+		userProfilePic.image = UIImage(named: "swag-60@2x.png")
 		//getUserInfo()
         // Do any additional setup after loading the view.
-		//drawProfile()
     }
 
 	
