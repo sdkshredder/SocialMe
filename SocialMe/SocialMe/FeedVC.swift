@@ -60,6 +60,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.frame = view.frame
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.layoutMargins = UIEdgeInsetsZero
         view.addSubview(tableView)
     }
     
@@ -72,8 +74,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.detailTextLabel!.text = user.email
         cell.imageView?.image = UIImage(named: "podcasts")
         cell.separatorInset = UIEdgeInsetsZero
+        
+        cell.layoutMargins = UIEdgeInsetsZero
+        styleCell(cell.contentView)
+        
         // cell.contentView.backgroundColor = UIColor.grayColor()
+        
         return cell
+    }
+    
+    func styleCell(content: UIView) {
+        let a = UIView(frame: CGRectMake(10, 10, 400, 100))
+        a.backgroundColor = UIColor.greenColor()
+        content.clipsToBounds = true
+        content.addSubview(a)
+        
+        let profilePic = UIImageView()
+        profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+        profilePic.clipsToBounds = true
     }
     
     func getAllUsers() {
@@ -98,6 +116,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         println(indexPath.row)
         //let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC.self)
         
+        
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         performSegueWithIdentifier("profileSegue", sender: cell)
         
@@ -106,7 +125,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return 80
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
