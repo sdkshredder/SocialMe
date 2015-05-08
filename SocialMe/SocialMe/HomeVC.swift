@@ -7,20 +7,47 @@
 //
 
 import UIKit
+import Parse
 
 class HomeVC: UIViewController {
 
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad();
-        initDisplay()
+        styleButtons()
     }
     
-    func initDisplay() {
-        logIn()
-        signUp()
-        logo()
-        navigationController?.navigationBar.tintColor = UIColor.clearColor()
-        navigationController?.navigationBar.hidden = true
+    func styleButtons() {
+        loginButton.layer.cornerRadius = loginButton.frame.height/2.0
+        signupButton.layer.cornerRadius = signupButton.frame.height/2.0
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        if PFUser.currentUser() != nil {
+            /*
+            let vc : UITabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("tab") as! UITabBarController
+            self.navigationController?.presentViewController(vc, animated: false, completion: nil)
+            */
+            performSegueWithIdentifier("reveal", sender: self)
+        }
+    }
+    
+    @IBAction func logIn(sender: UIButton) {
+        let loginVC : LoginVC = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC") as! LoginVC
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
+
+    
+    @IBAction func signUp(sender: UIButton) {
+        let signupVC : SignUpVC = self.storyboard!.instantiateViewControllerWithIdentifier("signupVC") as! SignUpVC
+        navigationController?.pushViewController(signupVC, animated: true)
     }
     
     func logo() {
