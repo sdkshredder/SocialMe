@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ykb-z2-sPT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="txE-0p-xd7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="NZp-St-VvG">
+        <!--ProfileVC-->
+        <scene sceneID="Bxt-uE-v6d">
             <objects>
-                <viewController id="rhT-o0-kgm" sceneMemberID="viewController">
+                <viewController id="2vW-9m-5N4" customClass="ProfileVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="YMc-Q8-IAG"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ha6-a2-aLD"/>
+                        <viewControllerLayoutGuide type="top" id="uiE-S6-mOc"/>
+                        <viewControllerLayoutGuide type="bottom" id="w5o-Y8-ebz"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uZs-lY-CUb">
+                    <view key="view" contentMode="scaleToFill" id="svN-Gl-aKG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="FG8-4z-wrV"/>
+                    <navigationItem key="navigationItem" id="Oi2-me-X0f"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oFe-4p-2Ao" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7b2-OL-Ggn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1835" y="-389"/>
+            <point key="canvasLocation" x="-1473" y="1511"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="eHt-tS-8Li">
@@ -190,7 +190,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="BrL-kU-vNo" kind="show" id="YgN-vN-Vn1"/>
+                        <segue destination="BrL-kU-vNo" kind="show" identifier="profileSegue" id="YgN-vN-Vn1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLx-er-pn9" userLabel="First Responder" sceneMemberID="firstResponder"/>

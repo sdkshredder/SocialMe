@@ -140,8 +140,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         println(indexPath.row)
 		let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC())
         
-		let cell = tableView.cellForRowAtIndexPath(indexPath)
-			
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
         performSegueWithIdentifier("profileSegue", sender: cell)
 		
         
