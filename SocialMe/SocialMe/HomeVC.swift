@@ -15,12 +15,6 @@ class HomeVC: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad();
-        styleButtons()
-    }
-    
-    func styleButtons() {
-        loginButton.layer.cornerRadius = loginButton.frame.height/2.0
-        signupButton.layer.cornerRadius = signupButton.frame.height/2.0
         
     }
     

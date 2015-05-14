@@ -17,8 +17,25 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     
     override func viewDidLoad() {
-        super.viewDidLoad();
-        //navigationController?.setNavigationBarHidden(false, animated: true)
+        super.viewDidLoad()
+        addTFBorder()
+    }
+    
+    func addTFBorder() {
+        var bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0.0, usernameTF.frame.size.height - 1, usernameTF.frame.size.width, 1.0);
+        bottomBorder.backgroundColor = UIColor.darkGrayColor().CGColor
+        usernameTF.layer.addSublayer(bottomBorder)
+        
+        var bottomBorderB = CALayer()
+        bottomBorderB.frame = CGRectMake(0.0, passwordTF.frame.size.height - 1, passwordTF.frame.size.width, 1.0);
+        bottomBorderB.backgroundColor = UIColor.darkGrayColor().CGColor
+        passwordTF.layer.addSublayer(bottomBorderB)
+        
+        var bottomBorderC = CALayer()
+        bottomBorderC.frame = CGRectMake(0.0, emailTF.frame.size.height - 1, emailTF.frame.size.width, 1.0);
+        bottomBorderC.backgroundColor = UIColor.darkGrayColor().CGColor
+        emailTF.layer.addSublayer(bottomBorderC)
     }
 
     @IBAction func signUpNewUser(sender: UIButton) {

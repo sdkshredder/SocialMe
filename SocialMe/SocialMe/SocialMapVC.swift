@@ -22,15 +22,20 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        map.delegate = self
         setupLocationManager()
         setupDisplay()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
     }
+    
+    
     
     func setupDisplay() {
         logLocation()
         orientMapView()
+        showPeopleNearby()
         arrow.layer.cornerRadius = 22
-        map.delegate = self
     }
     
     @IBOutlet weak var zoomToggle: UIImageView!
@@ -72,7 +77,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         let geoPoint = getLocation()
         let user = PFUser.currentUser()
         user!.setObject(geoPoint, forKey: "location")
-        
+        let now = NSDate().timeIntervalSince1970
+        user!.setObject(now, forKey: "lastSeen")
         user!.saveInBackgroundWithBlock {
             (succeeded, error) -> Void in
             if error == nil {
@@ -89,13 +95,49 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         plotPlaces(nearby)
     }
     
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        if !(annotation is CustomAnnotation) {
+            return nil
+        }
+        
+        let reuseId = "test"
+        
+        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
+        if anView == nil {
+            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            anView.canShowCallout = true
+        }
+        else {
+            anView.annotation = annotation
+        }
+        
+        //Set annotation-specific properties **AFTER**
+        //the view is dequeued or created...
+        
+        let cpa = annotation as! CustomAnnotation
+        anView.image = UIImage(named:cpa.imageName)
+        
+        return anView
+    }
+    
     private func plotPlaces(people: [PFUser]) {
-        var annotations = [MKPointAnnotation]()
+        var annotations = [CustomAnnotation]()
         for person in people {
             let location : PFGeoPoint = person["location"] as! PFGeoPoint
             let a = CLLocation(latitude: location.latitude, longitude: location.longitude)
-            let annotation = MKPointAnnotation()
+            let annotation = CustomAnnotation()
             annotation.title = person.username
+            annotation.imageName = "balloon.png"
+            
+            if let lastSeen : Double = person.objectForKey("lastSeen") as? Double {
+                var date = NSDate(timeIntervalSince1970: lastSeen)
+                var formatter = NSDateFormatter()
+                formatter.dateStyle = .MediumStyle
+                formatter.timeStyle = .MediumStyle
+                let it = formatter.stringFromDate(date)
+                annotation.subtitle = it
+            }
+            
             annotation.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
             annotations.append(annotation)
 
@@ -163,8 +205,10 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     @IBAction func showProfile(sender: UIBarButtonItem) {
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
         UIView.animateWithDuration(0.3, animations: {
-            self.map.frame.origin = CGPointMake(0, self.view.frame.height - 50)
+            self.map.frame.origin = CGPointMake(0, self.view.frame.height)
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
+            self.arrow.alpha = 0
+            self.map.alpha = 0.5
             }, completion: {
                 (value: Bool) in
                 UIView.animateWithDuration(0.2, animations: {
@@ -176,6 +220,36 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         
     }
     
+    func requestLocationUpdate(notification: NSNotification) {
+        let info  = notification.userInfo as! [String: String]
+        let type = info["pref"]
+        if type == "always" {
+            if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
+                locationManager.startUpdatingLocation()
+                locationManager.requestAlwaysAuthorization()
+            }
+        } else if type == "while" {
+            if CLLocationManager.authorizationStatus() != .AuthorizedWhenInUse {
+                locationManager.startUpdatingLocation()
+                locationManager.requestWhenInUseAuthorization()
+            }
+            
+        } else {
+            //Deal with it.
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!,
+        didChangeAuthorizationStatus status: CLAuthorizationStatus)
+    {
+        /*
+        if status == .Authorized || status == .AuthorizedWhenInUse {
+            manager.startUpdatingLocation()
+            // ...
+        }
+*/
+    }
+    
     func returnAction(sender: UIButton) {
         navigationController?.setNavigationBarHidden(false, animated: true)
         hidden = false
@@ -183,6 +257,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.map.frame.origin = CGPointMake(0, 0)
             self.returnButton.alpha = 0
+            self.arrow.alpha = 1
+            self.map.alpha = 1
             let tabFrame = self.tabBarController?.tabBar.frame
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - tabFrame!.height)
             }, completion: {
@@ -221,13 +297,14 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     func zoomToUserLocation(placemark: CLPlacemark) {
         self.map.setRegion(MKCoordinateRegion(center: placemark.location.coordinate,
-            span: MKCoordinateSpanMake(0.15, 0.15)), animated: true)
+            span: MKCoordinateSpanMake(0.01, 0.01)), animated: true)
     }
     
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
+        //locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
     }
     

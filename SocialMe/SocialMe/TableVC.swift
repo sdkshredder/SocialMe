@@ -9,79 +9,135 @@
 import UIKit
 import Parse
 
-class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
+    
     @IBOutlet weak var table: UITableView!
+    var editingAge = false
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 62
-        
-        //selected.containsObject(indexPath.row)
+        let a = getTitleForPath(indexPath.section)
+        if a == "Age" && editingAge == true {
+            return 220
+        } else if a == "Location" {
+            return 90
+        }
+        return 60
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func getTitleForPath(indexPath: NSIndexPath) -> String {
-        var res = ""
-        switch indexPath.row {
-            case 0:
-                res = "Name"
-            case 1:
-                res = "Age"
-            case 2:
-                res = "Hometown"
-            case 3:
-                res = "School"
-            case 4:
-                res = "Occupation"
-        default:
-                res = "hello"
-        }
-        return res
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 6
     }
     
-    func getCurrentUserAttributes() {
-        /*
-        var user = PFUser.currentUser()
-        user!.setObject(geoPoint, forKey: "location")
-        
-        user!.saveInBackgroundWithBlock {
-            (succeeded, error) -> Void in
-            if error == nil {
-                println("success for user \(user!.username)")
-            }
+    func getTitleForPath(path : Int) -> String {
+        switch path {
+            case 0:
+                return "Name"
+            case 1:
+                return "Age"
+            case 2:
+                return "Hometown"
+            case 3:
+                return "School"
+            case 4:
+                return "Occupation"
+            case 5:
+                return "Location"
+        default:
+                return "Log Out"
         }
-
-        */
+    }
+    
+    @IBAction func cancel(sender: UIBarButtonItem) {
+        NSNotificationCenter.defaultCenter().postNotificationName("hideSettings", object: nil)
+    }
+    
+    func getCellID(path : Int) -> String {
+        let a = getTitleForPath(path)
+        if a == "Age" {
+            return "ageCell"
+        } else if a == "Location" {
+            return "locationCell"
+        }
+        return "tableCell"
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return getTitleForPath(section)
+    }
+    
+    func configureStandardCell(cell: TableTVCell, indexPath: NSIndexPath) {
+        cell.textField.placeholder = getTitleForPath(indexPath.section)
+        cell.editButton.tag = indexPath.section
+        // cell.textField.placeholder = "blah"
+        
+        let user = PFUser.currentUser()
+        let attr = getTitleForPath(indexPath.section)
+        let val = user?.objectForKey(attr) as! String
+        
+        if !val.isEmpty {
+            cell.textField.placeholder = val
+        }
+        
+    }
+    
+    func configureAgeCell(cell: AgeTVCell) {
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("tableCell") as! TableTVCell
+        let ID = getCellID(indexPath.section)
         
-        cell.layoutMargins = UIEdgeInsetsZero
-        cell.separatorInset = UIEdgeInsetsZero
-        
-        cell.title.text = getTitleForPath(indexPath)
-        cell.textField.placeholder = getTitleForPath(indexPath)
-        cell.title.tag = indexPath.row
-        
-        let attr = getTitleForPath(indexPath)
-        
-        let user = PFUser.currentUser()
-        return cell
+        if ID == "tableCell" {
+            var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! TableTVCell
+            cell.layoutMargins = UIEdgeInsetsZero
+            cell.separatorInset = UIEdgeInsetsZero
+            let title = getTitleForPath(indexPath.section)
+            cell.editButton.tag = indexPath.section
+            cell.textField.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName : UIColor.purpleColor()])
+            let user = PFUser.currentUser()
+            let attr = getTitleForPath(indexPath.section)
+            let val = user?.objectForKey(attr) as! String
+   
+            if !val.isEmpty {
+                cell.textField.attributedPlaceholder = NSAttributedString(string: val, attributes: [NSForegroundColorAttributeName : UIColor.darkGrayColor()])
+            }
+            return cell
+        } else if ID == "ageCell" {
+            var b = tableView.dequeueReusableCellWithIdentifier(ID) as! AgeTVCell
+            return b
+        } else {
+            var c = tableView.dequeueReusableCellWithIdentifier(ID) as! LocationTVCell
+            if (CLLocationManager.authorizationStatus() == .AuthorizedAlways) {
+                c.control.selectedSegmentIndex = 0
+            } else if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse) {
+                c.control.selectedSegmentIndex = 1
+            } else {
+                c.control.selectedSegmentIndex = 2
+            }
+            return c
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
-        table.separatorInset = UIEdgeInsetsZero
-        table.layoutMargins = UIEdgeInsetsZero
+        //table.separatorInset = UIEdgeInsetsZero
+        //table.layoutMargins = UIEdgeInsetsZero
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleNotification:", name: "ageNotification", object: nil)
+    }
+    
+    func handleNotification(notification: NSNotification) {
+        editingAge = !editingAge
+        //println(editingAge)
+        table.beginUpdates()
+        table.endUpdates()
+        NSNotificationCenter.defaultCenter().postNotificationName("pickerNotification", object: nil)
     }
 }

@@ -28,8 +28,7 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         } else {
             selected.addObject(b)
         }
-        // text.enabled = true
-        println(selected)
+        
         table.beginUpdates()
         table.endUpdates()
         
