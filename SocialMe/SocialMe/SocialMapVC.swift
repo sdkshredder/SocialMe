@@ -22,18 +22,23 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        map.delegate = self
         setupLocationManager()
-        setupDisplay()
+        map.delegate = self
+        map.setUserTrackingMode(.Follow, animated: true)
+        
+        //setupDisplay()
+        /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
+        */
     }
     
     
     
     func setupDisplay() {
-        logLocation()
-        orientMapView()
+        //logLocation()
+        //locationManager.startUpdatingLocation()
+        //orientMapView()
         showPeopleNearby()
         arrow.layer.cornerRadius = 22
     }
@@ -41,17 +46,19 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     @IBOutlet weak var zoomToggle: UIImageView!
     
     @IBAction func tooltipTap(sender: UITapGestureRecognizer) {
-        orientMapView()
+        //orientMapView()
         rotateArrow()
     }
     
     func mapView(mapView: MKMapView!,
         regionDidChangeAnimated animated: Bool) {
+            /*
             if self.arrow.alpha == 0 {
                 UIView.animateWithDuration(0.2, animations: {
                     self.arrow.alpha = 1
                 })
             }
+            */
     }
     
     func rotateArrow() {
@@ -60,11 +67,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         rotateAnimation.toValue = CGFloat(M_PI * 2.0)
         rotateAnimation.duration = 0.2
         arrow.layer.addAnimation(rotateAnimation, forKey: nil)
-    }
-    
-    func initDisplay() {
-        setupLocationManager()
-        logLocation()
     }
     
     func getLocation() -> PFGeoPoint {
@@ -88,11 +90,26 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func showPeopleNearby() {
-        let location : PFGeoPoint = getLocation()
-        let query = PFUser.query()
-        query!.whereKey("location", nearGeoPoint: location)
-        let nearby = query!.findObjects() as! [PFUser]
-        plotPlaces(nearby)
+        //let location : PFGeoPoint = getLocation()
+        //let query = PFUser.query()
+        
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            
+            let location : PFGeoPoint = self.getLocation()
+            let query = PFUser.query()
+            query!.whereKey("location", nearGeoPoint: location)
+            let nearby = query!.findObjects() as! [PFUser]
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                self.plotPlaces(nearby)
+            }
+        }
+        
+        
+        
     }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
@@ -206,7 +223,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
         UIView.animateWithDuration(0.3, animations: {
             self.map.frame.origin = CGPointMake(0, self.view.frame.height)
-            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - 49)
             self.arrow.alpha = 0
             self.map.alpha = 0.5
             }, completion: {
@@ -283,6 +300,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func orientMapView() {
+        /*
         CLGeocoder().reverseGeocodeLocation(locationManager.location, completionHandler: { (placemarks, error) -> Void in
             if (error != nil) {
                 println("Error: " + error.localizedDescription)
@@ -293,6 +311,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
                 self.zoomToUserLocation(pm)
             }
         })
+        */
     }
     
     func zoomToUserLocation(placemark: CLPlacemark) {
@@ -315,7 +334,16 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
         return .Fade
     }
-       
+    
+    func locationManager(manager: CLLocationManager!,
+        didUpdateLocations locations: [AnyObject]!) {
+            logLocation()
+            /*
+            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
+            tempAlert.show()
+            */
+    }
+    
     /*
     func addBlur() {
         

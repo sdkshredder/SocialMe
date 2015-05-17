@@ -42,9 +42,9 @@
                                     <segue destination="pcd-i1-SV3" kind="embed" id="D1T-jR-Q23"/>
                                 </connections>
                             </containerView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AZe-zs-WbG">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="satellite" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AZe-zs-WbG">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" name="secondarySelectedControlColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                             </mapView>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6su-X0-HkA">
                                 <rect key="frame" x="540" y="499" width="44" height="44"/>
@@ -212,18 +212,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIU-RC-sgB">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIU-RC-sgB">
                                 <rect key="frame" x="0.0" y="460" width="600" height="70"/>
                                 <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="Mf1-lg-xTD"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Log in">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Log in"/>
                                 <connections>
                                     <action selector="logIn:" destination="l9m-kj-Wv6" eventType="touchUpInside" id="RPW-z8-hPN"/>
                                 </connections>
@@ -234,7 +231,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="QhA-ay-NlO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Sign up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -319,7 +316,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="rIG-DU-qdW"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Log in">
                                     <color key="titleColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
                                 </state>
@@ -357,6 +354,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Log in" id="WWs-RG-kaa"/>
                     <connections>
+                        <outlet property="constraint" destination="7bf-4j-ZLF" id="8Fi-ZK-yGL"/>
                         <outlet property="logInButton" destination="5No-t9-bQ7" id="53t-ca-aPu"/>
                         <outlet property="passwordTF" destination="XbU-Kz-WMA" id="3W3-Aj-pzk"/>
                         <outlet property="usernameTF" destination="1IR-s1-LCx" id="i9h-hd-riq"/>
@@ -402,7 +400,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="vVA-Tu-fL1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Sign up">
                                     <color key="titleColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -438,6 +436,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sign up" id="5wX-f9-t2J"/>
                     <connections>
+                        <outlet property="constraint" destination="jQ9-sG-5j7" id="dXs-U4-fEY"/>
                         <outlet property="emailTF" destination="LJe-RH-xq3" id="xBO-he-5Cs"/>
                         <outlet property="passwordTF" destination="3jI-NC-xCm" id="1rP-0h-X5N"/>
                         <outlet property="signUpButton" destination="oLd-j6-qi4" id="u2a-tZ-BgF"/>
@@ -457,6 +456,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                             <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
@@ -497,19 +497,20 @@
             </objects>
             <point key="canvasLocation" x="-3043" y="-1801"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Feed-->
         <scene sceneID="Krw-vK-r2g">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ApI-41-2Kd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="mostViewed" id="EUW-Uk-Bpq">
+                    <tabBarItem key="tabBarItem" title="Feed" id="EUW-Uk-Bpq">
                         <inset key="imageInsets" minX="10" minY="17" maxX="10" maxY="5"/>
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="12"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7pT-0u-SH1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.84003459999999996" green="0.75899660999999996" blue="0.98547339" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.20715488269999999" green="0.76795706860000001" blue="0.8366499543" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                         </textAttributes>
@@ -523,18 +524,19 @@
             </objects>
             <point key="canvasLocation" x="-1473" y="27"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Connections-->
         <scene sceneID="fD0-v1-Cnw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kmv-SW-aHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="jer-CQ-dEd">
+                    <tabBarItem key="tabBarItem" title="Connections" id="jer-CQ-dEd">
                         <inset key="imageInsets" minX="5" minY="10" maxX="5" maxY="0.0"/>
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k2o-D0-HcO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -612,19 +614,20 @@
             </objects>
             <point key="canvasLocation" x="197" y="631"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Map-->
         <scene sceneID="lqZ-xk-JGD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wsc-Tt-CUB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="s07-2W-ano">
+                    <tabBarItem key="tabBarItem" title="Map" id="s07-2W-ano">
                         <inset key="imageInsets" minX="4" minY="12" maxX="4" maxY="0.0"/>
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="12"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QMp-D3-PHV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                             <color key="textColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
@@ -657,7 +660,7 @@
             </objects>
             <point key="canvasLocation" x="-3855" y="-1801"/>
         </scene>
-        <!--Settings-->
+        <!--My Profile-->
         <scene sceneID="N1m-Hq-JLF">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="5aQ-oo-cNN" customClass="TableVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -829,6 +832,13 @@
                                             <outlet property="editButton" destination="t3e-6d-Xhg" id="TKn-tl-cdQ"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profilePictureCell" rowHeight="140" id="1U2-9b-0Tn">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1U2-9b-0Tn" id="don-CS-QZD">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -841,8 +851,9 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Settings" id="kIZ-ff-vLE">
+                    <navigationItem key="navigationItem" title="My Profile" id="kIZ-ff-vLE">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="JHH-GT-crg">
+                            <color key="tintColor" red="0.50196081399917603" green="0.0" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cancel:" destination="5aQ-oo-cNN" id="oP0-su-JFh"/>
                             </connections>
@@ -864,6 +875,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ETS-gi-b7s">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

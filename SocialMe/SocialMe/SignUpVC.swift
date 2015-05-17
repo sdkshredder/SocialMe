@@ -15,11 +15,45 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var constraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addTFBorder()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
     }
+    
+    func keyboardWillShowNotification(notification: NSNotification) {
+        println(notification.userInfo)
+        
+        let userInfo = notification.userInfo!
+        
+        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        // Convert the keyboard frame from screen to view coordinates.
+        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
+        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
+        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
+        
+        // The text view should be adjusted, update the constant for this constraint.
+        constraint.constant -= originDelta
+        
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
+            self.view.layoutIfNeeded()
+            }, completion: nil)
+        
+        // Scroll to the selected text once the keyboard frame changes.
+        //let selectedRange = textView.selectedRange
+        //textView.scrollRangeToVisible(selectedRange)
+        
+    }
+    
     
     func addTFBorder() {
         var bottomBorder = CALayer()
@@ -40,15 +74,24 @@ class SignUpVC: UIViewController {
 
     @IBAction func signUpNewUser(sender: UIButton) {
         var user = PFUser()
+        let username = usernameTF.text //as! String
+        let lowerCaseUsername = username.lowercaseString
+        
         (user.username, user.password, user.email) =
-            (usernameTF.text, passwordTF.text, emailTF.text)
+            (lowerCaseUsername, passwordTF.text, emailTF.text)
+        
+        user.setObject(18, forKey: "lowerAgeFilter")
+        user.setObject(40, forKey: "upperAgeFilter")
+        user.setObject("both", forKey: "genderFilter")
+        user.setObject(10, forKey: "distanceFilter")
         
         user.signUpInBackgroundWithBlock {
             (succeeded, error) -> Void in
             if error == nil {
                 println("success for user \(user.username)")
                 //self.performSegueWithIdentifier("signup", sender: self)
-                
+                //self.navigationController?.setNavigationBarHidden(true, animated: true)
+                //self.performSegueWithIdentifier("login", sender: self)
             } else {
                 let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
                 alert.show()
