@@ -25,12 +25,13 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         setupLocationManager()
         map.delegate = self
         map.setUserTrackingMode(.Follow, animated: true)
-        
+        showPeopleNearby()
+        arrow.layer.cornerRadius = 22
         //setupDisplay()
-        /*
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
-        */
+        
     }
     
     

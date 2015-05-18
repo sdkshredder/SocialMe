@@ -78,11 +78,17 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         
         let user = PFUser.currentUser()
         let attr = getTitleForPath(indexPath.section)
+        
+        if let val = user?.objectForKey(attr) as? String {
+            cell.textField.placeholder = val 
+        }
+        /*
         let val = user?.objectForKey(attr) as! String
         
         if !val.isEmpty {
             cell.textField.placeholder = val
         }
+        */
         
     }
     
@@ -102,11 +108,18 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             cell.textField.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName : UIColor.purpleColor()])
             let user = PFUser.currentUser()
             let attr = getTitleForPath(indexPath.section)
+            
+            if let val = user?.objectForKey(attr) as? String {
+                cell.textField.attributedPlaceholder = NSAttributedString(string: val, attributes: [NSForegroundColorAttributeName : UIColor.darkGrayColor()])
+            }
+            
+            /*
             let val = user?.objectForKey(attr) as! String
    
             if !val.isEmpty {
                 cell.textField.attributedPlaceholder = NSAttributedString(string: val, attributes: [NSForegroundColorAttributeName : UIColor.darkGrayColor()])
             }
+            */
             return cell
         } else if ID == "ageCell" {
             var b = tableView.dequeueReusableCellWithIdentifier(ID) as! AgeTVCell
