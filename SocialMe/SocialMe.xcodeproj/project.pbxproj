@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DDE757061B0928180090B35D /* SettingsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE757051B0928180090B35D /* SettingsTVC.swift */; };
 		DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */; };
 		FE0A91CE1AF6FAA700CA41B2 /* ContentTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0A91CD1AF6FAA700CA41B2 /* ContentTVCell.swift */; };
 		FE0A91D01AF6FCC600CA41B2 /* ContactTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0A91CF1AF6FCC600CA41B2 /* ContactTVC.swift */; };
@@ -87,6 +88,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DDE757051B0928180090B35D /* SettingsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTVC.swift; sourceTree = "<group>"; };
 		DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FE0A91CD1AF6FAA700CA41B2 /* ContentTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTVCell.swift; sourceTree = "<group>"; };
 		FE0A91CF1AF6FCC600CA41B2 /* ContactTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTVC.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */,
 				FE8A48D91AF298D30022C339 /* RootVC.swift */,
 				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
+				DDE757051B0928180090B35D /* SettingsTVC.swift */,
 				FEBD878F1AE55289006452FD /* profile-icon@2x.png */,
 				FEA6B2891AE7138A00D9B9A9 /* button@2x.png */,
 				FEBD86891AE1FD06006452FD /* swag-60@2x.png */,
@@ -477,6 +480,7 @@
 				FE45F1EB1AFAEAB1000AECE4 /* TableVC.swift in Sources */,
 				FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */,
 				FE0A91D01AF6FCC600CA41B2 /* ContactTVC.swift in Sources */,
+				DDE757061B0928180090B35D /* SettingsTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

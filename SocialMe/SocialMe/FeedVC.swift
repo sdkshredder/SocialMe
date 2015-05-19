@@ -30,6 +30,23 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
+    @IBAction func showSettings(sender: UIBarButtonItem) {
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
+        
+            navigationController?.pushViewController(vc, animated: true)
+            /*setNavigationBarHidden(true, animated: true)
+        
+        UIView.animateWithDuration(0.2, animations: {
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
+            self.tableView.frame.origin = CGPointMake(0, self.view.frame.height)
+            
+        })
+*/
+        
+    }
+    
+    
     func addSwipeUp() {
         let swipeView = UIView(frame: CGRectMake(0, view.frame.height - 50, view.frame.width, 50))
         let swipe = UISwipeGestureRecognizer(target: self, action: "swipeUp:")
