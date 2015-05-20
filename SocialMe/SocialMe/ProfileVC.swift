@@ -64,7 +64,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 				//cell.inputLabel?.text = user.objectForKey("School") as? String
 			}
 			if (indexPath.row == 3) {
-				cell.attrLabel?.text = "Birthday: "
+				cell.attrLabel?.text = "Age: "
 				if let age = user.objectForKey("Age") as? String {
 					cell.inputLabel?.text = age
 				}
