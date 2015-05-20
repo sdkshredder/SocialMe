@@ -11,13 +11,15 @@ import Parse
 import Foundation
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
-    
+	
 	@IBOutlet weak var userProfilePic: UIImageView!
 	@IBOutlet weak var tableView: UITableView!
 	
 	var userPic : UIImage?
-	var username = "cory"
-	var userData = [("Hometown","Los Angeles"),("Occupation","Football"),("School","Stanford University"),("Birthday","1/1/1994")]
+	var username = NSString()
+	var user : PFUser! // = []
+	var numAttr = 5
+	
 	
 	//set width and height by click.....ctrl drag on the center vertically to set it on the blue line
 	func tableView(tableView: UITableView, heightForRowAtIndexPath: NSIndexPath) -> CGFloat {
@@ -28,11 +30,47 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		var cell = tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! ProfileTVC
-		let (attr, input)  = userData[indexPath.row]
+		var cell = tableView.dequeueReusableCellWithIdentifier("profileCell") as! ProfileTVC
 		cell.layoutMargins = UIEdgeInsetsZero
 		cell.separatorInset = UIEdgeInsetsZero
-		cell.attrLabel?.text = attr
+		//let user = userData[0] as! PFUser
+		println(user)
+		if user != nil {
+			if (indexPath.row == 4) {
+				cell.attrLabel?.text = "Name: "
+				cell.inputLabel?.text = user.username
+			}
+			if (indexPath.row == 0) {
+				cell.attrLabel?.text = "Hometown: "
+				if let hometown = user.objectForKey("Hometown") as? String {
+					cell.inputLabel?.text = hometown
+				}
+				//cell.inputLabel?.text = user.objectForKey("Hometown") as? String
+			}
+			if (indexPath.row == 1) {
+				cell.attrLabel?.text = "Occupation: "
+				if let occupation = user.objectForKey("Occupation") as? String {
+					cell.inputLabel?.text = occupation
+				}
+				//cell.inputLabel?.text = user.objectForKey("Occupation") as? String
+			}
+			if (indexPath.row == 2) {
+				cell.attrLabel?.text = "School: "
+				if let school = user.objectForKey("School") as? String {
+					cell.inputLabel?.text =  school
+				}
+				//cell.inputLabel?.text = user.objectForKey("School") as? String
+			}
+			if (indexPath.row == 3) {
+				cell.attrLabel?.text = "Birthday: "
+				if let age = user.objectForKey("Age") as? String {
+					cell.inputLabel?.text = age
+				}
+				//cell.inputLabel?.text = user.objectForKey("Age") as? String
+			}
+		}
+		
+
 		//cell.inputLabel?.text = input
 		
 		//tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
@@ -58,33 +96,63 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 	}
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return userData.count
+		return numAttr
 	}
 	
 	
-/*
+
 	//TODO: Need to debug for empty resulting array
+	
 	func getUserInfo() {
+		let value = NSArray()
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
+			
 			var query = PFUser.query()
-			query!.whereKey("username", notEqualTo: "blah")
-			var res : NSArray = query!.findObjects()!
+			query!.whereKey("username", equalTo: self.username)
+			let res = query!.findObjects() as! [PFUser]
+			//println(res[0])
+			self.user = res[0] as PFUser
+			//println(self.user.objectForKey("Hometown"))
+			
 			dispatch_async(dispatch_get_main_queue()) {
-				self.userData = res
+				//println(res[0])
+				//self.user = res[0] as PFUser
+				//println(self.user.objectForKey("Hometown"))
+				self.loadProfilePicture()
 				self.tableView.reloadData()
 			}
 		}
 	}
-*/
+	
+
+	func loadProfilePicture() {
+		
+		
+		if let userImageFile = user.objectForKey("photo") as? PFFile {
+			userImageFile.getDataInBackgroundWithBlock {
+				(imageData: NSData?, error: NSError?) -> Void in
+				if error == nil {
+					if let imageData = imageData {
+						let image = UIImage(data:imageData)
+						self.userProfilePic.image = image
+					}
+				}
+			}
+		} else {
+			userProfilePic.image = UIImage(named: "swag-60@2x.png")
+		}
+	}
 
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        let title = UINavigationItem(title: (self.username as String))
-		navigationController?.navigationBar.pushNavigationItem(title, animated: true)
-		userProfilePic.image = UIImage(named: "swag-60@2x.png")
-		//getUserInfo()
+		println(username)
+        // let title = UINavigationItem(title: (self.username as String))
+		//navigationController?.navigationBar.pushNavigationItem(title, animated: true)
+		// userProfilePic.image = UIImage(named: "swag-60@2x.png")
+		getUserInfo()
+		// loadProfilePicture()
         // Do any additional setup after loading the view.
     }
 
