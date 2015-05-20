@@ -33,6 +33,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 		var cell = tableView.dequeueReusableCellWithIdentifier("profileCell") as! ProfileTVC
 		cell.layoutMargins = UIEdgeInsetsZero
 		cell.separatorInset = UIEdgeInsetsZero
+		cell.attrLabel.alpha = 0
+		cell.inputLabel.alpha = 0
 		//let user = userData[0] as! PFUser
 		println(user)
 		if user != nil {
@@ -69,7 +71,10 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 				//cell.inputLabel?.text = user.objectForKey("Age") as? String
 			}
 		}
-		
+		UIView.animateWithDuration(0.5, animations: {
+			cell.attrLabel.alpha = 1
+			cell.inputLabel.alpha = 1
+		})
 
 		//cell.inputLabel?.text = input
 		
@@ -111,7 +116,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 			var query = PFUser.query()
 			query!.whereKey("username", equalTo: self.username)
 			let res = query!.findObjects() as! [PFUser]
-			//println(res[0])
+			println(res[0])
 			self.user = res[0] as PFUser
 			//println(self.user.objectForKey("Hometown"))
 			
