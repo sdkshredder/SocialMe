@@ -8,10 +8,14 @@
 
 import UIKit
 import Parse
+import MobileCoreServices
+// import CoreImage
 
-class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+
+class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     let locationManager = CLLocationManager()
+    let picker = UIImagePickerController()
     
     @IBOutlet weak var table: UITableView!
     var editingAge = false
@@ -22,8 +26,16 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return 220
         } else if a == "Location" {
             return 90
+        } else if a == "Profile Picture" {
+            return 150
         }
         return 60
+    }
+    
+    func colorTable() {
+        for subview in table.subviews {
+            subview.contentView.backgroundColor = UIColor.blueColor() // = UIColor.blueColor()
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,16 +49,18 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     func getTitleForPath(path : Int) -> String {
         switch path {
             case 0:
-                return "Name"
+                return "Profile Picture"
             case 1:
-                return "Age"
+                return "Name"
             case 2:
-                return "Hometown"
+                return "Age"
             case 3:
-                return "School"
+                return "Hometown"
             case 4:
-                return "Occupation"
+                return "School"
             case 5:
+                return "Occupation"
+            case 6:
                 return "Location"
         default:
                 return "Log Out"
@@ -61,7 +75,10 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         let a = getTitleForPath(path)
         if a == "Age" {
             return "ageCell"
-        } else if a == "Location" {
+        } else if a == "Profile Picture"{
+            return "profilePictureCell"
+        }
+        else if a == "Location" {
             return "locationCell"
         }
         return "tableCell"
@@ -74,7 +91,6 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     func configureStandardCell(cell: TableTVCell, indexPath: NSIndexPath) {
         cell.textField.placeholder = getTitleForPath(indexPath.section)
         cell.editButton.tag = indexPath.section
-        // cell.textField.placeholder = "blah"
         
         let user = PFUser.currentUser()
         let attr = getTitleForPath(indexPath.section)
@@ -82,14 +98,6 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         if let val = user?.objectForKey(attr) as? String {
             cell.textField.placeholder = val 
         }
-        /*
-        let val = user?.objectForKey(attr) as! String
-        
-        if !val.isEmpty {
-            cell.textField.placeholder = val
-        }
-        */
-        
     }
     
     func configureAgeCell(cell: AgeTVCell) {
@@ -99,7 +107,25 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let ID = getCellID(indexPath.section)
         
-        if ID == "tableCell" {
+        if ID == "profilePictureCell" {
+            var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! ProfilePictureTVCell
+            
+            if let picFile = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
+                picFile.getDataInBackgroundWithBlock {
+                    (imageData: NSData?, error: NSError?) -> Void in
+                    if error == nil {
+                        if let imageData = imageData {
+                            let image = UIImage(data:imageData)
+                            cell.profilePicture.image = image
+                        }
+                    }
+                }
+            }
+            
+            return cell
+        }
+        
+        else if ID == "tableCell" {
             var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! TableTVCell
             cell.layoutMargins = UIEdgeInsetsZero
             cell.separatorInset = UIEdgeInsetsZero
@@ -112,7 +138,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             if let val = user?.objectForKey(attr) as? String {
                 cell.textField.attributedPlaceholder = NSAttributedString(string: val, attributes: [NSForegroundColorAttributeName : UIColor.darkGrayColor()])
             }
-            
+
             /*
             let val = user?.objectForKey(attr) as! String
    
@@ -141,11 +167,68 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
-        //table.separatorInset = UIEdgeInsetsZero
-        //table.layoutMargins = UIEdgeInsetsZero
+    
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleNotification:", name: "ageNotification", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleImageNotification:", name: "imageNotification", object: nil)
     }
     
+    func handleImageNotification(notification: NSNotification) {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            let picker = UIImagePickerController()
+            picker.sourceType = .Camera
+            picker.showsCameraControls = true
+            picker.mediaTypes = [kUTTypeImage]
+            picker.delegate = self
+            picker.allowsEditing = true
+            let button = UIButton(frame: CGRectMake(100, 100, 100, 100))
+            button.backgroundColor = UIColor.greenColor()
+            button.addTarget(self, action: "pickPic:", forControlEvents: UIControlEvents.TouchUpInside)
+            //picker.insertSubview(button, aboveSubview: picker.view)
+            
+            presentViewController(picker, animated: true, completion: nil)
+        }
+    }
+    
+    func pickPic(sender: UITapGestureRecognizer) {
+        println("piiiimp")
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        var image = info[UIImagePickerControllerEditedImage] as? UIImage
+        if image == nil {
+            image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            
+        }
+        
+        let file = PFFile(name:"photo.png", data:UIImagePNGRepresentation(image))
+        let currentUser = PFUser.currentUser()
+        currentUser!.setObject(file, forKey: "photo")
+        currentUser!.saveInBackgroundWithBlock{
+            (succeeded, error) -> Void in
+            if error == nil {
+                println("successsssss for user \(currentUser!.username)")
+            } else {
+                println(" error")
+            }
+    
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("hideSettings", object: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("hideSettings", object: nil)
+    }
+    
+    /*
+    func imagePickerControllerDidCancel(UIIPC) {
+        presentingViewController.dismissViewControllerAnimated(true, completion: nil) }
+    }
+    */
+
     func handleNotification(notification: NSNotification) {
         editingAge = !editingAge
         //println(editingAge)

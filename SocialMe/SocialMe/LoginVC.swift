@@ -14,7 +14,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-    
     @IBOutlet weak var constraint: NSLayoutConstraint!
     
     let bg = UIView()
@@ -23,8 +22,53 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addTFBorder()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: Keyboard Event Notifications
+    
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: true)
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: false)
+    }
+    
+    // MARK: Convenience
+    
+    func keyboardWillChangeFrameWithNotification(notification: NSNotification, showsKeyboard: Bool) {
+        let userInfo = notification.userInfo!
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        // Convert the keyboard frame from screen to view coordinates.
+        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
+        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
+        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
+        
+        // The text view should be adjusted, update the constant for this constraint.
+        constraint.constant -= originDelta
+        
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
+            self.view.layoutIfNeeded()
+            if showsKeyboard == false {
+                //self.signUpButton.alpha = 1
+                //self.birthdayLabel.alpha = 1
+                //self.birthdayPicker.alpha = 1
+            }
+            }, completion: nil)
+        
+        // Scroll to the selected text once the keyboard frame changes.
+        //let selectedRange = textView.selectedRange
+        //textView.scrollRangeToVisible(selectedRange)
     }
     
     func keyboardWillShowNotification(notification: NSNotification) {
@@ -67,7 +111,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         bottomBorderB.frame = CGRectMake(0.0, passwordTF.frame.size.height - 1, passwordTF.frame.size.width, 1.0);
         bottomBorderB.backgroundColor = UIColor.blackColor().CGColor
         passwordTF.layer.addSublayer(bottomBorderB)
-        //logInButton.layer.cornerRadius = logInButton.frame.height/2.0
     }
     
     @IBAction func displayLoginButton(sender: UITextField) {

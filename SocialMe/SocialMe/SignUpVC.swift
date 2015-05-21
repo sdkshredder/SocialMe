@@ -9,24 +9,42 @@
 import UIKit
 import Parse
 
-class SignUpVC: UIViewController {
+class SignUpVC: UIViewController, UITextFieldDelegate {
+    
+    
     
     @IBOutlet weak var usernameTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var emailTF: UITextField!
+    @IBOutlet weak var birthdayLabel: UILabel!
+    @IBOutlet weak var birthdayPicker: UIDatePicker!
+    
+    
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var constraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addTFBorder()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        initTextFields()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    func keyboardWillShowNotification(notification: NSNotification) {
-        println(notification.userInfo)
-        
+    // MARK: Keyboard Event Notifications
+    
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: true)
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: false)
+    }
+    
+    // MARK: Convenience
+    
+    func keyboardWillChangeFrameWithNotification(notification: NSNotification, showsKeyboard: Bool) {
         let userInfo = notification.userInfo!
         
         let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
@@ -46,12 +64,39 @@ class SignUpVC: UIViewController {
         
         UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
             self.view.layoutIfNeeded()
-            }, completion: nil)
+            if showsKeyboard == false {
+                self.signUpButton.alpha = 1
+                self.birthdayLabel.alpha = 1
+                self.birthdayPicker.alpha = 1
+            }
+        }, completion: nil)
         
         // Scroll to the selected text once the keyboard frame changes.
         //let selectedRange = textView.selectedRange
         //textView.scrollRangeToVisible(selectedRange)
+    }
+    
+    func initTextFields() {
+        addTFBorder()
+        usernameTF.delegate = self
+        passwordTF.delegate = self
+        emailTF.delegate = self
+    }
+    
+    func initScrollView() {
+        //scrollView.contentInset = //UIEdgeInsetsMake(64, 0, 0, 0)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == usernameTF {
+            passwordTF.becomeFirstResponder()
+        } else if textField == passwordTF {
+            emailTF.becomeFirstResponder()
+        } else {
+            emailTF.resignFirstResponder()
         
+        }
+        return true
     }
     
     
@@ -81,7 +126,7 @@ class SignUpVC: UIViewController {
             (lowerCaseUsername, passwordTF.text, emailTF.text)
         
         user.setObject(18, forKey: "lowerAgeFilter")
-        user.setObject(40, forKey: "upperAgeFilter")
+        user.setObject(41, forKey: "upperAgeFilter")
         user.setObject("both", forKey: "genderFilter")
         user.setObject(10, forKey: "distanceFilter")
         

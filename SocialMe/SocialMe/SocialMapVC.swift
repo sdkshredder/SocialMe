@@ -14,42 +14,48 @@ import CoreLocation
 class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
+    var map = MKMapView()
     var hidden = false
     
+    @IBOutlet weak var mapContainer: UIView!
     @IBOutlet weak var returnButton: UIButton!
-    @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var arrow: UIVisualEffectView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupLocationManager()
-        map.delegate = self
-        map.setUserTrackingMode(.Follow, animated: true)
-        showPeopleNearby()
-        arrow.layer.cornerRadius = 22
-        //setupDisplay()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
-        
-    }
-    
-    
-    
-    func setupDisplay() {
-        //logLocation()
-        //locationManager.startUpdatingLocation()
-        //orientMapView()
-        showPeopleNearby()
-        arrow.layer.cornerRadius = 22
-    }
     
     @IBOutlet weak var zoomToggle: UIImageView!
     
     @IBAction func tooltipTap(sender: UITapGestureRecognizer) {
-        //orientMapView()
+        orientMapView()
         rotateArrow()
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLocationManager()
+        registerForNotification()
+        
+        setupMap()
+        styleDisplay()
+        showPeopleNearby()
+        //setupDisplay(
+        
+    }
+    
+    func styleDisplay() {
+        arrow.layer.cornerRadius = arrow.frame.height / 2.0
+    }
+    
+    func setupMap() {
+        map.delegate = self
+        map.setUserTrackingMode(.Follow, animated: true)
+        map.frame = mapContainer.frame
+        mapContainer.addSubview(map)
+    }
+    
+    func registerForNotification() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
+    }
+    
     
     func mapView(mapView: MKMapView!,
         regionDidChangeAnimated animated: Bool) {
@@ -174,8 +180,15 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
 
     func presentMainVC () {
-        let vc : UINavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
+        let vc : UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
+        //let vc = navigationController!.viewControllers[0] as! UINavigationController
+        //navigationController?.popToViewController(vc, animated: true)
+        //navigationController?.popToViewController(navigationController!.viewControllers[2], animated: true)
+        // navigationController?.popViewControllerAnimated(true)
+        
+        //popToRootViewControllerAnimated(true)
+        
     }
     
     func returnToMap(sender: UIButton) {
@@ -189,7 +202,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             }, completion: {
                 (value: Bool) in
                 self.hidden = false
-                self.setNeedsStatusBarAppearanceUpdate()
+                //self.setNeedsStatusBarAppearanceUpdate()
         })
     }
     
@@ -213,9 +226,11 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     
     @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
-        PFUser.logOut()
         let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
         alert.show()
+        PFUser.logOut()
+        // presentMainVC()
+        //navigationController?.popToRootViewControllerAnimated(<#animated: Bool#>)
     }
     
     
@@ -223,16 +238,16 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     @IBAction func showProfile(sender: UIBarButtonItem) {
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
         UIView.animateWithDuration(0.3, animations: {
-            self.map.frame.origin = CGPointMake(0, self.view.frame.height)
-            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - 49)
+            self.mapContainer.frame.origin = CGPointMake(0, self.view.frame.height - 49)
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
             self.arrow.alpha = 0
-            self.map.alpha = 0.5
+            self.mapContainer.alpha = 0.5
             }, completion: {
                 (value: Bool) in
                 UIView.animateWithDuration(0.2, animations: {
                     self.returnButton.alpha = 1
                     self.hidden = true
-                    self.setNeedsStatusBarAppearanceUpdate()
+                    //self.setNeedsStatusBarAppearanceUpdate()
                 })
         })
         
@@ -271,12 +286,11 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func returnAction(sender: UIButton) {
         navigationController?.setNavigationBarHidden(false, animated: true)
         hidden = false
-        setNeedsStatusBarAppearanceUpdate()
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.map.frame.origin = CGPointMake(0, 0)
+            self.mapContainer.frame.origin = CGPointMake(0, 0)
             self.returnButton.alpha = 0
             self.arrow.alpha = 1
-            self.map.alpha = 1
+            self.mapContainer.alpha = 1
             let tabFrame = self.tabBarController?.tabBar.frame
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - tabFrame!.height)
             }, completion: {
@@ -320,20 +334,14 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             span: MKCoordinateSpanMake(0.01, 0.01)), animated: true)
     }
     
+    
+    
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        //locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return hidden
-    }
-    
-    override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
-        return .Fade
+        locationManager.requestWhenInUseAuthorization()
+        
     }
     
     func locationManager(manager: CLLocationManager!,

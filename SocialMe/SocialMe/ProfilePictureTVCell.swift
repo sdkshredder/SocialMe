@@ -10,4 +10,9 @@ import UIKit
 
 class ProfilePictureTVCell: UITableViewCell {
 
+    @IBOutlet weak var profilePicture: UIImageView!
+    
+    @IBAction func edit(sender: UIButton) {
+        NSNotificationCenter.defaultCenter().postNotificationName("imageNotification", object: nil)
+    }
 }
