@@ -15,13 +15,5 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let title = UINavigationItem(title: (username as! String))
-        // navigationController?.navigationBar.pushNavigationItem(title, animated: true)
-        // Do any additional setup after loading the view.
     }
-
-    
-    
-
-    
-   
 }
