@@ -14,13 +14,15 @@ class annotation: NSObject, MKAnnotation {
     let locationName: String
     let discipline: String
     let coordinate: CLLocationCoordinate2D
-    let a: MKPinAnnotationView
+    var a: MKPinAnnotationView
     
     init(title: String, locationName: String, discipline: String, coordinate: CLLocationCoordinate2D, a: MKPinAnnotationView) {
         self.title = title
         self.locationName = locationName
         self.discipline = discipline
         self.coordinate = coordinate
+        // a.image = UIImage(named: "contacts.png")
+        // a.image = UIImage(named: "contacts.png")
         self.a = a
         super.init()
     }
