@@ -163,9 +163,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
             if user?.objectForKey("genderFilter") as! String != "Both"{
-                query!.whereKey("gender", equalTo: (user?.objectForKey("genderFilter") as! String))
+                query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
-            //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: ((user?.objectForKey("distanceFilter") as! Double) / 3280.84))
+            
+            //let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
+            //println(kilometers)
+            
+            //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
+            
+            
             //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: user?.objectForKey("distanceFilter") as! Double)
             
             //var name = PFUser.query()
