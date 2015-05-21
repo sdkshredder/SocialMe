@@ -12,8 +12,10 @@ import Foundation
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
 	
-	@IBOutlet weak var userProfilePic: UIImageView!
 	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var userProfilePic: UIImageView!
+	@IBOutlet weak var addUserButton: UIButton!
+	@IBOutlet weak var messageUserButton: UIButton!
 	
 	var userPic : UIImage?
 	var username = NSString()
@@ -38,38 +40,40 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 		//let user = userData[0] as! PFUser
 		println(user)
 		if user != nil {
-			if (indexPath.row == 4) {
+			
+			if (indexPath.row == 0) {
 				cell.attrLabel?.text = "Name: "
 				cell.inputLabel?.text = user.username
 			}
-			if (indexPath.row == 0) {
-				cell.attrLabel?.text = "Hometown: "
-				if let hometown = user.objectForKey("Hometown") as? String {
-					cell.inputLabel?.text = hometown
-				}
-				//cell.inputLabel?.text = user.objectForKey("Hometown") as? String
-			}
 			if (indexPath.row == 1) {
-				cell.attrLabel?.text = "Occupation: "
-				if let occupation = user.objectForKey("Occupation") as? String {
-					cell.inputLabel?.text = occupation
-				}
-				//cell.inputLabel?.text = user.objectForKey("Occupation") as? String
-			}
-			if (indexPath.row == 2) {
-				cell.attrLabel?.text = "School: "
-				if let school = user.objectForKey("School") as? String {
-					cell.inputLabel?.text =  school
-				}
-				//cell.inputLabel?.text = user.objectForKey("School") as? String
-			}
-			if (indexPath.row == 3) {
 				cell.attrLabel?.text = "Age: "
 				if let age = user.objectForKey("Age") as? String {
 					cell.inputLabel?.text = age
 				}
 				//cell.inputLabel?.text = user.objectForKey("Age") as? String
 			}
+			if (indexPath.row == 2) {
+				cell.attrLabel?.text = "Hometown: "
+				if let hometown = user.objectForKey("Hometown") as? String {
+					cell.inputLabel?.text = hometown
+				}
+				//cell.inputLabel?.text = user.objectForKey("Hometown") as? String
+			}
+			if (indexPath.row == 3) {
+				cell.attrLabel?.text = "Occupation: "
+				if let occupation = user.objectForKey("Occupation") as? String {
+					cell.inputLabel?.text = occupation
+				}
+				//cell.inputLabel?.text = user.objectForKey("Occupation") as? String
+			}
+			if (indexPath.row == 4) {
+				cell.attrLabel?.text = "Alma Mater: "
+				if let school = user.objectForKey("School") as? String {
+					cell.inputLabel?.text =  school
+				}
+				//cell.inputLabel?.text = user.objectForKey("School") as? String
+			}
+
 		}
 		UIView.animateWithDuration(0.5, animations: {
 			cell.attrLabel.alpha = 1
@@ -149,10 +153,22 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 		}
 	}
 
+	func initTableView() {
+		tableView.dataSource = self
+		tableView.delegate = self
+	}
+	
+	func styleUserPic() {
+		userProfilePic.layer.cornerRadius = userProfilePic.frame.height / 2.0
+		userProfilePic.clipsToBounds = true
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		println(username)
+		initTableView()
+		styleUserPic()
+		
         // let title = UINavigationItem(title: (self.username as String))
 		//navigationController?.navigationBar.pushNavigationItem(title, animated: true)
 		// userProfilePic.image = UIImage(named: "swag-60@2x.png")

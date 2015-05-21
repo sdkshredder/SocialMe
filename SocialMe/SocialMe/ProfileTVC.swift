@@ -11,11 +11,15 @@ import UIKit
 class ProfileTVC: UITableViewCell, UITextFieldDelegate {
 	//weak dissappears if there is not a pointer to it anymore
 
-	@IBOutlet weak var inputLabel: UILabel!
+	//@IBOutlet weak var inputLabel: UILabel!
+	//@IBOutlet weak var attrLabel: UILabel!
+	//@IBOutlet weak var attrLabel: UILabel!
+	
 	@IBOutlet weak var attrLabel: UILabel!
-	@IBAction func hello(sender: UIButton) {
-		println("hello")
-	}
+	@IBOutlet weak var inputLabel: UILabel!
+	//@IBAction func hello(sender: UIButton) {
+	//	println("hello")
+	//}
 //    override func awakeFromNib() {
 //        super.awakeFromNib()
 //		// self.contentView.userInteractionEnabled = false
