@@ -11,70 +11,145 @@ import Parse
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
-    var (username, password, email) = (UITextField(), UITextField(), UITextField())
-    let (circle, check, x, bg, label, info) = (UIImageView(), UIImageView(), UIImageView(), UIView(), UILabel(), UILabel())
-
+    
+    
+    @IBOutlet weak var usernameTF: UITextField!
+    @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var emailTF: UITextField!
+    @IBOutlet weak var birthdayLabel: UILabel!
+    @IBOutlet weak var birthdayPicker: UIDatePicker!
+    
+    
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var constraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
-        super.viewDidLoad();
-        self.initDisplay()
+        super.viewDidLoad()
+        initTextFields()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: Keyboard Event Notifications
+    
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: true)
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: false)
+    }
+    
+    // MARK: Convenience
+    
+    func keyboardWillChangeFrameWithNotification(notification: NSNotification, showsKeyboard: Bool) {
+        let userInfo = notification.userInfo!
+        
+        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        // Convert the keyboard frame from screen to view coordinates.
+        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
+        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
+        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
+        
+        // The text view should be adjusted, update the constant for this constraint.
+        constraint.constant -= originDelta
+        
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
+            self.view.layoutIfNeeded()
+            if showsKeyboard == false {
+                self.signUpButton.alpha = 1
+                self.birthdayLabel.alpha = 1
+                self.birthdayPicker.alpha = 1
+            }
+        }, completion: nil)
+        
+        // Scroll to the selected text once the keyboard frame changes.
+        //let selectedRange = textView.selectedRange
+        //textView.scrollRangeToVisible(selectedRange)
+    }
+    
+    func initTextFields() {
+        addTFBorder()
+        usernameTF.delegate = self
+        passwordTF.delegate = self
+        emailTF.delegate = self
+    }
+    
+    func initScrollView() {
+        //scrollView.contentInset = //UIEdgeInsetsMake(64, 0, 0, 0)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == usernameTF {
+            passwordTF.becomeFirstResponder()
+        } else if textField == passwordTF {
+            emailTF.becomeFirstResponder()
+        } else {
+            emailTF.resignFirstResponder()
+        
+        }
+        return true
+    }
+    
+    
+    func addTFBorder() {
+        var bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0.0, usernameTF.frame.size.height - 1, usernameTF.frame.size.width, 1.0);
+        bottomBorder.backgroundColor = UIColor.darkGrayColor().CGColor
+        usernameTF.layer.addSublayer(bottomBorder)
+        
+        var bottomBorderB = CALayer()
+        bottomBorderB.frame = CGRectMake(0.0, passwordTF.frame.size.height - 1, passwordTF.frame.size.width, 1.0);
+        bottomBorderB.backgroundColor = UIColor.darkGrayColor().CGColor
+        passwordTF.layer.addSublayer(bottomBorderB)
+        
+        var bottomBorderC = CALayer()
+        bottomBorderC.frame = CGRectMake(0.0, emailTF.frame.size.height - 1, emailTF.frame.size.width, 1.0);
+        bottomBorderC.backgroundColor = UIColor.darkGrayColor().CGColor
+        emailTF.layer.addSublayer(bottomBorderC)
     }
 
-    func initDisplay() {
-        initBGTap()
-        addBackButton()
-        addLogo()
-        usernameInit()
-        passwordInit()
-        emailInit()
+    @IBAction func signUpNewUser(sender: UIButton) {
+        var user = PFUser()
+        let username = usernameTF.text //as! String
+        let lowerCaseUsername = username.lowercaseString
+        
+        (user.username, user.password, user.email) =
+            (lowerCaseUsername, passwordTF.text, emailTF.text)
+        
+        user.setObject(18, forKey: "lowerAgeFilter")
+        user.setObject(41, forKey: "upperAgeFilter")
+        user.setObject("both", forKey: "genderFilter")
+        user.setObject(10, forKey: "distanceFilter")
+        
+        user.signUpInBackgroundWithBlock {
+            (succeeded, error) -> Void in
+            if error == nil {
+                println("success for user \(user.username)")
+                //self.performSegueWithIdentifier("signup", sender: self)
+                //self.navigationController?.setNavigationBarHidden(true, animated: true)
+                //self.performSegueWithIdentifier("login", sender: self)
+            } else {
+                let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
+                alert.show()
+            }
+        }
     }
     
-    func usernameInit() {
-        var inset = self.view.frame.width/10.0
-        username.frame = CGRectMake(inset, 66, self.view.frame.width - inset * 2, 60)
-        username.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.grayColor()])
-        username.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        username.delegate = self
-        username.autocapitalizationType =  .None
-        view.addSubview(username)
-        addDiv(username)
-    }
-    
-    func passwordInit() {
-        var inset = self.view.frame.width/10.0
-        password.frame = CGRectMake(inset, 126, self.view.frame.width - inset * 2, 60)
-        password.attributedPlaceholder = NSAttributedString(string:"Password",
-            attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        password.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        password.delegate = self
-        password.secureTextEntry = true
-        self.view.addSubview(password)
-        self.addDiv(password)
-    }
-    
-    func emailInit() {
-        var inset = self.view.frame.width/10.0
-        email.frame = CGRectMake(inset, 186, self.view.frame.width - inset * 2, 60)
-        email.attributedPlaceholder = NSAttributedString(string:"Email",
-            attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        email.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        email.delegate = self
-        self.view.addSubview(email)
-        self.addDiv(email)
-    }
     
     func age() {
         
     }
     
-    
-    func formatLabel(frame: CGRect) {
-        label.frame = frame
-        label.text = "SIGN UP"
-        label.textColor = UIColor.blackColor()
-        label.textAlignment = .Center
-        label.alpha = 0
-        label.userInteractionEnabled = true
-    }
+    /*
     
     func addSignUpButton() {
         var frame = CGRectMake(0, 247, self.view.frame.width, 66)
@@ -239,7 +314,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             removeIndicators(username)
         }
     }
-    
+
     func removeButton() {
         if (password.text == "" && label.frame.height != 0) {
             UIView.animateWithDuration(0.1, animations: {
@@ -252,42 +327,5 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             })
         }
     }
-    
-    func initBGTap() {
-        let bgTap = UIButton(frame: view.frame)
-        bgTap.addTarget(self, action: "bgTap:", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(bgTap)
-    }
-    
-    func addDiv(tf: UITextField) {
-        let div = UIView(frame: CGRectMake(0, tf.frame.origin.y + tf.frame.size.height, self.view.frame.width, 1))
-        div.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(div)
-    }
-    
-    func addLogo() {
-        let logo = UILabel(frame: CGRectMake(self.view.frame.width/2 - 80, 0, 160, 80))
-        logo.text = "SocialMe"
-        logo.textColor = UIColor.grayColor()
-        logo.font = UIFont(name: "HelveticaNeue-Light", size: 33)
-        logo.textAlignment = .Center
-        self.view.addSubview(logo)
-    }
-    
-    func addBackButton() {
-        let nav = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.width, 64))
-        let back = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "barButtonItemClicked:")
-        let b = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: "back:")
-        b.imageInsets = UIEdgeInsetsMake(5, 3, 5, 4)
-        let n = UINavigationItem()
-        n.setLeftBarButtonItem(b, animated: true)
-        nav.pushNavigationItem(n, animated: true)
-        nav.tintColor = UIColor.grayColor()
-        self.view.addSubview(nav)
-    }
-    
-    func back(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
+    */
 }

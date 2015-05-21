@@ -11,174 +11,128 @@ import Parse
 
 class LoginVC: UIViewController, UITextFieldDelegate {
     
-    var (username, password) = (UITextField(), UITextField())
+    @IBOutlet weak var usernameTF: UITextField!
+    @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var constraint: NSLayoutConstraint!
     
     let bg = UIView()
     let label = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initDisplay()
+        addTFBorder()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    func addDiv(tf: UITextField) {
-        let div = UIView(frame: CGRectMake(0, tf.frame.origin.y + tf.frame.size.height, view.frame.width, 1))
-        div.backgroundColor = UIColor.grayColor()
-        view.addSubview(div)
+    // MARK: Keyboard Event Notifications
+    
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: true)
     }
     
-    func initDisplay() {
-        initBGTap()
-        addNav()
-        addLogo()
-        usernameInit()
-        passwordInit()
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: false)
     }
     
-    func initBGTap() {
-        let bgTap = UIButton(frame: view.frame)
-        bgTap.addTarget(self, action: "bgTap:", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(bgTap)
-    }
+    // MARK: Convenience
     
-    func bgTap(sender: UIButton) {
-        view.endEditing(true)
-    }
-    
-    func addBackgroundImage() {
-        let bars = UIImageView(image: UIImage(named: "bg"))
-        bars.frame = view.frame
-        view.addSubview(bars)
-    }
-    
-    func addNav() {
-        let nav = UINavigationBar(frame: CGRectMake(0, 0, view.frame.width, 64))
-        let back = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: "back:")
-        back.imageInsets = UIEdgeInsetsMake(5, 3, 5, 4)
-        let item = UINavigationItem()
-        item.setLeftBarButtonItem(back, animated: true)
-        nav.tintColor = UIColor.grayColor()
-        nav.pushNavigationItem(item, animated: true)
-        view.addSubview(nav)
-    }
-    
-    func back(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func addCancel() {
-        let cancel = UIButton(frame: CGRectMake(10, 18, 44, 44))
-        cancel.backgroundColor = UIColor.yellowColor()
-        cancel.addTarget(self, action: "cancel:", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(cancel)
-    }
-    
-    func cancel(sender: UIButton) {
-        view.endEditing(true)
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        if (textField.placeholder == "Password") {
-            if (bg.frame.height == 0) {
-                addSignInButton()
+    func keyboardWillChangeFrameWithNotification(notification: NSNotification, showsKeyboard: Bool) {
+        let userInfo = notification.userInfo!
+        
+        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        // Convert the keyboard frame from screen to view coordinates.
+        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
+        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
+        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
+        
+        // The text view should be adjusted, update the constant for this constraint.
+        constraint.constant -= originDelta
+        
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
+            self.view.layoutIfNeeded()
+            if showsKeyboard == false {
+                //self.signUpButton.alpha = 1
+                //self.birthdayLabel.alpha = 1
+                //self.birthdayPicker.alpha = 1
             }
-        } else {
-            removeButton()
-        }
+            }, completion: nil)
+        
+        // Scroll to the selected text once the keyboard frame changes.
+        //let selectedRange = textView.selectedRange
+        //textView.scrollRangeToVisible(selectedRange)
     }
     
-    func removeButton() {
-        if (password.text == "" && label.frame.height != 0) {
-            UIView.animateWithDuration(0.1, animations: {
-                self.label.alpha = 0
-                }, completion: {
-                    (value: Bool) in
-                    UIView.animateWithDuration(0.2, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                        self.bg.frame = CGRectMake(0, self.bg.frame.origin.y, self.view.frame.width, 0)
-                    }, completion: nil)
+    func keyboardWillShowNotification(notification: NSNotification) {
+        println(notification.userInfo)
+        
+        let userInfo = notification.userInfo!
+        
+        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        // Convert the keyboard frame from screen to view coordinates.
+        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
+        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
+        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
+        
+        // The text view should be adjusted, update the constant for this constraint.
+        constraint.constant -= originDelta
+        
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
+            self.view.layoutIfNeeded()
+            }, completion: nil)
+        
+        // Scroll to the selected text once the keyboard frame changes.
+        //let selectedRange = textView.selectedRange
+        //textView.scrollRangeToVisible(selectedRange)
+        
+    }
+    
+    func addTFBorder() {
+        var bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0.0, usernameTF.frame.size.height - 1, usernameTF.frame.size.width, 1.0);
+        bottomBorder.backgroundColor = UIColor.blackColor().CGColor
+        usernameTF.layer.addSublayer(bottomBorder)
+        
+        var bottomBorderB = CALayer()
+        bottomBorderB.frame = CGRectMake(0.0, passwordTF.frame.size.height - 1, passwordTF.frame.size.width, 1.0);
+        bottomBorderB.backgroundColor = UIColor.blackColor().CGColor
+        passwordTF.layer.addSublayer(bottomBorderB)
+    }
+    
+    @IBAction func displayLoginButton(sender: UITextField) {
+        if logInButton.alpha == 0 {
+            UIView.animateWithDuration(0.2, animations: {
+                self.logInButton.alpha = 1
             })
         }
     }
     
-    func formatLabel(frame: CGRect) {
-        label.alpha = 0
-        label.frame = frame
-        label.text = "LOG IN"
-        label.textColor = UIColor.blackColor()
-        label.textAlignment = .Center
-        label.userInteractionEnabled = true
-        label.font = UIFont(name: "HelveticaNeue", size: 18)
-    }
-    
-    
-    func addSignInButton() {
-        var frame = CGRectMake(0, 187, view.frame.width, 66)
-        bg.frame = CGRectMake(0, 187, view.frame.width, 0)
-        bg.backgroundColor = UIColor.greenColor()
-        view.addSubview(bg)
-        
-        formatLabel(frame)
-        let listener = UITapGestureRecognizer(target: self, action: "logIn:")
-        label.addGestureRecognizer(listener)
-        view.addSubview(label)
-        
-        UIView.animateWithDuration(0.2, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.bg.frame = frame
-            }, completion: {
-                (value: Bool) in
-                UIView.animateWithDuration(0.1, animations: {
-                    self.label.alpha = 1
-                })
-        })
-    }
-    
-    func logIn(sender: UITapGestureRecognizer) {
-        PFUser.logInWithUsernameInBackground(username.text, password: password.text, block: {
+    @IBAction func logIn(sender: UIButton) {
+        let username = usernameTF.text
+        let lowerCaseUsername = username.lowercaseString
+        PFUser.logInWithUsernameInBackground(lowerCaseUsername, password: passwordTF.text, block: {
             (succeeded, error) -> Void in
             if error == nil {
-                let tabVC : UITabBarController = self.storyboard!
-                    .instantiateViewControllerWithIdentifier("tab")
-                        as! UITabBarController
-                
-                self.presentViewController(tabVC,
-                    animated: true, completion: nil)
+                self.navigationController?.setNavigationBarHidden(true, animated: true)
+                self.performSegueWithIdentifier("login", sender: self)
             } else {
-                let alert = UIAlertView(title: "Error", message: "unable to log in", delegate: self, cancelButtonTitle: "okay")
+                let alert = UIAlertView(title: "Ops!", message: "unable to log in", delegate: self, cancelButtonTitle: "okay")
                 alert.show()
             }
         })
     }
-    
-    func addLogo() {
-        let logo = UILabel(frame: CGRectMake(view.frame.width/2 - 80, 0, 160, 80))
-        logo.text = "SocialMe"
-        logo.font = UIFont(name: "HelveticaNeue-Light", size: 33)
-        logo.textColor = UIColor.grayColor()
-        logo.textAlignment = .Center
-        view.addSubview(logo)
-    }
-    
-    func usernameInit() {
-        var inset = view.frame.width/10.0
-        username.frame = CGRectMake(inset, 66, view.frame.width - inset * 2, 60)
-        username.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor.grayColor()])
-        username.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        username.autocapitalizationType =  .None
-        username.delegate = self
-        view.addSubview(username)
-        addDiv(username)
-    }
-    
-    func passwordInit() {
-        var inset = view.frame.width/10.0
-        password.frame = CGRectMake(inset, 126, view.frame.width - inset * 2, 60)
-        password.attributedPlaceholder = NSAttributedString(string:"Password",
-            attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        password.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        password.delegate = self
-        password.secureTextEntry = true
-        view.addSubview(password)
-        addDiv(password)
-    }
-    
 }

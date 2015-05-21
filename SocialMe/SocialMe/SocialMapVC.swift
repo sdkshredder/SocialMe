@@ -11,121 +11,311 @@ import MapKit
 import Parse
 import CoreLocation
 
-class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIAlertViewDelegate {
+class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    var mapView  = MKMapView()
     let locationManager = CLLocationManager()
+    var map = MKMapView()
+    var hidden = false
+    
+    @IBOutlet weak var mapContainer: UIView!
+    @IBOutlet weak var returnButton: UIButton!
+    @IBOutlet weak var arrow: UIVisualEffectView!
+    
+    @IBOutlet weak var zoomToggle: UIImageView!
+    
+    @IBAction func tooltipTap(sender: UITapGestureRecognizer) {
+        orientMapView()
+        rotateArrow()
+    }
     
     override func viewDidLoad() {
-        super.viewDidLoad();
-        initDisplay()
+        super.viewDidLoad()
+        setupLocationManager()
+        registerForNotification()
+        
+        setupMap()
+        styleDisplay()
+        showPeopleNearby()
+        //setupDisplay(
+        
     }
     
-    func initDisplay() {
-        setupLocationManager()
-        orientMapView()
-        handleMap()
+    func styleDisplay() {
+        arrow.layer.cornerRadius = arrow.frame.height / 2.0
+    }
+    
+    func setupMap() {
+        map.delegate = self
+        map.setUserTrackingMode(.Follow, animated: true)
+        map.frame = mapContainer.frame
+        mapContainer.addSubview(map)
+    }
+    
+    func registerForNotification() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
+    }
+    
+    
+    func mapView(mapView: MKMapView!,
+        regionDidChangeAnimated animated: Bool) {
+            /*
+            if self.arrow.alpha == 0 {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.arrow.alpha = 1
+                })
+            }
+            */
+    }
+    
+    func rotateArrow() {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(M_PI * 2.0)
+        rotateAnimation.duration = 0.2
+        arrow.layer.addAnimation(rotateAnimation, forKey: nil)
+    }
+    
+    func getLocation() -> PFGeoPoint {
+        locationManager.startUpdatingLocation()
+        let location = locationManager.location
+        return PFGeoPoint(location: location)
+    }
+    
+    func logLocation() {
+        let geoPoint = getLocation()
+        let user = PFUser.currentUser()
+        user!.setObject(geoPoint, forKey: "location")
+        let now = NSDate().timeIntervalSince1970
+        user!.setObject(now, forKey: "lastSeen")
+        user!.saveInBackgroundWithBlock {
+            (succeeded, error) -> Void in
+            if error == nil {
+                println("success for user \(user!.username)")
+            }
+        }
+    }
+    
+    func showPeopleNearby() {
+        //let location : PFGeoPoint = getLocation()
+        //let query = PFUser.query()
+        
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            
+            let location : PFGeoPoint = self.getLocation()
+            let query = PFUser.query()
+            query!.whereKey("location", nearGeoPoint: location)
+            let nearby = query!.findObjects() as! [PFUser]
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                self.plotPlaces(nearby)
+            }
+        }
+        
+        
+        
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        if !(annotation is CustomAnnotation) {
+            return nil
+        }
+        
+        let reuseId = "test"
+        
+        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
+        if anView == nil {
+            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            anView.canShowCallout = true
+        }
+        else {
+            anView.annotation = annotation
+        }
+        
+        //Set annotation-specific properties **AFTER**
+        //the view is dequeued or created...
+        
+        let cpa = annotation as! CustomAnnotation
+        anView.image = UIImage(named:cpa.imageName)
+        
+        return anView
+    }
+    
+    private func plotPlaces(people: [PFUser]) {
+        var annotations = [CustomAnnotation]()
+        for person in people {
+            let location : PFGeoPoint = person["location"] as! PFGeoPoint
+            let a = CLLocation(latitude: location.latitude, longitude: location.longitude)
+            let annotation = CustomAnnotation()
+            annotation.title = person.username
+            annotation.imageName = "balloon.png"
+            
+            if let lastSeen : Double = person.objectForKey("lastSeen") as? Double {
+                var date = NSDate(timeIntervalSince1970: lastSeen)
+                var formatter = NSDateFormatter()
+                formatter.dateStyle = .MediumStyle
+                formatter.timeStyle = .MediumStyle
+                let it = formatter.stringFromDate(date)
+                annotation.subtitle = it
+            }
+            
+            annotation.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+            annotations.append(annotation)
+
+            /*
+            let artwork = annotation(title: "King David Kalakaua",
+                locationName: "Waikiki Gateway Park",
+                discipline: "Sculpture",
+                coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
+            mapView.addAnnotation(artwork)
+            */
+        }
+        
+        map.addAnnotations(annotations)
+        map.showAnnotations(annotations, animated: true)
+
     }
 
-    
-    func setupNav() {
-        var nav = navigationController!.navigationBar
-        let a = UINavigationItem(title: "SocialMe")
-        let b = UIBarButtonItem(image: UIImage(named: "contacts"), style: UIBarButtonItemStyle.Plain, target: self, action: "profileTap:")
-        a.setLeftBarButtonItem(b, animated: false)
-        nav.pushNavigationItem(a, animated: false)
-    }
-    
-    func addNavProfile(nav : UINavigationBar) {
-        let item = UINavigationItem()
-        let a = UIBarButtonItem(image: UIImage(named: "contacts"), style: UIBarButtonItemStyle.Plain, target: self, action: "profileTap:")
-        a.imageInsets = UIEdgeInsetsMake(12, 12, 12, 12)
-        item.setLeftBarButtonItem(a, animated: true)
-        nav.pushNavigationItem(item, animated: true)
-    }
-    
-    func addNavSettings(nav : UINavigationBar) {
-        let settings = UIImageView(frame: CGRectMake(view.frame.width - 44, 2, 34, 34))
-        settings.image = UIImage(named: "loading")
-        addSettingsAction(settings)
-        nav.addSubview(settings)
-    }
-    
-    func addSettingsAction(settings : UIImageView) {
-        settings.userInteractionEnabled = true
-        settings.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "settingsTap:"))
-    }
-    
-    func addProfileAction(profile : UIImageView) {
-        profile.userInteractionEnabled = true
-        profile.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "profileTap:"))
-    }
-    
-    func settingsTap(sender : UITapGestureRecognizer) {
-        PFUser.logOut()
-        let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
-        alert.show()
-    }
-    
     func presentMainVC () {
-        let vc : UINavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
+        let vc : UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
+        //let vc = navigationController!.viewControllers[0] as! UINavigationController
+        //navigationController?.popToViewController(vc, animated: true)
+        //navigationController?.popToViewController(navigationController!.viewControllers[2], animated: true)
+        // navigationController?.popViewControllerAnimated(true)
+        
+        //popToRootViewControllerAnimated(true)
+        
     }
     
     func returnToMap(sender: UIButton) {
         navigationController?.setNavigationBarHidden(false, animated: true)
         sender.removeFromSuperview()
+        
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.mapView.frame.origin = CGPointMake(0, 0)
-            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - 49)
+            self.map.frame.origin = CGPointMake(0, 0)
+            let tabFrame = self.tabBarController?.tabBar.frame
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - tabFrame!.height)
             }, completion: {
                 (value: Bool) in
-                
+                self.hidden = false
+                //self.setNeedsStatusBarAppearanceUpdate()
         })
     }
     
+    /*
     func addMapReturnButton() {
         let returnButton = UIButton(frame: CGRectMake(0, view.frame.height - 50, view.frame.width, 50))
         returnButton.addTarget(self, action: "returnToMap:", forControlEvents: UIControlEvents.TouchUpInside)
         returnButton.backgroundColor = UIColor.clearColor()
         view.addSubview(returnButton)
     }
+*/
+    
+    
+    @IBAction func returnTap(sender: UIButton) {
+        returnAction(sender)
+    }
+    
+    @IBAction func buttonSwipe(sender: UIButton) {
+        returnAction(sender) 
+    }
+    
+    
+    @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
+        let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
+        alert.show()
+        PFUser.logOut()
+        // presentMainVC()
+        //navigationController?.popToRootViewControllerAnimated(<#animated: Bool#>)
+    }
+    
+    
     
     @IBAction func showProfile(sender: UIBarButtonItem) {
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
-        addMapReturnButton()
         UIView.animateWithDuration(0.3, animations: {
-            self.mapView.frame.origin = CGPointMake(0, self.view.frame.height - 50)
+            self.mapContainer.frame.origin = CGPointMake(0, self.view.frame.height - 49)
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
+            self.arrow.alpha = 0
+            self.mapContainer.alpha = 0.5
+            }, completion: {
+                (value: Bool) in
+                UIView.animateWithDuration(0.2, animations: {
+                    self.returnButton.alpha = 1
+                    self.hidden = true
+                    //self.setNeedsStatusBarAppearanceUpdate()
+                })
+        })
+        
+    }
+    
+    func requestLocationUpdate(notification: NSNotification) {
+        let info  = notification.userInfo as! [String: String]
+        let type = info["pref"]
+        if type == "always" {
+            if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
+                locationManager.startUpdatingLocation()
+                locationManager.requestAlwaysAuthorization()
+            }
+        } else if type == "while" {
+            if CLLocationManager.authorizationStatus() != .AuthorizedWhenInUse {
+                locationManager.startUpdatingLocation()
+                locationManager.requestWhenInUseAuthorization()
+            }
+            
+        } else {
+            //Deal with it.
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!,
+        didChangeAuthorizationStatus status: CLAuthorizationStatus)
+    {
+        /*
+        if status == .Authorized || status == .AuthorizedWhenInUse {
+            manager.startUpdatingLocation()
+            // ...
+        }
+*/
+    }
+    
+    func returnAction(sender: UIButton) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        hidden = false
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.mapContainer.frame.origin = CGPointMake(0, 0)
+            self.returnButton.alpha = 0
+            self.arrow.alpha = 1
+            self.mapContainer.alpha = 1
+            let tabFrame = self.tabBarController?.tabBar.frame
+            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - tabFrame!.height)
+            }, completion: {
+                (value: Bool) in
+                
         })
     }
-        
+    
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         presentMainVC()
     }
-    
-    func addNavTitle(nav : UINavigationBar) {
-        let logo = UILabel(frame: CGRectMake(view.frame.width/2 - 80, 0, 160, 34))
-        logo.font = UIFont(name: "HelveticaNeue-Light", size: 34)
-        logo.textColor = UIColor.grayColor()
-        logo.textAlignment = .Center
-        logo.text = "SocialMe"
-        nav.addSubview(logo)
-    }
-    
-    func profileButtonTouched(sender: UIButton) {
-        orientMapView()
-    }
+
 
     func handleMap() {
+        /*
         mapView.delegate = self
         mapView.frame = view.frame
         mapView.showsUserLocation = true
         addLocationToggleToView(mapView)
         view.addSubview(mapView)
+        */
     }
     
     func orientMapView() {
+        /*
         CLGeocoder().reverseGeocodeLocation(locationManager.location, completionHandler: { (placemarks, error) -> Void in
             if (error != nil) {
                 println("Error: " + error.localizedDescription)
@@ -136,51 +326,31 @@ class SocialMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
                 self.zoomToUserLocation(pm)
             }
         })
+        */
     }
     
     func zoomToUserLocation(placemark: CLPlacemark) {
-        mapView.setRegion(MKCoordinateRegion(center: placemark.location.coordinate,
-            span: MKCoordinateSpanMake(0.15, 0.15)), animated: true)
+        self.map.setRegion(MKCoordinateRegion(center: placemark.location.coordinate,
+            span: MKCoordinateSpanMake(0.01, 0.01)), animated: true)
     }
+    
+    
     
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
+        
     }
     
-    func addIconToToggle(toggle : UIVisualEffectView) {
-        let icon = UIImageView(frame: CGRectMake(0, 0, toggle.frame.width, toggle.frame.height))
-        icon.image = UIImage(named: "near-me")
-        toggle.addSubview(icon)
-    }
-    
-    func addLocationToggleToView(map : MKMapView) {
-        let toggle = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
-        setFrameForToggle(toggle)
-        addActionToToggle(toggle)
-        addIconToToggle(toggle)
-        map.addSubview(toggle)
-    }
-    
-    func addActionToToggle(toggle : UIVisualEffectView) {
-        var tap = UITapGestureRecognizer(target: self, action: "locationTap:")
-        toggle.userInteractionEnabled = true
-        toggle.addGestureRecognizer(tap)
-    }
-    
-    func locationTap(sender : UITapGestureRecognizer) {
-        orientMapView()
-    }
-    
-    func setFrameForToggle(toggle : UIVisualEffectView) {
-        var (width, height) = (view.frame.width, view.frame.height)
-        toggle.frame = CGRectMake(width - 54, (height - (tabBarController?.tabBar.frame.height)! - 54), 44, 44);
-        toggle.layer.borderColor = UIColor.grayColor().CGColor
-        toggle.layer.cornerRadius = 22
-        toggle.layer.borderWidth = 1
-        toggle.clipsToBounds = true
+    func locationManager(manager: CLLocationManager!,
+        didUpdateLocations locations: [AnyObject]!) {
+            logLocation()
+            /*
+            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
+            tempAlert.show()
+            */
     }
     
     /*

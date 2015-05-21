@@ -7,20 +7,60 @@
 //
 
 import UIKit
+import Parse
 
 class HomeVC: UIViewController {
 
+    //@IBOutlet weak var loginButton: UIButton!
+    //@IBOutlet weak var signupButton: UIButton!
+    
+    @IBOutlet weak var backgroundView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad();
-        initDisplay()
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        animateBG()
+        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("animateBG"), userInfo: nil, repeats: true)
     }
     
-    func initDisplay() {
-        logIn()
-        signUp()
-        logo()
-        navigationController?.navigationBar.tintColor = UIColor.clearColor()
-        navigationController?.navigationBar.hidden = true
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+    }
+    
+    func animateBG() {
+        let a = view.frame.height
+        let iv = UIImageView(frame: CGRectMake(-a, 0, a, a))
+        iv.image = UIImage(named: "line.png")
+        backgroundView.addSubview(iv)
+        UIView.animateWithDuration(4, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            UIView.animateWithDuration(6, animations: {
+                iv.frame = CGRectMake(a, 0, a * 5, a * 5)
+            })
+        }, completion: nil)
+    }
+    
+    /*
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        if PFUser.currentUser() != nil {
+            /*
+            let vc : UITabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("tab") as! UITabBarController
+            self.navigationController?.presentViewController(vc, animated: false, completion: nil)
+            */
+            performSegueWithIdentifier("reveal", sender: self)
+        }
+    }
+*/
+    
+    @IBAction func logInTouch(sender: UIButton) {
+        let loginVC : LoginVC = self.storyboard!.instantiateViewControllerWithIdentifier("loginVC") as! LoginVC
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
+    
+    @IBAction func signUpTouch(sender: UIButton) {
+        let signupVC : SignUpVC = self.storyboard!.instantiateViewControllerWithIdentifier("signupVC") as! SignUpVC
+        navigationController?.pushViewController(signupVC, animated: true)
     }
     
     func logo() {
