@@ -14,24 +14,12 @@ import CoreLocation
 class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
+    var map = MKMapView()
     var hidden = false
     
+    @IBOutlet weak var mapContainer: UIView!
     @IBOutlet weak var returnButton: UIButton!
-    @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var arrow: UIVisualEffectView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupLocationManager()
-        setupDisplay()
-    }
-    
-    func setupDisplay() {
-        logLocation()
-        orientMapView()
-        arrow.layer.cornerRadius = 22
-        map.delegate = self
-    }
     
     @IBOutlet weak var zoomToggle: UIImageView!
     
@@ -40,13 +28,44 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         rotateArrow()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLocationManager()
+        registerForNotification()
+        
+        setupMap()
+        styleDisplay()
+        showPeopleNearby()
+        //setupDisplay(
+        
+    }
+    
+    func styleDisplay() {
+        arrow.layer.cornerRadius = arrow.frame.height / 2.0
+    }
+    
+    func setupMap() {
+        map.delegate = self
+        map.setUserTrackingMode(.Follow, animated: true)
+        map.frame = mapContainer.frame
+        mapContainer.addSubview(map)
+    }
+    
+    func registerForNotification() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"returnAction:", name: "hideSettings", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"requestLocationUpdate:", name: "locationPreferences", object: nil)
+    }
+    
+    
     func mapView(mapView: MKMapView!,
         regionDidChangeAnimated animated: Bool) {
+            /*
             if self.arrow.alpha == 0 {
                 UIView.animateWithDuration(0.2, animations: {
                     self.arrow.alpha = 1
                 })
             }
+            */
     }
     
     func rotateArrow() {
@@ -55,11 +74,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         rotateAnimation.toValue = CGFloat(M_PI * 2.0)
         rotateAnimation.duration = 0.2
         arrow.layer.addAnimation(rotateAnimation, forKey: nil)
-    }
-    
-    func initDisplay() {
-        setupLocationManager()
-        logLocation()
     }
     
     func getLocation() -> PFGeoPoint {
@@ -72,7 +86,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         let geoPoint = getLocation()
         let user = PFUser.currentUser()
         user!.setObject(geoPoint, forKey: "location")
-        
+        let now = NSDate().timeIntervalSince1970
+        user!.setObject(now, forKey: "lastSeen")
         user!.saveInBackgroundWithBlock {
             (succeeded, error) -> Void in
             if error == nil {
@@ -82,20 +97,71 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func showPeopleNearby() {
-        let location : PFGeoPoint = getLocation()
-        let query = PFUser.query()
-        query!.whereKey("location", nearGeoPoint: location)
-        let nearby = query!.findObjects() as! [PFUser]
-        plotPlaces(nearby)
+        //let location : PFGeoPoint = getLocation()
+        //let query = PFUser.query()
+        
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            
+            let location : PFGeoPoint = self.getLocation()
+            let query = PFUser.query()
+            query!.whereKey("location", nearGeoPoint: location)
+            let nearby = query!.findObjects() as! [PFUser]
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                self.plotPlaces(nearby)
+            }
+        }
+        
+        
+        
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        if !(annotation is CustomAnnotation) {
+            return nil
+        }
+        
+        let reuseId = "test"
+        
+        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
+        if anView == nil {
+            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            anView.canShowCallout = true
+        }
+        else {
+            anView.annotation = annotation
+        }
+        
+        //Set annotation-specific properties **AFTER**
+        //the view is dequeued or created...
+        
+        let cpa = annotation as! CustomAnnotation
+        anView.image = UIImage(named:cpa.imageName)
+        
+        return anView
     }
     
     private func plotPlaces(people: [PFUser]) {
-        var annotations = [MKPointAnnotation]()
+        var annotations = [CustomAnnotation]()
         for person in people {
             let location : PFGeoPoint = person["location"] as! PFGeoPoint
             let a = CLLocation(latitude: location.latitude, longitude: location.longitude)
-            let annotation = MKPointAnnotation()
+            let annotation = CustomAnnotation()
             annotation.title = person.username
+            annotation.imageName = "balloon.png"
+            
+            if let lastSeen : Double = person.objectForKey("lastSeen") as? Double {
+                var date = NSDate(timeIntervalSince1970: lastSeen)
+                var formatter = NSDateFormatter()
+                formatter.dateStyle = .MediumStyle
+                formatter.timeStyle = .MediumStyle
+                let it = formatter.stringFromDate(date)
+                annotation.subtitle = it
+            }
+            
             annotation.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
             annotations.append(annotation)
 
@@ -114,8 +180,15 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
 
     func presentMainVC () {
-        let vc : UINavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
+        let vc : UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
+        //let vc = navigationController!.viewControllers[0] as! UINavigationController
+        //navigationController?.popToViewController(vc, animated: true)
+        //navigationController?.popToViewController(navigationController!.viewControllers[2], animated: true)
+        // navigationController?.popViewControllerAnimated(true)
+        
+        //popToRootViewControllerAnimated(true)
+        
     }
     
     func returnToMap(sender: UIButton) {
@@ -129,7 +202,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             }, completion: {
                 (value: Bool) in
                 self.hidden = false
-                self.setNeedsStatusBarAppearanceUpdate()
+                //self.setNeedsStatusBarAppearanceUpdate()
         })
     }
     
@@ -153,9 +226,11 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     
     @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
-        PFUser.logOut()
         let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
         alert.show()
+        PFUser.logOut()
+        // presentMainVC()
+        //navigationController?.popToRootViewControllerAnimated(<#animated: Bool#>)
     }
     
     
@@ -163,26 +238,59 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     @IBAction func showProfile(sender: UIBarButtonItem) {
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
         UIView.animateWithDuration(0.3, animations: {
-            self.map.frame.origin = CGPointMake(0, self.view.frame.height - 50)
+            self.mapContainer.frame.origin = CGPointMake(0, self.view.frame.height - 49)
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
+            self.arrow.alpha = 0
+            self.mapContainer.alpha = 0.5
             }, completion: {
                 (value: Bool) in
                 UIView.animateWithDuration(0.2, animations: {
                     self.returnButton.alpha = 1
                     self.hidden = true
-                    self.setNeedsStatusBarAppearanceUpdate()
+                    //self.setNeedsStatusBarAppearanceUpdate()
                 })
         })
         
     }
     
+    func requestLocationUpdate(notification: NSNotification) {
+        let info  = notification.userInfo as! [String: String]
+        let type = info["pref"]
+        if type == "always" {
+            if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
+                locationManager.startUpdatingLocation()
+                locationManager.requestAlwaysAuthorization()
+            }
+        } else if type == "while" {
+            if CLLocationManager.authorizationStatus() != .AuthorizedWhenInUse {
+                locationManager.startUpdatingLocation()
+                locationManager.requestWhenInUseAuthorization()
+            }
+            
+        } else {
+            //Deal with it.
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!,
+        didChangeAuthorizationStatus status: CLAuthorizationStatus)
+    {
+        /*
+        if status == .Authorized || status == .AuthorizedWhenInUse {
+            manager.startUpdatingLocation()
+            // ...
+        }
+*/
+    }
+    
     func returnAction(sender: UIButton) {
         navigationController?.setNavigationBarHidden(false, animated: true)
         hidden = false
-        setNeedsStatusBarAppearanceUpdate()
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.map.frame.origin = CGPointMake(0, 0)
+            self.mapContainer.frame.origin = CGPointMake(0, 0)
             self.returnButton.alpha = 0
+            self.arrow.alpha = 1
+            self.mapContainer.alpha = 1
             let tabFrame = self.tabBarController?.tabBar.frame
             self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height - tabFrame!.height)
             }, completion: {
@@ -207,6 +315,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func orientMapView() {
+        /*
         CLGeocoder().reverseGeocodeLocation(locationManager.location, completionHandler: { (placemarks, error) -> Void in
             if (error != nil) {
                 println("Error: " + error.localizedDescription)
@@ -217,28 +326,33 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
                 self.zoomToUserLocation(pm)
             }
         })
+        */
     }
     
     func zoomToUserLocation(placemark: CLPlacemark) {
         self.map.setRegion(MKCoordinateRegion(center: placemark.location.coordinate,
-            span: MKCoordinateSpanMake(0.15, 0.15)), animated: true)
+            span: MKCoordinateSpanMake(0.01, 0.01)), animated: true)
     }
+    
+    
     
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
+        
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return hidden
+    func locationManager(manager: CLLocationManager!,
+        didUpdateLocations locations: [AnyObject]!) {
+            logLocation()
+            /*
+            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
+            tempAlert.show()
+            */
     }
     
-    override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
-        return .Fade
-    }
-       
     /*
     func addBlur() {
         
