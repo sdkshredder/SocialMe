@@ -107,7 +107,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func styleCell(content: UIView, user: PFUser) {
         let a = UIView(frame: CGRectMake(0, 0, 350, 240))
         //a.backgroundColor = UIColor.greenColor()
-        
+        /*
+        let userImageFile = anotherPhoto["imageFile"] as PFFile
+        userImageFile.getDataInBackgroundWithBlock {
+            (imageData: NSData?, error: NSError?) -> Void in
+            if error == nil {
+                if let imageData = imageData {
+                    let image = UIImage(data:imageData)
+                }
+            }
+        }
+        */
+        /*
+        if user.objectForKey("photo") != nil {
+           let profilePic = UIImageView(data:user.objectForKey("photo") as! PFFile)
+        } else {
+            let profilePic = UIImageView(image: UIImage(named: "podcasts"))
+        }
+        */
         
         let profilePic = UIImageView(image: UIImage(named: "podcasts"))
         profilePic.layer.cornerRadius = profilePic.frame.height/2.0
@@ -140,14 +157,41 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             
             let user = PFUser.currentUser()
+            
             var query = PFUser.query()
             query!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
-            var res : NSArray = query!.findObjects()!
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.data = res
-                self.tableView.reloadData()
+            query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
+            query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
+            if user?.objectForKey("genderFilter") as! String != "Both"{
+                query!.whereKey("gender", equalTo: (user?.objectForKey("genderFilter") as! String))
             }
+            //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: ((user?.objectForKey("distanceFilter") as! Double) / 3280.84))
+            //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: user?.objectForKey("distanceFilter") as! Double)
+            
+            //var name = PFUser.query()
+            //name!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
+            
+            //var lowerAge = PFUser.query()
+            //lowerAge!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
+            
+            //var query = PFQuery.orQueryWithSubqueries([lowerAge!, name!])
+            println(query)
+            /*query.findObjectsInBackgroundWithBlock{
+                (results: [AnyObject]?, error:NSError?) -> Void in
+                if error == nil {*/
+                    var res : NSArray = query!.findObjects()!
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.data = res
+                        self.tableView.reloadData()
+                    }
+                //}
+            //}
+            
+            
+            
+
+            
         }
     }
 
@@ -187,6 +231,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if PFUser.currentUser() == nil {
             presentMainVC()
         }
+        getAllUsers()
     }
     
     func presentMainVC () {

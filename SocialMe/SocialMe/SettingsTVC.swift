@@ -22,13 +22,13 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     @IBAction func valueDidChange(sender: UISlider) {
         var current = Int(sender.value)
-        current /= 10
+        current = 10
         distanceValue.text = String(format: "\(current) feet")
     }
     
-    
-    @IBAction func segmentChange(sender: UISegmentedControl) {
+    @IBAction func segmentValueChange(sender: UISegmentedControl) {
     }
+
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -40,9 +40,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         let a = pickerData[row]
-        // return "Aa"
         return String(stringInterpolationSegment: a)
-        // return String(pickerData[row])
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -62,22 +60,31 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            var change = 0
             let user = PFUser.currentUser()
             
             if Int(self.slider.value) != user?.objectForKey("distanceFilter") as! Int{
                 user!.setObject(Int(self.slider.value), forKey:"distanceFilter")
+                change = 1
             }
-            if Int(self.lowerAge.selectedRowInComponent(0)) != user?.objectForKey("lowerAgeFilter") as! Int{
-                user!.setObject(Int(self.lowerAge.selectedRowInComponent(0)), forKey:"lowerAgeFilter")
+            if Int(self.lowerAge.selectedRowInComponent(0)) + 18 != user?.objectForKey("lowerAgeFilter") as! Int{
+                user!.setObject(Int(self.lowerAge.selectedRowInComponent(0)) + 18, forKey:"lowerAgeFilter")
+                change = 1
             }
-            if Int(self.upperAge.selectedRowInComponent(0)) != user?.objectForKey("upperAgeFilter") as! Int{
-                user!.setObject(Int(self.upperAge.selectedRowInComponent(0)), forKey:"upperAgeFilter")
+            if Int(self.upperAge.selectedRowInComponent(0)) + 18 != user?.objectForKey("upperAgeFilter") as! Int{
+                user!.setObject(Int(self.upperAge.selectedRowInComponent(0)) + 18, forKey:"upperAgeFilter")
+                change = 1
             }
-            /*
+            
             if self.segment.titleForSegmentAtIndex(self.segment.selectedSegmentIndex) != user?.objectForKey("genderFilter") as? String{
                 user!.setObject(self.segment.titleForSegmentAtIndex(self.segment.selectedSegmentIndex)!, forKey:"genderFilter")
+                change = 1
             }
-            */
+            
+            if change == 1 {
+                user?.save()
+            }
+            
             
             
             
@@ -94,10 +101,20 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             navigationController?.popViewControllerAnimated(true)
         }
     }
-    
+    /*
     func action(sender: UISegmentedControl) {
-        
+        switch sender.selectedSegmentIndex{
+        case 1:
+            println("Segment 1 selected")
+        case 2:
+            println("Segment 2 selected")
+        case 3:
+            println("Segment 3 selecteed")
+        default:
+            println("No segments")
+        }
     }
+    */
 
     
     override func viewDidLoad() {
@@ -111,7 +128,9 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         lowerAge.dataSource = self
         upperAge.delegate = self
         upperAge.dataSource = self
-        segment.addTarget(self, action: "action:", forControlEvents: .ValueChanged)
+        //segment.addTarget(self, action: "action:", forControlEvents: .ValueChanged)
+        //segment.
+        
         
         
         

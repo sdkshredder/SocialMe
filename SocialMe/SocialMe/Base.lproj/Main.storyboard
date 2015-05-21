@@ -267,8 +267,7 @@
                                                         <segment title="Both"/>
                                                     </segments>
                                                     <connections>
-                                                        <action selector="segmentChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="HSV-XM-4uM"/>
-                                                        <action selector="updateGender:" destination="Xmk-0W-le7" eventType="valueChanged" id="u4t-d7-naK"/>
+                                                        <action selector="segmentValueChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="yH7-nG-yQa"/>
                                                     </connections>
                                                 </segmentedControl>
                                             </subviews>
