@@ -28,6 +28,8 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return 90
         } else if a == "Profile Picture" {
             return 150
+        } else if a == "Log Out" {
+            return 50
         }
         return 60
     }
@@ -43,7 +45,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
     
     func getTitleForPath(path : Int) -> String {
@@ -117,11 +119,18 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
                         if let imageData = imageData {
                             let image = UIImage(data:imageData)
                             cell.profilePicture.image = image
+                            cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.height / 2.0
+                            cell.profilePicture.clipsToBounds = true
                         }
                     }
                 }
             }
             
+            return cell
+        } else if ID == "logoutCell" {
+            var cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "logout")//tableView.dequeueReusableCellWithIdentifier(ID) as! UITableViewCell //dequeueReusableCellWithIdentifier(ID) as! ProfilePictureTVCell
+            cell.textLabel!.text = "Log Out"
+
             return cell
         }
         
@@ -231,7 +240,6 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
 
     func handleNotification(notification: NSNotification) {
         editingAge = !editingAge
-        //println(editingAge)
         table.beginUpdates()
         table.endUpdates()
         NSNotificationCenter.defaultCenter().postNotificationName("pickerNotification", object: nil)

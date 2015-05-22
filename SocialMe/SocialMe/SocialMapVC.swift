@@ -97,10 +97,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func showPeopleNearby() {
-        //let location : PFGeoPoint = getLocation()
-        //let query = PFUser.query()
-        
-        
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             
@@ -226,9 +222,9 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     
     @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
-        let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
-        alert.show()
-        PFUser.logOut()
+        //let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
+        // alert.show()
+        // PFUser.logOut()
         // presentMainVC()
         //navigationController?.popToRootViewControllerAnimated(<#animated: Bool#>)
     }

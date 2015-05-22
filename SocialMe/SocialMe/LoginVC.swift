@@ -21,13 +21,17 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addTFBorder()
+        initTextFields()
         navigationController?.setNavigationBarHidden(false, animated: true)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    // MARK: Keyboard Event Notifications
+    func initTextFields() {
+        addTFBorder()
+        usernameTF.delegate = self
+        passwordTF.delegate = self
+    }
     
     func handleKeyboardWillShowNotification(notification: NSNotification) {
         keyboardWillChangeFrameWithNotification(notification, showsKeyboard: true)
@@ -37,14 +41,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         keyboardWillChangeFrameWithNotification(notification, showsKeyboard: false)
     }
     
-    // MARK: Convenience
-    
     func keyboardWillChangeFrameWithNotification(notification: NSNotification, showsKeyboard: Bool) {
         let userInfo = notification.userInfo!
         
         let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
         
-        // Convert the keyboard frame from screen to view coordinates.
         let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
@@ -52,41 +53,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
         let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
         
-        // The text view should be adjusted, update the constant for this constraint.
-        constraint.constant -= originDelta
-        
-        view.setNeedsUpdateConstraints()
-        
-        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
-            self.view.layoutIfNeeded()
-            if showsKeyboard == false {
-                //self.signUpButton.alpha = 1
-                //self.birthdayLabel.alpha = 1
-                //self.birthdayPicker.alpha = 1
-            }
-            }, completion: nil)
-        
-        // Scroll to the selected text once the keyboard frame changes.
-        //let selectedRange = textView.selectedRange
-        //textView.scrollRangeToVisible(selectedRange)
-    }
-    
-    func keyboardWillShowNotification(notification: NSNotification) {
-        println(notification.userInfo)
-        
-        let userInfo = notification.userInfo!
-        
-        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        // Convert the keyboard frame from screen to view coordinates.
-        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        
-        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
-        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
-        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
-        
-        // The text view should be adjusted, update the constant for this constraint.
+
         constraint.constant -= originDelta
         
         view.setNeedsUpdateConstraints()
@@ -96,20 +63,19 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             }, completion: nil)
         
         // Scroll to the selected text once the keyboard frame changes.
-        //let selectedRange = textView.selectedRange
-        //textView.scrollRangeToVisible(selectedRange)
-        
+        // let selectedRange = textView.selectedRange
+        // textView.scrollRangeToVisible(selectedRange)
     }
     
     func addTFBorder() {
         var bottomBorder = CALayer()
         bottomBorder.frame = CGRectMake(0.0, usernameTF.frame.size.height - 1, usernameTF.frame.size.width, 1.0);
-        bottomBorder.backgroundColor = UIColor.blackColor().CGColor
+        bottomBorder.backgroundColor = UIColor.lightGrayColor().CGColor
         usernameTF.layer.addSublayer(bottomBorder)
         
         var bottomBorderB = CALayer()
         bottomBorderB.frame = CGRectMake(0.0, passwordTF.frame.size.height - 1, passwordTF.frame.size.width, 1.0);
-        bottomBorderB.backgroundColor = UIColor.blackColor().CGColor
+        bottomBorderB.backgroundColor = UIColor.lightGrayColor().CGColor
         passwordTF.layer.addSublayer(bottomBorderB)
     }
     
@@ -134,5 +100,37 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 alert.show()
             }
         })
+    }
+    
+    func enableLogInButton() {
+        logInButton.enabled = true
+        UIView.animateWithDuration(0.2, animations: {
+            self.logInButton.backgroundColor = UIColor(red: 0, green: 1, blue: 128/255.0, alpha: 1)
+            self.logInButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            self.logInButton.alpha = 1
+        })
+    }
+    
+    // MARK : textField Delegate
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField == passwordTF {
+            if usernameTF.text != "" {
+                enableLogInButton()
+            }
+        } else {
+            if passwordTF.text != "" {
+                enableLogInButton()
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == usernameTF {
+            passwordTF.becomeFirstResponder()
+        } else if textField == passwordTF {
+            passwordTF.resignFirstResponder()
+        }
+        return true
     }
 }
