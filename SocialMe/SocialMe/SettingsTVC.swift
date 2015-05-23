@@ -104,20 +104,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             navigationController?.popViewControllerAnimated(true)
         }
     }
-    /*
-    func action(sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex{
-        case 1:
-            println("Segment 1 selected")
-        case 2:
-            println("Segment 2 selected")
-        case 3:
-            println("Segment 3 selecteed")
-        default:
-            println("No segments")
-        }
-    }
-    */
 
     
     override func viewDidLoad() {
@@ -126,7 +112,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         navigationItem.leftBarButtonItem = backButton
         initData()
         let user = PFUser.currentUser()
-        let distance = user?.objectForKey("lowerAgeFilter") as! Int
+        let distance = user?.objectForKey("distanceFilter") as! Int
         slider.value = Float(distance)
         if distance == 1 {
             distanceValue.text = "1 foot"
