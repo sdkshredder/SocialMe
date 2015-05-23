@@ -107,17 +107,65 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func styleCell(content: UIView, user: PFUser) {
         let a = UIView(frame: CGRectMake(0, 0, 350, 240))
         //a.backgroundColor = UIColor.greenColor()
-        /*
-        let userImageFile = anotherPhoto["imageFile"] as PFFile
-        userImageFile.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    let image = UIImage(data:imageData)
-                }
+        
+        
+        if let userImageFile = user.objectForKey("photo") as? PFFile {
+        //let userImageFile = user.objectForKey("photo") as! PFFile
+            println("Photo found")
+            userImageFile.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                //if error == nil {
+                    let profImage = UIImage(data:imageData!)
+                    let profilePic = UIImageView(image: profImage)
+                    let defaultPic = UIImageView(image: UIImage(named: "podcasts"))
+                profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: defaultPic.frame.size.width+10, height: defaultPic.frame.size.height+10)
+                    profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+                    profilePic.clipsToBounds = true
+                
+                    a.addSubview(profilePic)
+                
+                var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
+                name.text = user.username
+                name.font = UIFont .boldSystemFontOfSize(18.0)
+                a.addSubview(name)
+                var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
+                distance.text = "500 feet"
+                a.addSubview(distance)
+                var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
+                occupation.text = user.objectForKey("Occupation") as? String
+                a.addSubview(occupation)
+                
+                content.clipsToBounds = true
+                content.addSubview(a)
+                content.sendSubviewToBack(a)
+                content.bringSubviewToFront(profilePic)
+                
+                //}
             }
+        } else {
+            let profilePic = UIImageView(image: UIImage(named: "podcasts"))
+            profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+            profilePic.clipsToBounds = true
+            profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
+            a.addSubview(profilePic)
+            
+            var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
+            name.text = user.username
+            name.font = UIFont .boldSystemFontOfSize(18.0)
+            a.addSubview(name)
+            var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
+            distance.text = "500 feet"
+            a.addSubview(distance)
+            var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
+            occupation.text = user.objectForKey("Occupation") as? String
+            a.addSubview(occupation)
+            content.clipsToBounds = true
+            content.addSubview(a)
+            content.sendSubviewToBack(a)
+            content.bringSubviewToFront(profilePic)
         }
-        */
+        
+        
         /*
         if user.objectForKey("photo") != nil {
            let profilePic = UIImageView(data:user.objectForKey("photo") as! PFFile)
@@ -125,30 +173,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let profilePic = UIImageView(image: UIImage(named: "podcasts"))
         }
         */
-        
+        /*
         let profilePic = UIImageView(image: UIImage(named: "podcasts"))
         profilePic.layer.cornerRadius = profilePic.frame.height/2.0
         profilePic.clipsToBounds = true
         profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
         a.addSubview(profilePic)
+        */
         
-        var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
-        name.text = user.username
-        name.font = UIFont .boldSystemFontOfSize(18.0)
-        a.addSubview(name)
-        var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
-        distance.text = "500 feet"
-        a.addSubview(distance)
-        var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
-        occupation.text = user.objectForKey("Occupation") as? String
-        a.addSubview(occupation)
 
         
         
-        content.clipsToBounds = true
-        content.addSubview(a)
-        content.sendSubviewToBack(a)
-        content.bringSubviewToFront(profilePic)
+        
     }
     
     func getAllUsers() {
