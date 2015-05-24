@@ -111,7 +111,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         var distance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
         var distanceLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 24, 200, 20))
-        distanceLabel.text = "\(distance) ft"
+        distanceLabel.text = "\(round(100*distance)/100) ft"
         distanceLabel.font = UIFont.systemFontOfSize(16)
         content.addSubview(distanceLabel)
         
@@ -133,37 +133,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let user = PFUser.currentUser()
             
             var query = PFUser.query()
-			query!.whereKey("username", equalTo: "Kelsey")
-			/*
             query!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
-			
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
-			
+			/* Uncomment this to implement distance fileter.......
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
-            query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
-            */
-
-            
-            /*query.findObjectsInBackgroundWithBlock{
-                (results: [AnyObject]?, error:NSError?) -> Void in
-                if error == nil {*/
-                    var res : NSArray = query!.findObjects()!
+				query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
+			*/
+            var res : NSArray = query!.findObjects()!
                     
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.data = res
-                        self.tableView.reloadData()
-                    }
-                //}
-            //}
-            
-            
-            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.data = res
+                self.tableView.reloadData()
+            }
 
-            
+
         }
     }
 
