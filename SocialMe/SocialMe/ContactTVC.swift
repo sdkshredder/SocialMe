@@ -17,10 +17,10 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         super.viewDidLoad()
         table.separatorInset = UIEdgeInsetsZero
         table.layoutMargins = UIEdgeInsetsZero
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"hello:", name: "cellNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
     }
     
-    func hello(notification: NSNotification) {
+    func animateCellFrame(notification: NSNotification) {
         let a = notification.userInfo as! [String : Int]
         let b = a["index"]!
         if selected.containsObject(b) {
@@ -39,8 +39,6 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
             return 124
         }
         return 62
-        
-        //selected.containsObject(indexPath.row)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

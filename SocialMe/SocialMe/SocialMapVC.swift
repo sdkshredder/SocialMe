@@ -32,7 +32,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         super.viewDidLoad()
         setupLocationManager()
         registerForNotification()
-        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("logLocation"), userInfo: nil, repeats: true)
         setupMap()
         styleDisplay()
         showPeopleNearby()
@@ -83,24 +83,22 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func logLocation() {
-        let geoPoint = getLocation()
-        let user = PFUser.currentUser()
-        user!.setObject(geoPoint, forKey: "location")
-        let now = NSDate().timeIntervalSince1970
-        user!.setObject(now, forKey: "lastSeen")
-        user!.saveInBackgroundWithBlock {
-            (succeeded, error) -> Void in
-            if error == nil {
-                println("success for user \(user!.username)")
+        if PFUser.currentUser() != nil {
+            let geoPoint = getLocation()
+            let user = PFUser.currentUser()
+            user!.setObject(geoPoint, forKey: "location")
+            let now = NSDate().timeIntervalSince1970
+            user!.setObject(now, forKey: "lastSeen")
+            user!.saveInBackgroundWithBlock {
+                (succeeded, error) -> Void in
+                if error == nil {
+                    println("success for user \(user!.username)")
+                }
             }
         }
     }
     
     func showPeopleNearby() {
-        //let location : PFGeoPoint = getLocation()
-        //let query = PFUser.query()
-        
-        
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             
@@ -134,9 +132,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         else {
             anView.annotation = annotation
         }
-        
-        //Set annotation-specific properties **AFTER**
-        //the view is dequeued or created...
         
         let cpa = annotation as! CustomAnnotation
         anView.image = UIImage(named:cpa.imageName)
@@ -226,11 +221,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     
     @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
-        let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
-        alert.show()
-        PFUser.logOut()
-        // presentMainVC()
-        //navigationController?.popToRootViewControllerAnimated(<#animated: Bool#>)
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -268,7 +260,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             }
             
         } else {
-            //Deal with it.
+            //handle #TODO
         }
     }
     
@@ -343,35 +335,4 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         locationManager.requestWhenInUseAuthorization()
         
     }
-    
-    func locationManager(manager: CLLocationManager!,
-        didUpdateLocations locations: [AnyObject]!) {
-            logLocation()
-            /*
-            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
-            tempAlert.show()
-            */
-    }
-    
-    /*
-    func addBlur() {
-        
-        // 1 - http://www.raywenderlich.com/84043/ios-8-visual-effects-tutorial
-        
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurEffectDark = UIBlurEffect(style: .Dark)
-        
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        let blurViewTwo = UIVisualEffectView(effect: blurEffectDark)
-        
-        blurView.frame = CGRectMake(0, self.view.frame.height - 100, self.view.frame.width, 50)
-        blurViewTwo.frame = CGRectMake(0, self.view.frame.height - 150, self.view.frame.width, 50)
-        
-        blurViewTwo.setTranslatesAutoresizingMaskIntoConstraints(false)
-        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        view.addSubview(blurViewTwo)
-        view.addSubview(blurView)
-    }
-    */
 }

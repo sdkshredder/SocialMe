@@ -15,7 +15,6 @@ class TableTVCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
     
     @IBAction func editTF(sender: UIButton) {
-        //textField.attributedPlaceholder
         if textField.enabled == false {
             UIView.animateWithDuration(0.2, animations: {
                 self.textField.enabled = true
