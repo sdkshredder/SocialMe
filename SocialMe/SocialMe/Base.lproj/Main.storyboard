@@ -213,14 +213,14 @@
                     <navigationItem key="navigationItem" title="SocialMe" id="ohR-4G-lDG">
                         <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Lmo-Cr-35q">
                             <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
-                            <color key="tintColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="showProfile:" destination="v17-xv-42k" id="ynI-My-ZhY"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="general.png" style="plain" id="wV7-mv-Rxe">
                             <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
-                            <color key="tintColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="showFilterPreferences:" destination="v17-xv-42k" id="wiv-Xc-lSV"/>
                             </connections>
@@ -412,14 +412,14 @@
                     <navigationItem key="navigationItem" title="SocialMe" id="rsA-G3-PFY">
                         <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Yq5-M4-x5j">
                             <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
-                            <color key="tintColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="ShowProfile:" destination="iKc-BW-79x" id="4tg-5Y-6sB"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="general.png" id="IGb-jh-NOo">
                             <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
-                            <color key="tintColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="showSettings:" destination="iKc-BW-79x" id="D9H-aO-52o"/>
                             </connections>
@@ -452,7 +452,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ScQ-9H-M8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2245" y="-1485"/>
+            <point key="canvasLocation" x="-748" y="-1545"/>
         </scene>
         <!--HomeVC-->
         <scene sceneID="k2v-X9-Wz8">
@@ -482,17 +482,17 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G7W-7k-Ckb">
-                                                        <rect key="frame" x="0.0" y="535" width="600" height="2"/>
+                                                        <rect key="frame" x="0.0" y="535" width="600" height="1"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="2" id="Lel-gP-TR4"/>
+                                                            <constraint firstAttribute="height" constant="1" id="Lel-gP-TR4"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68i-dj-mha">
-                                                        <rect key="frame" x="0.0" y="471" width="600" height="2"/>
+                                                        <rect key="frame" x="0.0" y="470" width="600" height="1"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="2" id="pj1-rB-gYs"/>
+                                                            <constraint firstAttribute="height" constant="1" id="pj1-rB-gYs"/>
                                                         </constraints>
                                                     </view>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="socialme-word.png" translatesAutoresizingMaskIntoConstraints="NO" id="IHr-Wg-edi">
@@ -507,10 +507,10 @@
                                                     <constraint firstItem="68i-dj-mha" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="51H-ib-QU8"/>
                                                     <constraint firstItem="IHr-Wg-edi" firstAttribute="top" secondItem="REQ-Xi-LLo" secondAttribute="top" constant="100" id="5PO-Xz-Qpf"/>
                                                     <constraint firstItem="G7W-7k-Ckb" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="5dm-FW-n7x"/>
-                                                    <constraint firstItem="G7W-7k-Ckb" firstAttribute="top" secondItem="68i-dj-mha" secondAttribute="bottom" constant="62" id="H9T-aR-V9j"/>
+                                                    <constraint firstItem="G7W-7k-Ckb" firstAttribute="top" secondItem="68i-dj-mha" secondAttribute="bottom" constant="64" id="H9T-aR-V9j"/>
                                                     <constraint firstAttribute="trailing" secondItem="68i-dj-mha" secondAttribute="trailing" id="K9S-aa-pPU"/>
                                                     <constraint firstAttribute="centerX" secondItem="IHr-Wg-edi" secondAttribute="centerX" constant="-0.5" id="NuX-oD-bdG"/>
-                                                    <constraint firstAttribute="bottom" secondItem="G7W-7k-Ckb" secondAttribute="bottom" constant="63" id="YS9-Ph-Cxg"/>
+                                                    <constraint firstAttribute="bottom" secondItem="G7W-7k-Ckb" secondAttribute="bottom" constant="64" id="YS9-Ph-Cxg"/>
                                                     <constraint firstAttribute="trailing" secondItem="G7W-7k-Ckb" secondAttribute="trailing" id="bSO-fC-LHJ"/>
                                                 </constraints>
                                             </view>
@@ -749,6 +749,18 @@
                                     <!--2015-05-20 23:53:54 +0000-->
                                 </date>
                             </datePicker>
+                            <segmentedControl opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="edW-q2-sK0">
+                                <rect key="frame" x="201" y="421" width="199" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="199" id="ptd-yW-ORs"/>
+                                    <constraint firstAttribute="height" constant="28" id="sfp-1D-QMR"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Male"/>
+                                    <segment title="Female"/>
+                                </segments>
+                                <color key="tintColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -756,6 +768,7 @@
                             <constraint firstItem="7ze-5p-FrE" firstAttribute="top" secondItem="0LS-r2-tdY" secondAttribute="bottom" id="DHL-Km-nY2"/>
                             <constraint firstItem="Hbq-9m-FOk" firstAttribute="leading" secondItem="R3v-3H-B1J" secondAttribute="leading" constant="16" id="L0c-v0-9kp"/>
                             <constraint firstItem="oLd-j6-qi4" firstAttribute="leading" secondItem="R3v-3H-B1J" secondAttribute="leading" id="L5P-e2-db0"/>
+                            <constraint firstItem="edW-q2-sK0" firstAttribute="top" secondItem="7TH-Dc-0qZ" secondAttribute="bottom" constant="8" id="Tyn-I0-LoE"/>
                             <constraint firstAttribute="trailing" secondItem="oLd-j6-qi4" secondAttribute="trailing" id="b5l-xI-yV3"/>
                             <constraint firstItem="27F-0h-Efw" firstAttribute="top" secondItem="CaQ-Z0-mWE" secondAttribute="bottom" id="b6Y-JQ-rCk"/>
                             <constraint firstAttribute="trailing" secondItem="CaQ-Z0-mWE" secondAttribute="trailing" id="bTU-X1-OMP"/>
@@ -767,6 +780,7 @@
                             <constraint firstAttribute="trailing" secondItem="7ze-5p-FrE" secondAttribute="trailing" id="k49-y4-ael"/>
                             <constraint firstItem="7ze-5p-FrE" firstAttribute="leading" secondItem="R3v-3H-B1J" secondAttribute="leading" id="l6Z-Gb-BLH"/>
                             <constraint firstItem="CaQ-Z0-mWE" firstAttribute="leading" secondItem="R3v-3H-B1J" secondAttribute="leading" id="pJt-pg-fyX"/>
+                            <constraint firstAttribute="centerX" secondItem="edW-q2-sK0" secondAttribute="centerX" constant="-0.5" id="pus-2c-ffH"/>
                             <constraint firstAttribute="trailing" secondItem="27F-0h-Efw" secondAttribute="trailing" id="rdx-MZ-O3a"/>
                             <constraint firstItem="7TH-Dc-0qZ" firstAttribute="leading" secondItem="R3v-3H-B1J" secondAttribute="leading" id="rjb-gS-uBk"/>
                         </constraints>
@@ -777,9 +791,11 @@
                         <outlet property="birthdayPicker" destination="7TH-Dc-0qZ" id="mBE-No-YbN"/>
                         <outlet property="constraint" destination="fd8-Bf-oGI" id="EjS-8z-IF7"/>
                         <outlet property="emailTF" destination="27F-0h-Efw" id="WSm-aA-9jr"/>
+                        <outlet property="genderSegmentControl" destination="edW-q2-sK0" id="5tI-oC-ip3"/>
                         <outlet property="passwordTF" destination="CaQ-Z0-mWE" id="7j5-z7-TCO"/>
                         <outlet property="signUpButton" destination="oLd-j6-qi4" id="u2a-tZ-BgF"/>
                         <outlet property="usernameTF" destination="7ze-5p-FrE" id="DWT-ob-FA6"/>
+                        <segue destination="ykb-z2-sPT" kind="show" identifier="signup" id="D4c-x3-Bbm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49J-76-ffQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -794,11 +810,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="oKc-fO-EIe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="tintColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
-                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1300,6 +1316,6 @@
         <image name="socialme-word.png" width="1630" height="978"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="o4m-dp-fgm"/>
+        <segue reference="D4c-x3-Bbm"/>
     </inferredMetricsTieBreakers>
 </document>
