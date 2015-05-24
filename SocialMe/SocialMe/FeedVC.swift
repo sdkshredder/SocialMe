@@ -204,7 +204,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
 
-            
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
             query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
 

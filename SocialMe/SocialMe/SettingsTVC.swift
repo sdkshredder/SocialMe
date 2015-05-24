@@ -17,6 +17,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var distanceValue: UILabel!
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var segment: UISegmentedControl!
+
     
     var pickerData = [18]
     
@@ -134,6 +135,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             default:
                 segment.selectedSegmentIndex = 2
         }
+
         
         
         
