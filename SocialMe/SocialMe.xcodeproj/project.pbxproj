@@ -31,6 +31,9 @@
 		FE6718771AEE0E32006C03FC /* annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6718761AEE0E32006C03FC /* annotation.swift */; };
 		FE77BBC51B1130A50069D761 /* LogOutTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */; };
 		FE77BBC71B117EBD0069D761 /* ProfileTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */; };
+		FE77BBC91B119AF30069D761 /* FriendRequestsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */; };
+		FE77BBCB1B119B220069D761 /* MessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBCA1B119B220069D761 /* MessagesVC.swift */; };
+		FE77BBCD1B119DCB0069D761 /* FriendRequectTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBCC1B119DCB0069D761 /* FriendRequectTVCell.swift */; };
 		FE8A48DA1AF298D30022C339 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8A48D91AF298D30022C339 /* RootVC.swift */; };
 		FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */; };
 		FE8B46861ADCEFEF00FA9EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */; };
@@ -130,6 +133,9 @@
 		FE6718761AEE0E32006C03FC /* annotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = annotation.swift; sourceTree = "<group>"; };
 		FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTVCell.swift; sourceTree = "<group>"; };
 		FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTVCell.swift; sourceTree = "<group>"; };
+		FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestsTVC.swift; sourceTree = "<group>"; };
+		FE77BBCA1B119B220069D761 /* MessagesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesVC.swift; sourceTree = "<group>"; };
+		FE77BBCC1B119DCB0069D761 /* FriendRequectTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequectTVCell.swift; sourceTree = "<group>"; };
 		FE8A48D91AF298D30022C339 /* RootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVC.swift; sourceTree = "<group>"; };
 		FE8B467B1ADCEFEF00FA9EA3 /* SocialMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE8B467F1ADCEFEF00FA9EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +252,7 @@
 		FE77BBBE1B0F41470069D761 /* TVCells */ = {
 			isa = PBXGroup;
 			children = (
+				FE77BBCC1B119DCB0069D761 /* FriendRequectTVCell.swift */,
 				FE55B0921B092A2E00B2A7A0 /* ProfilePictureTVCell.swift */,
 				FE39C4B31B0140B4001BB406 /* LocationTVCell.swift */,
 				FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */,
@@ -282,6 +289,7 @@
 		FE77BBC11B0F418C0069D761 /* TVs */ = {
 			isa = PBXGroup;
 			children = (
+				FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */,
 				FE77BBBE1B0F41470069D761 /* TVCells */,
 				FE45F1EA1AFAEAB1000AECE4 /* TableVC.swift */,
 				DDE757051B0928180090B35D /* SettingsTVC.swift */,
@@ -311,6 +319,7 @@
 		FE8B467D1ADCEFEF00FA9EA3 /* SocialMe */ = {
 			isa = PBXGroup;
 			children = (
+				FE77BBCA1B119B220069D761 /* MessagesVC.swift */,
 				FE5D6F831B0316A6002691D4 /* Login+SignUp */,
 				FE77BBC11B0F418C0069D761 /* TVs */,
 				FE77BBBF1B0F416A0069D761 /* Map */,
@@ -582,6 +591,9 @@
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
 				FE55B0931B092A2E00B2A7A0 /* ProfilePictureTVCell.swift in Sources */,
 				FE5D6F851B03186C002691D4 /* CustomTextField.swift in Sources */,
+				FE77BBC91B119AF30069D761 /* FriendRequestsTVC.swift in Sources */,
+				FE77BBCB1B119B220069D761 /* MessagesVC.swift in Sources */,
+				FE77BBCD1B119DCB0069D761 /* FriendRequectTVCell.swift in Sources */,
 				FEBD86881AE1D05C006452FD /* SignUpVC.swift in Sources */,
 				FE8A48DA1AF298D30022C339 /* RootVC.swift in Sources */,
 				FE5D6F891B03D128002691D4 /* CustomAnnotation.swift in Sources */,

@@ -8,7 +8,7 @@
         <!--ProfileVC-->
         <scene sceneID="Bxt-uE-v6d">
             <objects>
-                <viewController id="2vW-9m-5N4" customClass="ProfileVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileVC" id="2vW-9m-5N4" customClass="ProfileVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uiE-S6-mOc"/>
                         <viewControllerLayoutGuide type="bottom" id="w5o-Y8-ebz"/>
@@ -962,14 +962,171 @@
                             <outlet property="delegate" destination="S5L-YX-dhc" id="ccf-fM-kVW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="6MB-Fg-Sml"/>
+                    <navigationItem key="navigationItem" id="6MB-Fg-Sml">
+                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="lVR-mB-S9A">
+                            <connections>
+                                <action selector="showMessages:" destination="S5L-YX-dhc" id="LCG-ds-ORX"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="06k-PQ-Irp">
+                            <connections>
+                                <action selector="showFriendRequests:" destination="S5L-YX-dhc" id="0LA-gZ-hLy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="table" destination="zRp-ka-LPH" id="QRZ-YQ-8dI"/>
+                        <segue destination="FnG-cE-wVQ" kind="show" identifier="messages" id="OWI-OR-5jv"/>
+                        <segue destination="3mF-QI-p6i" kind="show" identifier="friedRequests" id="TMf-rp-miU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7z-UC-do2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="197" y="631"/>
+            <point key="canvasLocation" x="27" y="548"/>
+        </scene>
+        <!--Friend Requests-->
+        <scene sceneID="J9M-Y3-M3A">
+            <objects>
+                <tableViewController storyboardIdentifier="friendRequestTVC" id="3mF-QI-p6i" customClass="FriendRequestsTVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="sSM-9H-AaL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendRequestCell" rowHeight="100" id="t2A-Ac-qkp" customClass="FriendRequectTVCell" customModule="SocialMe" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t2A-Ac-qkp" id="X2d-Ei-ALH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcasts.png" translatesAutoresizingMaskIntoConstraints="NO" id="At7-ED-TTV">
+                                            <rect key="frame" x="8" y="12" width="75" height="75"/>
+                                            <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="75" id="4iX-qA-Vrk"/>
+                                                <constraint firstAttribute="height" constant="75" id="SXg-7U-AqL"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z8G-U7-oap">
+                                            <rect key="frame" x="91" y="57" width="70" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="INq-TM-hzJ"/>
+                                                <constraint firstAttribute="width" constant="70" id="m9V-F7-w4d"/>
+                                            </constraints>
+                                            <state key="normal" title="Accept">
+                                                <color key="titleColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="acceptButtonTouched:" destination="t2A-Ac-qkp" eventType="touchUpInside" id="n5Y-Fa-AKH"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bPd-nB-GoY">
+                                            <rect key="frame" x="169" y="57" width="70" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="UjO-k7-6f7"/>
+                                                <constraint firstAttribute="height" constant="30" id="n3x-69-4tH"/>
+                                            </constraints>
+                                            <state key="normal" title="Reject">
+                                                <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="RejectButtonTouched:" destination="t2A-Ac-qkp" eventType="touchUpInside" id="e1g-Zv-7VH"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYf-UX-E9u">
+                                            <rect key="frame" x="247" y="57" width="70" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="gxp-dv-WKT"/>
+                                                <constraint firstAttribute="height" constant="30" id="odk-KV-ddR"/>
+                                            </constraints>
+                                            <state key="normal" title="Block">
+                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="BlockButtonTouched:" destination="t2A-Ac-qkp" eventType="touchUpInside" id="L7W-hp-d6o"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wW-Wf-YuH">
+                                            <rect key="frame" x="95" y="12" width="195" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="8eY-Br-gaE"/>
+                                                <constraint firstAttribute="width" constant="195" id="mfb-2m-jvH"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhw-hx-itN">
+                                            <rect key="frame" x="8" y="12" width="75" height="75"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="75" id="5UC-eu-oAE"/>
+                                                <constraint firstAttribute="width" constant="75" id="8nc-Gf-KC5"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="profilePictureTouched:" destination="t2A-Ac-qkp" eventType="touchUpInside" id="EQj-gD-GQY"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="At7-ED-TTV" secondAttribute="centerY" id="5qj-4g-jay"/>
+                                        <constraint firstItem="bPd-nB-GoY" firstAttribute="leading" secondItem="z8G-U7-oap" secondAttribute="trailing" constant="8" id="8Vb-Qk-F6Y"/>
+                                        <constraint firstItem="bPd-nB-GoY" firstAttribute="bottom" secondItem="mYf-UX-E9u" secondAttribute="bottom" id="JEg-hv-iQK"/>
+                                        <constraint firstItem="xhw-hx-itN" firstAttribute="leading" secondItem="X2d-Ei-ALH" secondAttribute="leading" constant="8" id="L9d-vf-fIu"/>
+                                        <constraint firstItem="mYf-UX-E9u" firstAttribute="leading" secondItem="bPd-nB-GoY" secondAttribute="trailing" constant="8" id="MP0-cN-hmn"/>
+                                        <constraint firstAttribute="centerY" secondItem="xhw-hx-itN" secondAttribute="centerY" id="REV-m5-42P"/>
+                                        <constraint firstItem="bPd-nB-GoY" firstAttribute="bottom" secondItem="z8G-U7-oap" secondAttribute="bottom" id="RLR-OD-ZyS"/>
+                                        <constraint firstItem="At7-ED-TTV" firstAttribute="leading" secondItem="X2d-Ei-ALH" secondAttribute="leading" constant="8" id="SVY-iF-eur"/>
+                                        <constraint firstItem="0wW-Wf-YuH" firstAttribute="leading" secondItem="At7-ED-TTV" secondAttribute="trailing" constant="12" id="Vqa-Wj-L7G"/>
+                                        <constraint firstItem="At7-ED-TTV" firstAttribute="top" secondItem="0wW-Wf-YuH" secondAttribute="top" id="Wb3-MN-P4t"/>
+                                        <constraint firstItem="bPd-nB-GoY" firstAttribute="bottom" secondItem="At7-ED-TTV" secondAttribute="bottom" id="fBe-Ff-dFW"/>
+                                        <constraint firstItem="z8G-U7-oap" firstAttribute="leading" secondItem="At7-ED-TTV" secondAttribute="trailing" constant="8" id="vUR-eq-Dqx"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="acceptButton" destination="z8G-U7-oap" id="8vX-0C-0bZ"/>
+                                    <outlet property="blockButton" destination="mYf-UX-E9u" id="cc7-e7-wny"/>
+                                    <outlet property="profilePicture" destination="At7-ED-TTV" id="MFy-YS-nnu"/>
+                                    <outlet property="rejectButton" destination="bPd-nB-GoY" id="d3H-NJ-zFj"/>
+                                    <outlet property="usernameLabel" destination="0wW-Wf-YuH" id="uNW-P6-k9o"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3mF-QI-p6i" id="xaY-sC-iTV"/>
+                            <outlet property="delegate" destination="3mF-QI-p6i" id="V5j-Me-snn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Friend Requests" id="xap-IB-u8H"/>
+                    <connections>
+                        <outlet property="tableView" destination="sSM-9H-AaL" id="7TO-pa-Saz"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGG-ZN-Jjv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="773" y="548"/>
+        </scene>
+        <!--MessagesVC-->
+        <scene sceneID="UUd-f8-e9E">
+            <objects>
+                <viewController storyboardIdentifier="messagesVC" id="FnG-cE-wVQ" customClass="MessagesVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="k95-MS-GJH"/>
+                        <viewControllerLayoutGuide type="bottom" id="rOc-zv-BIK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JVF-EZ-Bsw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eWW-1W-M7G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="27" y="1261"/>
         </scene>
         <!--Map-->
         <scene sceneID="lqZ-xk-JGD">
@@ -1283,7 +1440,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCG-vY-sYO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="153" y="1562"/>
+            <point key="canvasLocation" x="-659" y="2237"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3uw-TR-NgV">
@@ -1313,6 +1470,7 @@
         <image name="contacts.png" width="50" height="50"/>
         <image name="general.png" width="58" height="58"/>
         <image name="near-me@3x.png" width="177" height="177"/>
+        <image name="podcasts.png" width="50" height="55"/>
         <image name="socialme-word.png" width="1630" height="978"/>
     </resources>
     <inferredMetricsTieBreakers>

@@ -34,6 +34,18 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         
     }
     
+    @IBAction func showFriendRequests(sender: UIBarButtonItem) {
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("friendRequestTVC") as! FriendRequestsTVC
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    @IBAction func showMessages(sender: UIBarButtonItem) {
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("messagesVC") as! MessagesVC
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selected.containsObject(indexPath.row) {
             return 124

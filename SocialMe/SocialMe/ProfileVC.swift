@@ -23,7 +23,6 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     @IBOutlet weak var userProfilePic: UIImageView!
     @IBOutlet weak var messageButton: UIButton!
     @IBOutlet weak var addUserButton: UIButton!
-    
     @IBAction func addFriendAction(sender: UIButton) {
         sendFriendRequest(user, fromUser: loggedInUser)
     }
