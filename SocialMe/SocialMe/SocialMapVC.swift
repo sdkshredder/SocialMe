@@ -342,7 +342,9 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     func locationManager(manager: CLLocationManager!,
         didUpdateLocations locations: [AnyObject]!) {
-            logLocation()
+            if PFUser.currentUser() != nil {
+                logLocation()
+            }
             /*
             var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
             tempAlert.show()

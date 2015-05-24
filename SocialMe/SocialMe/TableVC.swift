@@ -32,6 +32,13 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleImageNotification:", name: "imageNotification", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "logOut:", name: "logoutNotification", object: nil)
+    }
+    
+    func logOut(notification: NSNotification) {
+        PFUser.logOut()
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("root") as! RootVC
+        navigationController?.presentViewController(vc, animated: true, completion: nil)
     }
     
     func handleKeyboardWillShowNotification(notification: NSNotification) {
@@ -54,13 +61,8 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
         var originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
         
-        // constraint.constant -= originDelta
-        
-        // view.setNeedsUpdateConstraints()
-        
         if showsKeyboard == false {
             self.table.frame.size.height = 470
-            //self.table.frame.height // = originDelta
         } else {
                             var height = self.table.frame.size.height
                             println(height)
@@ -69,17 +71,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         }
         
         UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
-            //self.view.layoutIfNeeded()
-            
-            if showsKeyboard == false {
-                
-                //self.table.frame.height // = originDelta
-            } else {
-//                var height = self.table.frame.size.height
-//                println(height)
-//                let a = height + originDelta + 50
-//                self.table.frame.size.height = a
-            }
+        
             }, completion: nil)
         
         // Scroll to the selected text once the keyboard frame changes.

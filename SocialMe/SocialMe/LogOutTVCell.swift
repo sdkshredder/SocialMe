@@ -11,6 +11,6 @@ import UIKit
 class LogOutTVCell: UITableViewCell {
 
     @IBAction func logOutTouched(sender: UIButton) {
-        println("hello")
+        NSNotificationCenter.defaultCenter().postNotificationName("logoutNotification", object: nil)
     }
 }

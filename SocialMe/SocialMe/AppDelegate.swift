@@ -16,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Parse.setApplicationId("RNVW79HLFeFtAIgI0AzfbLLzRMZHApcxSJjbDCJB", clientKey: "7WTLoQHXQPvlWlNL1PyT0BpYzk9zKoU6u9cVdLJY")
-    
         return true
     }
     /*
