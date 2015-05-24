@@ -133,13 +133,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let user = PFUser.currentUser()
             
             var query = PFUser.query()
+			query!.whereKey("username", equalTo: "Kelsey")
+			/*
             query!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
+			
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
-            /*
+			
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
             query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
             */
@@ -187,6 +190,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         initTableView()
         fetchUsers()
+		println("You're logged in as \(PFUser.currentUser()?.username)")
     }
     
     override func viewDidAppear(animated: Bool) {
