@@ -17,13 +17,17 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var distanceValue: UILabel!
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var segment: UISegmentedControl!
+
     
     var pickerData = [18]
     
     @IBAction func valueDidChange(sender: UISlider) {
-        var current = Int(sender.value)
-        current = 10
-        distanceValue.text = String(format: "\(current) feet")
+        var distance = Int(sender.value)
+        if distance == 1 {
+            distanceValue.text = "1 foot"
+        } else {
+            distanceValue.text = "\(distance) feet"
+        }
     }
     
     @IBAction func segmentValueChange(sender: UISegmentedControl) {
@@ -101,20 +105,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             navigationController?.popViewControllerAnimated(true)
         }
     }
-    /*
-    func action(sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex{
-        case 1:
-            println("Segment 1 selected")
-        case 2:
-            println("Segment 2 selected")
-        case 3:
-            println("Segment 3 selecteed")
-        default:
-            println("No segments")
-        }
-    }
-    */
 
     
     override func viewDidLoad() {
@@ -122,14 +112,30 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
         initData()
-        distanceValue.text = "10 feet"
-        slider.value = 10
+        let user = PFUser.currentUser()
+        let distance = user?.objectForKey("distanceFilter") as! Int
+        slider.value = Float(distance)
+        if distance == 1 {
+            distanceValue.text = "1 foot"
+        } else {
+            distanceValue.text = "\(distance) feet"
+        }
         lowerAge.delegate = self
         lowerAge.dataSource = self
+        lowerAge.selectRow((user?.objectForKey("lowerAgeFilter") as! Int) - 18, inComponent: 0, animated: true)
         upperAge.delegate = self
         upperAge.dataSource = self
-        //segment.addTarget(self, action: "action:", forControlEvents: .ValueChanged)
-        //segment.
+        upperAge.selectRow((user?.objectForKey("upperAgeFilter") as! Int) - 18, inComponent: 0, animated: true)
+        let gender = user?.objectForKey("genderFilter") as! String
+        switch gender {
+            case "Male":
+                segment.selectedSegmentIndex = 0
+            case "Female":
+                segment.selectedSegmentIndex = 1
+            default:
+                segment.selectedSegmentIndex = 2
+        }
+
         
         
         
