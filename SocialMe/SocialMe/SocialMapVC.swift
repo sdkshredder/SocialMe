@@ -32,7 +32,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         super.viewDidLoad()
         setupLocationManager()
         registerForNotification()
-        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("logLocation"), userInfo: nil, repeats: true)
         setupMap()
         styleDisplay()
         showPeopleNearby()
@@ -222,11 +222,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     
     @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
-        //let alert = UIAlertView(title: "Logout", message: "You have been logged out", delegate: self, cancelButtonTitle: "Continue")
-        // alert.show()
-        // PFUser.logOut()
-        // presentMainVC()
-        //navigationController?.popToRootViewControllerAnimated(<#animated: Bool#>)
+        let settingsVC = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
+            navigationController?.presentViewController(settingsVC, animated: true, completion: nil)    
     }
     
     
@@ -340,16 +337,16 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         
     }
     
-    func locationManager(manager: CLLocationManager!,
-        didUpdateLocations locations: [AnyObject]!) {
-            if PFUser.currentUser() != nil {
-                logLocation()
-            }
-            /*
-            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
-            tempAlert.show()
-            */
-    }
+//    func locationManager(manager: CLLocationManager!,
+//        didUpdateLocations locations: [AnyObject]!) {
+//            if PFUser.currentUser() != nil {
+//                logLocation()
+//            }
+//            /*
+//            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
+//            tempAlert.show()
+//            */
+//    }
     
     /*
     func addBlur() {
