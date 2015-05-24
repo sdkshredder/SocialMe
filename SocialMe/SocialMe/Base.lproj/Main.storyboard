@@ -715,7 +715,7 @@
         <!--RootVC-->
         <scene sceneID="e6r-fX-gBg">
             <objects>
-                <viewController id="oeb-0S-q06" customClass="RootVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="root" id="oeb-0S-q06" customClass="RootVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aUl-h1-3VK"/>
                         <viewControllerLayoutGuide type="bottom" id="a2k-7P-HvB"/>
@@ -1198,6 +1198,6 @@
         <image name="socialme-word.png" width="1630" height="978"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="o4m-dp-fgm"/>
+        <segue reference="0zw-H4-0yz"/>
     </inferredMetricsTieBreakers>
 </document>
