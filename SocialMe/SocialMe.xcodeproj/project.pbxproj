@@ -30,6 +30,7 @@
 		FE5D6F8B1B03D476002691D4 /* balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5D6F8A1B03D476002691D4 /* balloon.png */; };
 		FE6718771AEE0E32006C03FC /* annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6718761AEE0E32006C03FC /* annotation.swift */; };
 		FE77BBC51B1130A50069D761 /* LogOutTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */; };
+		FE77BBC71B117EBD0069D761 /* ProfileTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */; };
 		FE8A48DA1AF298D30022C339 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8A48D91AF298D30022C339 /* RootVC.swift */; };
 		FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */; };
 		FE8B46861ADCEFEF00FA9EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */; };
@@ -128,6 +129,7 @@
 		FE5D6F8A1B03D476002691D4 /* balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon.png; sourceTree = "<group>"; };
 		FE6718761AEE0E32006C03FC /* annotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = annotation.swift; sourceTree = "<group>"; };
 		FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTVCell.swift; sourceTree = "<group>"; };
+		FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTVCell.swift; sourceTree = "<group>"; };
 		FE8A48D91AF298D30022C339 /* RootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVC.swift; sourceTree = "<group>"; };
 		FE8B467B1ADCEFEF00FA9EA3 /* SocialMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE8B467F1ADCEFEF00FA9EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				FE55B0921B092A2E00B2A7A0 /* ProfilePictureTVCell.swift */,
 				FE39C4B31B0140B4001BB406 /* LocationTVCell.swift */,
+				FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */,
 				FE9D23F61AFC7228005E065E /* AgeTVCell.swift */,
 				FE45F1EC1AFAEADF000AECE4 /* TableTVCell.swift */,
 				FE0A91CD1AF6FAA700CA41B2 /* ContentTVCell.swift */,
@@ -589,6 +592,7 @@
 				FE9D23FD1AFC909B005E065E /* TBC.swift in Sources */,
 				FE0A91D01AF6FCC600CA41B2 /* ContactTVC.swift in Sources */,
 				DDE757061B0928180090B35D /* SettingsTVC.swift in Sources */,
+				FE77BBC71B117EBD0069D761 /* ProfileTVCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
