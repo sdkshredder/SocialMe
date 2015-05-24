@@ -11,18 +11,15 @@ import Parse
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
-    
-    
     @IBOutlet weak var usernameTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var birthdayLabel: UILabel!
     @IBOutlet weak var birthdayPicker: UIDatePicker!
-    
+    @IBOutlet weak var genderSegmentControl: UISegmentedControl!
     
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var constraint: NSLayoutConstraint!
-    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,12 +58,11 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 self.signUpButton.alpha = 1
                 self.birthdayLabel.alpha = 1
                 self.birthdayPicker.alpha = 1
+                self.genderSegmentControl.alpha = 1
             }
         }, completion: nil)
         
-        // Scroll to the selected text once the keyboard frame changes.
-        //let selectedRange = textView.selectedRange
-        //textView.scrollRangeToVisible(selectedRange)
+        self.signUpButton.enabled = true
     }
     
     func initTextFields() {
@@ -83,7 +79,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             emailTF.becomeFirstResponder()
         } else {
             emailTF.resignFirstResponder()
-        
         }
         return true
     }
@@ -115,22 +110,38 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             (lowerCaseUsername, passwordTF.text, emailTF.text)
         
         user.setObject(18, forKey: "lowerAgeFilter")
-        user.setObject(41, forKey: "upperAgeFilter")
-        user.setObject("both", forKey: "genderFilter")
+        user.setObject(50, forKey: "upperAgeFilter")
+        user.setObject("Both", forKey: "genderFilter")
         user.setObject(10, forKey: "distanceFilter")
+        user.setObject(PFGeoPoint(latitude: 0, longitude: 0), forKey: "location")
+        
+        let age = getAge()
+        user.setObject(age, forKey: "Age")
+        
+        
+        var gender = "Both"
+        if genderSegmentControl.selectedSegmentIndex == 0 {
+            gender = "Male"
+        } else {
+            gender = "Female"
+        }
+        user.setObject(gender, forKey: "gender")
         
         user.signUpInBackgroundWithBlock {
             (succeeded, error) -> Void in
             if error == nil {
-                println("success for user \(user.username)")
-                //self.performSegueWithIdentifier("signup", sender: self)
-                //self.navigationController?.setNavigationBarHidden(true, animated: true)
-                //self.performSegueWithIdentifier("login", sender: self)
+                println("Sign up success for user \(user.username).")
+                self.navigationController?.setNavigationBarHidden(true, animated: true)
+                self.performSegueWithIdentifier("signup", sender: self)
             } else {
                 let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
                 alert.show()
             }
         }
     }
-   
+    
+    func getAge() -> Int {
+       return NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear, fromDate: birthdayPicker.date, toDate: NSDate(), options: nil).year
+    }
+
 }
