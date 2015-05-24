@@ -83,15 +83,17 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     }
     
     func logLocation() {
-        let geoPoint = getLocation()
-        let user = PFUser.currentUser()
-        user!.setObject(geoPoint, forKey: "location")
-        let now = NSDate().timeIntervalSince1970
-        user!.setObject(now, forKey: "lastSeen")
-        user!.saveInBackgroundWithBlock {
-            (succeeded, error) -> Void in
-            if error == nil {
-                println("success for user \(user!.username)")
+        if PFUser.currentUser() != nil {
+            let geoPoint = getLocation()
+            let user = PFUser.currentUser()
+            user!.setObject(geoPoint, forKey: "location")
+            let now = NSDate().timeIntervalSince1970
+            user!.setObject(now, forKey: "lastSeen")
+            user!.saveInBackgroundWithBlock {
+                (succeeded, error) -> Void in
+                if error == nil {
+                    println("success for user \(user!.username)")
+                }
             }
         }
     }
