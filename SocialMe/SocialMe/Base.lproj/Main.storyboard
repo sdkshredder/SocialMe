@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="txE-0p-xd7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="txE-0p-xd7">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -159,32 +159,33 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0zm-uL-3Q0" id="554-Op-fQm">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
-                                                    <rect key="frame" x="198" y="15" width="204" height="31"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500 ft" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1BT-AY-SXE">
+                                                    <rect key="frame" x="22" y="19" width="60" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="3fT-Zn-Wqj"/>
-                                                        <constraint firstAttribute="width" constant="200" id="lDr-4d-Ens"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="valueDidChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="2Ku-56-b3l"/>
-                                                    </connections>
-                                                </slider>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1BT-AY-SXE">
-                                                    <rect key="frame" x="22" y="19" width="100" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="ATV-WX-HLj"/>
+                                                        <constraint firstAttribute="width" constant="60" id="ATV-WX-HLj"/>
                                                         <constraint firstAttribute="height" constant="21" id="vJF-Ow-X0s"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
+                                                    <rect key="frame" x="88" y="15" width="424" height="31"/>
+                                                    <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="gvj-Uk-nKK"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="valueDidChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="2Ku-56-b3l"/>
+                                                    </connections>
+                                                </slider>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="jnN-NG-Ddh" secondAttribute="centerY" constant="-0.5" id="Dbn-Oz-1vj"/>
                                                 <constraint firstItem="1BT-AY-SXE" firstAttribute="leading" secondItem="554-Op-fQm" secondAttribute="leading" constant="22" id="K2A-eV-QHo"/>
+                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="leading" secondItem="1BT-AY-SXE" secondAttribute="trailing" constant="8" id="Wtt-Cm-ZSV"/>
                                                 <constraint firstAttribute="centerY" secondItem="1BT-AY-SXE" secondAttribute="centerY" id="XjZ-62-os4"/>
-                                                <constraint firstAttribute="centerY" secondItem="jnN-NG-Ddh" secondAttribute="centerY" constant="-0.5" id="qLS-hx-cB3"/>
-                                                <constraint firstAttribute="centerX" secondItem="jnN-NG-Ddh" secondAttribute="centerX" id="ql9-h4-OCT"/>
+                                                <constraint firstAttribute="trailing" secondItem="jnN-NG-Ddh" secondAttribute="trailing" constant="90" id="uLh-DV-GGA"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -264,6 +265,7 @@
                                                         <segment title="Female"/>
                                                         <segment title="Both"/>
                                                     </segments>
+                                                    <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="segmentValueChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="yH7-nG-yQa"/>
                                                     </connections>
