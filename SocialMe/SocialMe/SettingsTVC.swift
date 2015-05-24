@@ -96,7 +96,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     func back(sender: UIBarButtonItem) {
         if self.lowerAge.selectedRowInComponent(0) > self.upperAge.selectedRowInComponent(0){
-            let alert = UIAlertView(title: "Error", message: "Invalid settings", delegate: nil, cancelButtonTitle: "OK")
+            let alert = UIAlertView(title: "Invalid Age Range", message: "Lower age cannot be greater than Upper age", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         } else {
             navigationController?.popViewControllerAnimated(true)
