@@ -14,6 +14,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let tableView = UITableView()
     var data = NSArray()
+    var refresh = UIRefreshControl()
     
     @IBAction func ShowProfile(sender: UIBarButtonItem) {
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -34,15 +35,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let vc = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
         
             navigationController?.pushViewController(vc, animated: true)
-            /*setNavigationBarHidden(true, animated: true)
-        
-        UIView.animateWithDuration(0.2, animations: {
-            self.tabBarController?.tabBar.frame.origin = CGPointMake(0, self.view.frame.height)
-            self.tableView.frame.origin = CGPointMake(0, self.view.frame.height)
-            
-        })
-*/
-        
     }
     
     
@@ -73,6 +65,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func initTableView() {
+        refresh.addTarget(self, action: "updateFeed", forControlEvents: .ValueChanged)
+        tableView.addSubview(refresh)
         tableView.frame = view.frame
         tableView.delegate = self
         tableView.dataSource = self
@@ -80,6 +74,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.layoutMargins = UIEdgeInsetsZero
         tableView.rowHeight = 240
         view.addSubview(tableView)
+    }
+    
+    func updateFeed() {
+        tableView.reloadData()
+        var delayInSeconds = 1.0;
+        var popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)));
+        dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+            self.refresh.endRefreshing()
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -94,7 +97,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func styleCell(content: UIView, user: PFUser) {
         let profilePicture = UIImageView()
-        
         if let userImageFile = user.objectForKey("photo") as? PFFile {
             userImageFile.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
