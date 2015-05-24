@@ -16,7 +16,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var data = NSArray()
     
     @IBAction func ShowProfile(sender: UIBarButtonItem) {
-        println("Profile Tab")
+        //println("Profile Tab")
         navigationController?.setNavigationBarHidden(true, animated: true)
         let tab = tabBarController!.tabBar
         UIView.animateWithDuration(0.2, animations: {
@@ -87,7 +87,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cell") //tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
         
         let user = data[indexPath.row] as! PFUser
-        println(user)
+        //println(user)
         /*
         cell.textLabel!.text = user.username
         cell.detailTextLabel!.text = user.email
@@ -106,49 +106,87 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func styleCell(content: UIView, user: PFUser) {
         let a = UIView(frame: CGRectMake(0, 0, 350, 240))
-        //a.backgroundColor = UIColor.greenColor()
-        /*
-        let userImageFile = anotherPhoto["imageFile"] as PFFile
-        userImageFile.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    let image = UIImage(data:imageData)
+        
+        if let userImageFile = user.objectForKey("photo") as? PFFile {
+            userImageFile.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                
+                    let profImage = UIImage(data:imageData!)
+                    let profilePic = UIImageView(image: profImage)
+                    let defaultPic = UIImageView(image: UIImage(named: "podcasts"))
+                profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: defaultPic.frame.size.width+10, height: defaultPic.frame.size.height+10)
+                    profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+                    profilePic.clipsToBounds = true
+                
+                    a.addSubview(profilePic)
+                
+                var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
+                name.text = user.username
+                name.font = UIFont .boldSystemFontOfSize(18.0)
+                a.addSubview(name)
+                
+                println((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint))
+                var placeDistance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
+                
+                var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
+                if placeDistance == 1 {
+                    distance.text = "\(placeDistance) foot"
+                } else {
+                    distance.text = "\(placeDistance) feet"
                 }
+                a.addSubview(distance)
+                
+                
+                var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
+                occupation.text = user.objectForKey("Occupation") as? String
+                a.addSubview(occupation)
+                
+                content.clipsToBounds = true
+                content.addSubview(a)
+                content.sendSubviewToBack(a)
+                content.bringSubviewToFront(profilePic)
+                
+                
+                
+                
+            
             }
-        }
-        */
-        /*
-        if user.objectForKey("photo") != nil {
-           let profilePic = UIImageView(data:user.objectForKey("photo") as! PFFile)
         } else {
             let profilePic = UIImageView(image: UIImage(named: "podcasts"))
+            profilePic.layer.cornerRadius = profilePic.frame.height/2.0
+            profilePic.clipsToBounds = true
+            profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
+            a.addSubview(profilePic)
+            
+            var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
+            name.text = user.username
+            name.font = UIFont .boldSystemFontOfSize(18.0)
+            a.addSubview(name)
+            
+            
+            println((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint))
+            var placeDistance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
+            
+            var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
+            if placeDistance == 1 {
+                distance.text = "\(placeDistance) foot"
+            } else {
+                distance.text = "\(placeDistance) feet"
+            }
+            a.addSubview(distance)
+            
+            
+            var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
+            occupation.text = user.objectForKey("Occupation") as? String
+            a.addSubview(occupation)
+            content.clipsToBounds = true
+            content.addSubview(a)
+            content.sendSubviewToBack(a)
+            content.bringSubviewToFront(profilePic)
         }
-        */
-        
-        let profilePic = UIImageView(image: UIImage(named: "podcasts"))
-        profilePic.layer.cornerRadius = profilePic.frame.height/2.0
-        profilePic.clipsToBounds = true
-        profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: profilePic.frame.size.width, height: profilePic.frame.size.height)
-        a.addSubview(profilePic)
-        
-        var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
-        name.text = user.username
-        name.font = UIFont .boldSystemFontOfSize(18.0)
-        a.addSubview(name)
-        var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
-        distance.text = "500 feet"
-        a.addSubview(distance)
-        var occupation = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 55, width: 150, height: 20))
-        occupation.text = user.objectForKey("Occupation") as? String
-        a.addSubview(occupation)
-
         
         
-        content.clipsToBounds = true
-        content.addSubview(a)
-        content.sendSubviewToBack(a)
-        content.bringSubviewToFront(profilePic)
+        
     }
     
     func getAllUsers() {
@@ -165,23 +203,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
+
+            let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
+            query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
+
             
-            //let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
-            //println(kilometers)
-            
-            //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
-            
-            
-            //query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: user?.objectForKey("distanceFilter") as! Double)
-            
-            //var name = PFUser.query()
-            //name!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
-            
-            //var lowerAge = PFUser.query()
-            //lowerAge!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
-            
-            //var query = PFQuery.orQueryWithSubqueries([lowerAge!, name!])
-            println(query)
             /*query.findObjectsInBackgroundWithBlock{
                 (results: [AnyObject]?, error:NSError?) -> Void in
                 if error == nil {*/
@@ -203,7 +229,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath.row)
+        //println(indexPath.row)
         //let segueID = UIStoryboardSegue(identifier: "profileSegue", source: self, destination: ProfileVC.self)
         
         
