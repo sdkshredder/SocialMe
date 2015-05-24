@@ -7,12 +7,37 @@
 //
 
 import UIKit
+import Parse
+import Foundation
 
 class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var table: UITableView!
     var selected = NSMutableArray()
-    
+	var res : NSArray = []
+	
+	@IBAction func reactToRequest(sender: UIButton) {
+		reactToFriendRequest()
+	}
+	
+	func reactToFriendRequest() {
+		var requestQuery = PFQuery(className: "FriendRequests")
+		requestQuery.whereKey("toUser", equalTo: PFUser.currentUser()!.username!)
+		requestQuery.findObjectsInBackgroundWithBlock {
+			(objects: [AnyObject]?, error: NSError?) -> Void in
+			if (error == nil) {
+				println("Houston we have no problems")
+				if let objects = objects as? [PFObject] {
+					self.res = objects
+					var str = "Hey I love the Los Angeles Lakers"
+					self.testResponse(str)
+				}
+			}
+		}
+	}
+	func testResponse(str :NSString) {
+		println(str)
+	}
     override func viewDidLoad() {
         super.viewDidLoad()
         table.separatorInset = UIEdgeInsetsZero
@@ -33,6 +58,7 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         table.endUpdates()
         
     }
+	
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selected.containsObject(indexPath.row) {

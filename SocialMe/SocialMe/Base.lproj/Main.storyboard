@@ -918,6 +918,7 @@
                                                 <constraint firstAttribute="height" constant="22" id="bsd-56-XDT"/>
                                             </constraints>
                                             <connections>
+                                                <action selector="reactToRequest:" destination="S5L-YX-dhc" eventType="touchUpInside" id="oi9-7X-JAF"/>
                                                 <action selector="tap:" destination="O2u-Kp-KyP" eventType="touchUpInside" id="dpM-II-f7E"/>
                                             </connections>
                                         </button>
