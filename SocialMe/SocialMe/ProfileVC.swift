@@ -51,6 +51,10 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             self.requestRes = "pending"
                             self.notifyUsers("pending")
                             println("Friend Request Sent")
+        
+                            let alert = UIAlertView(title: "Success!", message: "Friend Request Sent", delegate: nil, cancelButtonTitle: "Done")
+                            alert.show()
+                            
                         }
                     }
                 } else {
@@ -84,6 +88,9 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         cell.separatorInset = UIEdgeInsetsZero
         cell.attrLabel.alpha = 0
         cell.inputLabel.alpha = 0
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
+        
         //let user = userData[0] as! PFUser
         println(user)
         if user != nil {
@@ -203,6 +210,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func initTableView() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.layoutMargins = UIEdgeInsetsZero
     }
     
     func styleUserPic() {
@@ -228,11 +237,5 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         getUserInfo()
         styleButtons()
     }
-    
-    
-    
-    
-    
-    
     
 }
