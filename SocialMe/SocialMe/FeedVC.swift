@@ -33,7 +33,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func showSettings(sender: UIBarButtonItem) {
         let vc = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
-        
             navigationController?.pushViewController(vc, animated: true)
     }
     

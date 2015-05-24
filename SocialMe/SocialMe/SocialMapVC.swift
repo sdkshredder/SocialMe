@@ -131,9 +131,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             anView.annotation = annotation
         }
         
-        //Set annotation-specific properties **AFTER**
-        //the view is dequeued or created...
-        
         let cpa = annotation as! CustomAnnotation
         anView.image = UIImage(named:cpa.imageName)
         
@@ -222,8 +219,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     
     @IBAction func showFilterPreferences(sender: UIBarButtonItem) {
-        let settingsVC = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
-            navigationController?.presentViewController(settingsVC, animated: true, completion: nil)    
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("settings") as! SettingsTVC
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -261,7 +258,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             }
             
         } else {
-            //Deal with it.
+            //handle #TODO
         }
     }
     
@@ -336,37 +333,4 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         locationManager.requestWhenInUseAuthorization()
         
     }
-    
-//    func locationManager(manager: CLLocationManager!,
-//        didUpdateLocations locations: [AnyObject]!) {
-//            if PFUser.currentUser() != nil {
-//                logLocation()
-//            }
-//            /*
-//            var tempAlert = UIAlertView(title: "location update!", message: "your location has been updated.", delegate: nil, cancelButtonTitle: "OK")
-//            tempAlert.show()
-//            */
-//    }
-    
-    /*
-    func addBlur() {
-        
-        // 1 - http://www.raywenderlich.com/84043/ios-8-visual-effects-tutorial
-        
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurEffectDark = UIBlurEffect(style: .Dark)
-        
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        let blurViewTwo = UIVisualEffectView(effect: blurEffectDark)
-        
-        blurView.frame = CGRectMake(0, self.view.frame.height - 100, self.view.frame.width, 50)
-        blurViewTwo.frame = CGRectMake(0, self.view.frame.height - 150, self.view.frame.width, 50)
-        
-        blurViewTwo.setTranslatesAutoresizingMaskIntoConstraints(false)
-        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        view.addSubview(blurViewTwo)
-        view.addSubview(blurView)
-    }
-    */
 }
