@@ -12,15 +12,66 @@ import Foundation
 
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
 	
+	var userPic : UIImage?
+	var username = NSString()
+	var user : PFUser! // = []
+	var numAttr = 5
+	var loggedInUser = PFUser.currentUser()!
+	var requestRes : NSString!
+	
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var userProfilePic: UIImageView!
 	@IBOutlet weak var addUserButton: UIButton!
 	@IBOutlet weak var messageUserButton: UIButton!
 	
-	var userPic : UIImage?
-	var username = NSString()
-	var user : PFUser! // = []
-	var numAttr = 5
+	@IBAction func addFriendAct(sender: UIButton) {
+		
+		sendFriendRequest(user, fromUser: loggedInUser)
+	}
+	
+
+	
+	
+	func sendFriendRequest(toUser : PFUser, fromUser : PFUser)  {
+		var requestQuery = PFQuery(className: "FriendRequests")
+		requestQuery.whereKey("toUser", equalTo: toUser.username!)
+		requestQuery.whereKey("fromUser", equalTo: fromUser.username!)
+		var status : NSString?
+		requestQuery.findObjectsInBackgroundWithBlock{
+			(objects: [AnyObject]?, error: NSError?) -> Void in
+			if error != nil {
+				println("There is a friend request here already")
+				
+			} else {
+				if (objects?.count == 0) {
+					//No entry pre-exists
+					var requestEntry = PFObject(className: "FriendRequests")
+					requestEntry["toUser"] = toUser.username
+					requestEntry["fromUser"] = fromUser.username
+					requestEntry["status"] = "pending"
+					requestEntry.saveInBackgroundWithBlock{
+						(success: Bool, error: NSError?) -> Void in
+						if (success) {
+							self.requestRes = "pending"
+							self.notifyUsers("pending")
+							println("Friend Request Sent")
+						}
+					}
+				} else {
+					//Entry does pre-exist
+					if let objects = objects as? [PFObject] {
+						var entry = objects[0]
+						self.notifyUsers(entry["status"] as! NSString)
+					}
+
+				}
+ 			}
+		}
+	}
+	
+	func notifyUsers(status: NSString) {
+		
+	}
 	
 	
 	//set width and height by click.....ctrl drag on the center vertically to set it on the blue line
