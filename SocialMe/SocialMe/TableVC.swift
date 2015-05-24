@@ -90,6 +90,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     
     @IBAction func cancel(sender: UIBarButtonItem) {
         NSNotificationCenter.defaultCenter().postNotificationName("hideSettings", object: nil)
+        navigationController?.popViewControllerAnimated(true)
     }
     
     func getCellID(path : Int) -> String {

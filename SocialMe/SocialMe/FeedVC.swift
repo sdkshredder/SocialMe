@@ -17,16 +17,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var refresh = UIRefreshControl()
     
     @IBAction func ShowProfile(sender: UIBarButtonItem) {
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        let tab = tabBarController!.tabBar
-        UIView.animateWithDuration(0.2, animations: {
-            tab.frame.origin = CGPointMake(0, self.view.frame.height)
-            self.tableView.frame.origin = CGPointMake(0, self.view.frame.height - 50)
-            
-            }, completion: {
-                (value: Bool) in
-                self.addSwipeUp()
-        })
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("myProfile") as! TableVC
+        navigationController?.pushViewController(vc, animated: true)
         
     }
     

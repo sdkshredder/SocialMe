@@ -22,7 +22,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7b2-OL-Ggn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1473" y="1511"/>
+            <point key="canvasLocation" x="-1473" y="2583"/>
         </scene>
         <!--SocialMe-->
         <scene sceneID="AH8-KI-ann">
@@ -332,7 +332,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLx-er-pn9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1473" y="749"/>
+            <point key="canvasLocation" x="-1473" y="1636"/>
         </scene>
         <!--TBC-->
         <scene sceneID="Z5u-wE-amD">
@@ -763,13 +763,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAz-30-Zq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1473" y="27"/>
+            <point key="canvasLocation" x="-1473" y="723"/>
         </scene>
-        <!--Connections-->
+        <!--Contacts-->
         <scene sceneID="fD0-v1-Cnw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kmv-SW-aHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Connections" id="jer-CQ-dEd">
+                    <tabBarItem key="tabBarItem" title="Contacts" id="jer-CQ-dEd">
                         <inset key="imageInsets" minX="5" minY="10" maxX="5" maxY="0.0"/>
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
@@ -904,7 +904,7 @@
         <!--My Profile-->
         <scene sceneID="N1m-Hq-JLF">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="5aQ-oo-cNN" customClass="TableVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="myProfile" automaticallyAdjustsScrollViewInsets="NO" id="5aQ-oo-cNN" customClass="TableVC" customModule="SocialMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oBf-Af-YvU"/>
                         <viewControllerLayoutGuide type="bottom" id="FEA-na-UV4"/>
@@ -1200,6 +1200,6 @@
         <image name="socialme-word.png" width="1630" height="978"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0zw-H4-0yz"/>
+        <segue reference="o4m-dp-fgm"/>
     </inferredMetricsTieBreakers>
 </document>

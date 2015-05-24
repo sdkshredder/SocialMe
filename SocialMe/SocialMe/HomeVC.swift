@@ -17,6 +17,7 @@ class HomeVC: UIViewController {
         super.viewDidLoad();
         animateBG()
         var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("animateBG"), userInfo: nil, repeats: true)
+        
     }
     
     
