@@ -96,7 +96,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         cell.layoutMargins = UIEdgeInsetsZero
 */
-        styleCell(cell.contentView, user: user)
+        //styleCell(cell.contentView, user: user)
+        //cell.imageView!.image = UIImage(named: "podcasts")
+        
+        if let userImageFile = user.objectForKey("photo") as? PFFile {
+            userImageFile.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                let profImage = UIImage(data:imageData!)
+                cell.imageView!.image = profImage
+            }
+        } else {
+            cell.imageView!.image = UIImage(named: "podcasts")
+        }
         
         // cell.contentView.backgroundColor = UIColor.grayColor()
         
@@ -114,11 +125,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     let profImage = UIImage(data:imageData!)
                     let profilePic = UIImageView(image: profImage)
                     let defaultPic = UIImageView(image: UIImage(named: "podcasts"))
-                profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: defaultPic.frame.size.width+10, height: defaultPic.frame.size.height+10)
+                    profilePic.frame = CGRect(x: CGRectGetMinX(a.bounds) + 30, y: CGRectGetMinY(a.bounds) + 10, width: defaultPic.frame.size.width+10, height: defaultPic.frame.size.height+10)
                     profilePic.layer.cornerRadius = profilePic.frame.height/2.0
                     profilePic.clipsToBounds = true
                 
-                    a.addSubview(profilePic)
+                    // a.addSubview(profilePic)
                 
                 var name = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds), width: 100, height: 50))
                 name.text = user.username
@@ -129,11 +140,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 var placeDistance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
                 
                 var distance = UILabel(frame: CGRect(x: CGRectGetMaxX(profilePic.bounds) + 60, y: CGRectGetMinY(a.bounds) + 35, width: 100, height: 20))
-                if placeDistance == 1 {
-                    distance.text = "\(placeDistance) foot"
-                } else {
-                    distance.text = "\(placeDistance) feet"
-                }
+                distance.text = "\(placeDistance) ft"
                 a.addSubview(distance)
                 
                 

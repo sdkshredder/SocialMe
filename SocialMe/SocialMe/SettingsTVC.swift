@@ -23,11 +23,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     @IBAction func valueDidChange(sender: UISlider) {
         var distance = Int(sender.value)
-        if distance == 1 {
-            distanceValue.text = "1 foot"
-        } else {
-            distanceValue.text = "\(distance) feet"
-        }
+        distanceValue.text = "\(distance) ft"
+
     }
     
     @IBAction func segmentValueChange(sender: UISegmentedControl) {
@@ -115,11 +112,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         let user = PFUser.currentUser()
         let distance = user?.objectForKey("distanceFilter") as! Int
         slider.value = Float(distance)
-        if distance == 1 {
-            distanceValue.text = "1 foot"
-        } else {
-            distanceValue.text = "\(distance) feet"
-        }
+        distanceValue.text = "\(distance) ft"
         lowerAge.delegate = self
         lowerAge.dataSource = self
         lowerAge.selectRow((user?.objectForKey("lowerAgeFilter") as! Int) - 18, inComponent: 0, animated: true)
