@@ -10,6 +10,7 @@ import UIKit
 
 class ContentTVCell: UITableViewCell {
 
+	@IBOutlet weak var friendPicture: UIImageView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var button: UIButton!
     @IBAction func tap(sender: UIButton) {

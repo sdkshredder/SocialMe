@@ -28,11 +28,18 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func sendFriendRequest(toUser : PFUser, fromUser : PFUser)  {
-        var requestQuery = PFQuery(className: "FriendRequests")
+		//let predicate = NSPredicate(format: "toUser = '@s' and fromUser = '@s' ",toUser.username!,fromUser.username!)
+		var requestQuery = PFQuery(className: "FriendRequests")
         requestQuery.whereKey("toUser", equalTo: toUser.username!)
         requestQuery.whereKey("fromUser", equalTo: fromUser.username!)
+		
+		var requestQuery2 = PFQuery(className: "FriendRequests")
+		requestQuery2.whereKey("toUser", equalTo: fromUser.username!)
+		requestQuery2.whereKey("fromUser", equalTo: toUser.username!)
+		
+		var query = PFQuery.orQueryWithSubqueries([requestQuery,requestQuery2])
         var status : NSString?
-        requestQuery.findObjectsInBackgroundWithBlock{
+        query.findObjectsInBackgroundWithBlock{
             (objects: [AnyObject]?, error: NSError?) -> Void in
             if error != nil {
                 println("There is a friend request here already")
@@ -44,33 +51,37 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     requestEntry["toUser"] = toUser.username
                     requestEntry["fromUser"] = fromUser.username
                     requestEntry["status"] = "pending"
+					
                     requestEntry.saveInBackgroundWithBlock{
                         (success: Bool, error: NSError?) -> Void in
                         if (success) {
-                            self.requestRes = "pending"
-                            self.notifyUsers("pending")
                             println("Friend Request Sent")
-        
                             let alert = UIAlertView(title: "Success!", message: "Friend Request Sent", delegate: nil, cancelButtonTitle: "Done")
                             alert.show()
-                            
                         }
                     }
                 } else {
                     //Entry does pre-exist
                     if let objects = objects as? [PFObject] {
                         var entry = objects[0]
-                        self.notifyUsers(entry["status"] as! NSString)
-                    }
-                    
+						var entryStatus = entry["status"] as! NSString
+						if (entryStatus == "approved") {
+							let alert = UIAlertView(title: "Hey!", message: "You guys are already friends.", delegate: nil, cancelButtonTitle: "OK")
+							alert.show()
+						} else if (entryStatus == "blocked") {
+							let alert = UIAlertView(title: "Sorry,", message: "This user is not accepting friend requests right now.", delegate: nil, cancelButtonTitle: "OK")
+							alert.show()
+						} else {
+							let alert = UIAlertView(title: "Guess What!", message: "There's already a pending friend request between you two.", delegate: nil, cancelButtonTitle: "OK")
+							alert.show()
+						}
+					}
                 }
             }
         }
     }
     
-    func notifyUsers(status: NSString) {
-        
-    }
+
     
     
     //set width and height by click.....ctrl drag on the center vertically to set it on the blue line
