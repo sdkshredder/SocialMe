@@ -16,8 +16,6 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 	let loggedInUser = PFUser.currentUser()
     var selected = NSMutableArray()
 	var data  = NSArray()
-    
-
 	
 	func retrieveFriends() {
 		let value = NSArray()
@@ -44,6 +42,7 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 			}
 		}
 	}
+    
     func animateCellFrame(notification: NSNotification) {
         let a = notification.userInfo as! [String : Int]
         let b = a["index"]!
