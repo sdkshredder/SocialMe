@@ -21,6 +21,28 @@ class FriendRequectTVCell: UITableViewCell {
 	var toUsername : NSString!
 	var fromUsername : NSString!
 	
+	
+	func addFriendShip(username :NSString, friendData :PFObject) {
+		var query = PFQuery(className: "Friendships")
+		query.whereKey("username", equalTo: username)
+		var objectArr = query.findObjects() as! [PFObject]
+		if objectArr.count > 0 {
+			var friendshipObj = objectArr[0]
+			if var friendsArr = friendshipObj["friends"] as? NSMutableArray {
+				friendsArr.addObject(friendData)
+				friendshipObj["friends"] = friendsArr
+				friendshipObj.save()
+			}
+		} else {
+			var newFriendship = PFObject(className: "Friendships")
+			newFriendship["username"] = username
+			var friendsArr = NSMutableArray()
+			friendsArr.addObject(friendData)
+			newFriendship["friends"] = friendsArr
+			newFriendship.save()
+		}
+	}
+	
 	func reactToRequest(response :NSString) {
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -44,11 +66,14 @@ class FriendRequectTVCell: UITableViewCell {
 			if (response == "approved") {
 				requestObject["status"] = "approved"
 				requestObject.save()
+				
+				self.addFriendShip(toUser.username!, friendData: fromUser)
+				self.addFriendShip(fromUser.username!, friendData: toUser)
 /*
 				if let var fromUserFriends = fromUser["friends"] as? NSMutableArray {
 					fromUserFriends.addObject(toUser)
 					fromUser["friends"] = fromUserFriends
-					
+				
 				} else {
 					var friendArr = NSMutableArray()
 					friendArr.addObject(toUser)
@@ -56,7 +81,7 @@ class FriendRequectTVCell: UITableViewCell {
 				}
 
 				fromUser.save()
-*/
+
 				if let var toUserFriends = toUser["friends"] as? NSMutableArray {
 					toUserFriends.addObject(fromUser)
 					toUser["friends"] = toUserFriends
@@ -67,6 +92,7 @@ class FriendRequectTVCell: UITableViewCell {
 
 				}
 				toUser.save()
+*/
 				
 			} else if (response == "rejected") {
 				requestObject["status"] = "rejected"

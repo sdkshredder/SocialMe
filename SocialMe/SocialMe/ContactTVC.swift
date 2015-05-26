@@ -25,16 +25,18 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			
 			
-			var query = PFUser.query()
-			query!.whereKey("username", equalTo: self.loggedInUser!.username as NSString!)
-			query?.includeKey("friends")
+			var query = PFQuery(className: "Friendships")
+			query.whereKey("username", equalTo: self.loggedInUser!.username as NSString!)
+			query.includeKey("friends")
 			//query!.selectKeys(["friends"])
-			var res : NSArray = query!.findObjects()!
-			var user : PFUser?
+			var res : NSArray = query.findObjects()!
+			var userObj : PFObject?
 			var userFriends = NSArray()
 			if (res.count > 0) {
-				user = res[0] as? PFUser
-				userFriends = user?.objectForKey("friends") as! NSArray
+				userObj = res[0] as? PFObject
+				userFriends = userObj?.objectForKey("friends") as! NSArray
+			} else {
+					println("You have no friends")
 			}
 			dispatch_async(dispatch_get_main_queue()) {
 				self.data = userFriends
