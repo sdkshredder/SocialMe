@@ -7,19 +7,41 @@
 //
 
 import UIKit
+import Parse
+import Foundation
 
 class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var table: UITableView!
+	let loggedInUser = PFUser.currentUser()
     var selected = NSMutableArray()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        table.separatorInset = UIEdgeInsetsZero
-        table.layoutMargins = UIEdgeInsetsZero
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
-        navigationController?.navigationItem.titleView?.backgroundColor = UIColor.blackColor()
-    }
+	var data  = NSArray()
+	
+	func retrieveFriends() {
+		let value = NSArray()
+		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+		dispatch_async(dispatch_get_global_queue(priority, 0)) {
+			
+			
+			var query = PFQuery(className: "Friendships")
+			query.whereKey("username", equalTo: self.loggedInUser!.username as NSString!)
+			query.includeKey("friends")
+			//query!.selectKeys(["friends"])
+			var res : NSArray = query.findObjects()!
+			var userObj : PFObject?
+			var userFriends = NSArray()
+			if (res.count > 0) {
+				userObj = res[0] as? PFObject
+				userFriends = userObj?.objectForKey("friends") as! NSArray
+			} else {
+					println("You have no friends")
+			}
+			dispatch_async(dispatch_get_main_queue()) {
+				self.data = userFriends
+				self.tableView.reloadData()
+			}
+		}
+	}
     
     func animateCellFrame(notification: NSNotification) {
         let a = notification.userInfo as! [String : Int]
@@ -53,9 +75,9 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         }
         return 62
     }
-    
+	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return data.count
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -64,10 +86,20 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("contact") as! ContentTVCell
-        cell.button.tag = indexPath.row
+		if let user = data[indexPath.row] as? PFUser {
+			cell.textField.text = user.objectForKey("username") as! String!
+		}
+		cell.button.tag = indexPath.row
         cell.layoutMargins = UIEdgeInsetsZero
         cell.separatorInset = UIEdgeInsetsZero
         return cell
     }
-
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		table.separatorInset = UIEdgeInsetsZero
+		table.layoutMargins = UIEdgeInsetsZero
+		NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
+		retrieveFriends()
+	}
 }

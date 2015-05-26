@@ -139,11 +139,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
-            /* Uncomment this to implement distance filter.......
+			/* Uncomment this to implement distance fileter.......
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
-            query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
-            */
-
+				query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
+			*/
             var res : NSArray = query!.findObjects()!
                     
             dispatch_async(dispatch_get_main_queue()) {
@@ -178,6 +177,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         initTableView()
         fetchUsers()
+		println("You're logged in as \(PFUser.currentUser()?.username)")
     }
     
     override func viewDidAppear(animated: Bool) {

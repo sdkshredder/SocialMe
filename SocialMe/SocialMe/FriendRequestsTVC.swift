@@ -11,22 +11,33 @@ import Parse
 
 
 class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableViewDataSource {
+	
+	let loggedInUser = PFUser.currentUser()
+	var res = NSArray()
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+		//println("The count is ")
+		//print(res.count)
+        return res.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("friendRequestCell") as! FriendRequectTVCell
-        
+		let requestObject = res[indexPath.row] as! PFObject
+		let toUsername = requestObject.objectForKey("toUser") as! NSString
+		let fromUsername = requestObject.objectForKey("fromUser") as! NSString
+		cell.toUsername = toUsername
+		cell.fromUsername = fromUsername
+		cell.usernameLabel.text = fromUsername as String
+		cell.showImg(fromUsername)
         cell.acceptButton.layer.cornerRadius = 4
         cell.acceptButton.layer.borderWidth = 1
         cell.acceptButton.layer.borderColor = UIColor.greenColor().CGColor
-        
+		
         cell.rejectButton.layer.cornerRadius = 4
         cell.rejectButton.layer.borderWidth = 1
         cell.rejectButton.layer.borderColor = UIColor.redColor().CGColor
@@ -40,17 +51,36 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
         cell.separatorInset = UIEdgeInsetsZero
         return cell
     }
-    
+
+	
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath.row)
     }
-    
+	
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.layoutMargins = UIEdgeInsetsZero
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"showProfile:", name: "showUserProfile", object: nil)
+		getRequestInfo()
     }
+	
+	func getRequestInfo() {
+		var friendReqQuery = PFQuery(className: "FriendRequests")
+		friendReqQuery.whereKey("toUser", equalTo: loggedInUser!.username!)
+		friendReqQuery.whereKey("status", equalTo: "pending")
+		friendReqQuery.findObjectsInBackgroundWithBlock {
+			(objects: [AnyObject]?, error: NSError?) -> Void in
+			if error == nil {
+				if let objects = objects as? [PFObject] {
+					self.res = objects
+					self.tableView.reloadData()
+				}
+			}
+			
+		}
+	}
 
     func showProfile(notification: NSNotification) {
         let info = notification.userInfo as! [String : Int]
@@ -60,9 +90,9 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
         let vc = storyboard?.instantiateViewControllerWithIdentifier("profileVC") as! ProfileVC
         
         // Get correct user from index and set username appropriately 
-        
-        vc.username = "a"
-        
+		var requestObject = res[index!] as! PFObject
+		vc.username = requestObject["fromUser"] as! NSString
+		
         navigationController?.pushViewController(vc, animated: true)
         
     }
