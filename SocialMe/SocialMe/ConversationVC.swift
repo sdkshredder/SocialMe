@@ -126,19 +126,9 @@ class ConversationVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.messageLabel.clipsToBounds = true
         cell.messageLabel.font = UIFont.systemFontOfSize(16)
         cell.messageLabel.layer.cornerRadius = 4
-        
-        
-        /*
-        var obj = messages[indexPath.row]
-        println(obj["text"])
-        
-        cell.messageLabel.text = obj["text"] as? String
-        if let username = obj["user"] as? String {
-            cell.usernameLabel.text = username
-        } else {
-            cell.usernameLabel.text = "[no username]"
-        }
-        */
+        let messageBG = UIView(frame: cell.messageLabel.frame)
+        messageBG.backgroundColor = UIColor.purpleColor()
+        cell.addSubview(messageBG)
         return cell
     }
 }
