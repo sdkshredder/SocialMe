@@ -18,6 +18,7 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         table.separatorInset = UIEdgeInsetsZero
         table.layoutMargins = UIEdgeInsetsZero
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
+        navigationController?.navigationItem.titleView?.backgroundColor = UIColor.blackColor()
     }
     
     func animateCellFrame(notification: NSNotification) {

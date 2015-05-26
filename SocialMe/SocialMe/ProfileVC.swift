@@ -10,7 +10,8 @@ import UIKit
 import Parse
 import Foundation
 
-class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
+class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
+    UITextFieldDelegate, UITextViewDelegate {
     
     var userPic : UIImage?
     var username = NSString()
@@ -18,6 +19,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var numAttr = 5
     var loggedInUser = PFUser.currentUser()!
     var requestRes : NSString!
+    var messageTV = UITextView()
+    var v_ : UIVisualEffectView!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userProfilePic: UIImageView!
@@ -139,12 +142,14 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         //let user = data[indexPath.row] as! PFUser
         //println(user)
+        
         /*
         cell.textLabel!.text = user.username
         cell.detailTextLabel!.text = user.email
         cell.imageView?.image = UIImage(named: "podcasts")
         cell.separatorInset = UIEdgeInsetsZero
         */
+        
         // cell.contentView.backgroundColor = UIColor.grayColor()
         return cell
     }
@@ -204,6 +209,109 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         } else {
             userProfilePic.image = UIImage(named: "swag-60@2x.png")
         }
+    }
+    
+    func hideBars(bool: Bool) {
+        navigationController?.setNavigationBarHidden(bool, animated: true)
+        
+        
+    }
+    
+    @IBAction func sendMessage(sender: UIButton) {
+        let blur = UIBlurEffect(style: .ExtraLight)
+        let vibrancy = UIVibrancyEffect(forBlurEffect: blur)
+        let v = UIVisualEffectView(effect: vibrancy)
+        v_ = UIVisualEffectView(effect: blur)
+        v.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
+        v_.frame = CGRectMake(0, view.frame.height, view.frame.width, view.frame.height)
+        
+        let messageLabel = UILabel(frame: CGRectMake(16, 64, 400, 30))
+        messageLabel.text = "Send \(user.username!) a message:"
+        v.contentView.addSubview(messageLabel)
+        
+        messageTV.delegate = self
+        messageTV.frame = CGRectMake(16, 100, view.frame.width - 32, 200)
+        messageTV.layer.cornerRadius = 4
+        messageTV.layer.borderWidth = 1
+        messageTV.font = UIFont.systemFontOfSize(23)
+        messageTV.becomeFirstResponder()
+        
+        let sendButton = UIButton(frame: CGRectMake(view.frame.width - 116, 308, 100, 44))
+        sendButton.setTitle("Send", forState: .Normal)
+        sendButton.layer.cornerRadius = 4
+        sendButton.layer.borderWidth = 2
+        sendButton.layer.borderColor = UIColor.greenColor().CGColor
+        sendButton.tintColor = UIColor.greenColor()
+        sendButton.addTarget(self, action: "sendMessageButtonTouched:", forControlEvents: .TouchUpInside)
+        v.contentView.addSubview(sendButton)
+        
+        let xButton = UIButton(frame: CGRectMake(16, 32, 34, 34))
+        xButton.setBackgroundImage(UIImage(named: "x_"), forState: UIControlState.Normal)
+        xButton.addTarget(self, action: "exitMessage:", forControlEvents: .TouchUpInside)
+        v.contentView.addSubview(xButton)
+        
+        messageTV.layer.borderColor = UIColor.whiteColor().CGColor
+        v.contentView.addSubview(messageTV)
+        v_.contentView.addSubview(v)
+        
+        view.addSubview(v_)
+        
+        hideBars(true)
+        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.v_.frame.origin = CGPointMake(0, 0)
+        }, completion: nil)
+        
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            messageTV.resignFirstResponder()    
+        }
+        return true
+    }
+    
+    func getQueryKey(a: String, b: String) -> String {
+        if a > b {
+            return "\(a)\(b)"
+        }
+        return "\(b)\(a)"
+    }
+    
+    func sendMessageButtonTouched(sender : UIButton) {
+        var requestEntry = PFObject(className: "Messages")
+        requestEntry["toUser"] = user.username
+        requestEntry["fromUser"] = loggedInUser.username
+        requestEntry["message"] = messageTV.text
+        requestEntry["key"] = getQueryKey(user.username!, b: loggedInUser.username!)
+        
+        requestEntry.saveInBackgroundWithBlock{
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                let alert = UIAlertView(title: "Success!", message: "Your message has been sent.", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+                self.exitMessageView(true)
+            } else {
+                let alert = UIAlertView(title: "Error :(", message: "There was an error sending your message.  Please try again.", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+                self.exitMessageView(false)
+            }
+        }
+    }
+    
+    func exitMessage(sender :UIButton) {
+        exitMessageView(true)
+    }
+    
+    func exitMessageView(clearTV: Bool) {
+        UIView.animateWithDuration(0.2, animations: {
+            self.v_.frame.origin = CGPointMake(0, self.view.frame.height)
+        })
+        if clearTV == true {
+            messageTV.text = ""
+        }
+        messageTV.removeFromSuperview()
+        messageTV.resignFirstResponder()
+        hideBars(false)
     }
     
     func initTableView() {
