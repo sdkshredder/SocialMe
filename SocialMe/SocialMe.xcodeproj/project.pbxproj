@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DDE757061B0928180090B35D /* SettingsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE757051B0928180090B35D /* SettingsTVC.swift */; };
+		DDEA1AD01B15DB7000728910 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDEA1ACE1B15DB7000728910 /* Main.storyboard */; };
 		DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */; };
 		FE02867A1B0DAA6000E3D56D /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = FE0286791B0DAA6000E3D56D /* line.png */; };
 		FE0286801B0DC72F00E3D56D /* socialme-word.png in Resources */ = {isa = PBXBuildFile; fileRef = FE02867F1B0DC72F00E3D56D /* socialme-word.png */; };
@@ -47,7 +48,6 @@
 		FE77BBEB1B157F380069D761 /* PrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBEA1B157F380069D761 /* PrivacyVC.swift */; };
 		FE8A48DA1AF298D30022C339 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8A48D91AF298D30022C339 /* RootVC.swift */; };
 		FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */; };
-		FE8B46861ADCEFEF00FA9EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */; };
 		FE8B46881ADCEFEF00FA9EA3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46871ADCEFEF00FA9EA3 /* Images.xcassets */; };
 		FE8B468B1ADCEFEF00FA9EA3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46891ADCEFEF00FA9EA3 /* LaunchScreen.xib */; };
 		FE8B46971ADCEFEF00FA9EA3 /* SocialMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46961ADCEFEF00FA9EA3 /* SocialMeTests.swift */; };
@@ -121,6 +121,7 @@
 
 /* Begin PBXFileReference section */
 		DDE757051B0928180090B35D /* SettingsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTVC.swift; sourceTree = "<group>"; };
+		DDEA1ACF1B15DB7000728910 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DDFC45A91AEDCE4700D92FE3 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FE0286791B0DAA6000E3D56D /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		FE02867F1B0DC72F00E3D56D /* socialme-word.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "socialme-word.png"; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		FE8B467B1ADCEFEF00FA9EA3 /* SocialMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE8B467F1ADCEFEF00FA9EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FE8B46851ADCEFEF00FA9EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FE8B46871ADCEFEF00FA9EA3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FE8B468A1ADCEFEF00FA9EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		FE8B46901ADCEFEF00FA9EA3 /* SocialMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,8 +302,8 @@
 		FE77BBC01B0F417D0069D761 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				DDEA1ACE1B15DB7000728910 /* Main.storyboard */,
 				FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */,
-				FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */,
 				FE77BBE81B1475480069D761 /* MessageLabel.swift */,
 				FE9D23FC1AFC909B005E065E /* TBC.swift */,
 				FE8A48D91AF298D30022C339 /* RootVC.swift */,
@@ -552,7 +552,6 @@
 				FEBD868A1AE1FD06006452FD /* swag-60@2x.png in Resources */,
 				FEA6B2911AE73C1700D9B9A9 /* near-me@3x.png in Resources */,
 				FEA6B2C31AE76FF200D9B9A9 /* message@2x.png in Resources */,
-				FE8B46861ADCEFEF00FA9EA3 /* Main.storyboard in Resources */,
 				FEA6B2A91AE7402A00D9B9A9 /* select.png in Resources */,
 				FE77BBD71B12C6E40069D761 /* my-profile@2x.png in Resources */,
 				FE1C1BBD1AED9C260075F689 /* general@3x.png in Resources */,
@@ -582,6 +581,7 @@
 				FE77BBD91B12C7A40069D761 /* friend-requests@2x.png in Resources */,
 				FEBD87921AE556C7006452FD /* settings@2x.png in Resources */,
 				FEA6B2AB1AE7402A00D9B9A9 /* select@3x.png in Resources */,
+				DDEA1AD01B15DB7000728910 /* Main.storyboard in Resources */,
 				FEA6B2901AE73C1700D9B9A9 /* near-me@2x.png in Resources */,
 				FE8B468B1ADCEFEF00FA9EA3 /* LaunchScreen.xib in Resources */,
 				FE55B08C1B0914D300B2A7A0 /* Default.png in Resources */,
@@ -671,10 +671,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */ = {
+		DDEA1ACE1B15DB7000728910 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FE8B46851ADCEFEF00FA9EA3 /* Base */,
+				DDEA1ACF1B15DB7000728910 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
