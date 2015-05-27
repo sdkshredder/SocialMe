@@ -86,10 +86,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 user?.save()
             }
             
-            
-            
-            
-            
         }
         
     }
@@ -129,7 +125,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 segment.selectedSegmentIndex = 2
         }
 
-        
         
         
         

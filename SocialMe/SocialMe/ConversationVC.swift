@@ -116,7 +116,6 @@ class ConversationVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             textColor = UIColor.blackColor()
         }
         
-        // println(ID)
         var messageText : String = (message.objectForKey("message") as? String)!
         var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! ConvoTVCell
         cell.messageLabel.text = messageText

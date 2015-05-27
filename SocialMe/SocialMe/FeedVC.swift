@@ -134,11 +134,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             var query = PFUser.query()
             query!.whereKey("username", notEqualTo: user?.objectForKey("username") as! String)
+            /*
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
+            */
 			/* Uncomment this to implement distance fileter.......
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
 				query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
