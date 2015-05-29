@@ -146,7 +146,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             let a = CLLocation(latitude: location.latitude, longitude: location.longitude)
             let annotation = CustomAnnotation()
             annotation.title = person.username
-            annotation.imageName = "balloon.png"
+            annotation.imageName = "smilez-0.png"
             
             if let lastSeen : Double = person.objectForKey("lastSeen") as? Double {
                 var date = NSDate(timeIntervalSince1970: lastSeen)
