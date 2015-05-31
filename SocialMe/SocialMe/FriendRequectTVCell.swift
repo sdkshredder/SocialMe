@@ -130,7 +130,7 @@ class FriendRequectTVCell: UITableViewCell {
 			
 			dispatch_group_enter(downloadGroup)
 				var userQuery = PFUser.query()
-				userQuery?.whereKey("username", equalTo: self.fromUsername)
+				userQuery?.whereKey("username", equalTo: username)
 				var userArr = userQuery?.findObjects() as! [PFUser]
 				var user = userArr[0]
 			

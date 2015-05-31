@@ -71,7 +71,7 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selected.containsObject(indexPath.row) {
-            return 124
+            return 200
         }
         return 62
     }
@@ -87,9 +87,14 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("contact") as! ContentTVCell
 		if let user = data[indexPath.row] as? PFUser {
-			cell.textField.text = user.objectForKey("username") as! String!
+			let username = user.objectForKey("username") as! String!
+			cell.nameLabel.text = username
+			cell.specAttrLabel.text = "Occupation"
+			cell.specAttrContentLabel.text = user.objectForKey("Occupation") as! String!
+			cell.button.tag = indexPath.row
+			cell.showImg(username)
+			cell.friendPicture.tag = indexPath.row
 		}
-		cell.button.tag = indexPath.row
         cell.layoutMargins = UIEdgeInsetsZero
         cell.separatorInset = UIEdgeInsetsZero
         return cell
