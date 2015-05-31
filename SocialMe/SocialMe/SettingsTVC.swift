@@ -18,6 +18,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var keyword: UITextField!
+    @IBOutlet weak var keySeg: UISegmentedControl!
+    @IBOutlet weak var keyRemove: UIButton!
 
 
     
@@ -32,17 +34,86 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     @IBAction func addKey(sender: UITextField) {
         let input = sender.text
+        let type = self.keySeg.titleForSegmentAtIndex(self.keySeg.selectedSegmentIndex)!
         
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             let user = PFUser.currentUser()
-            //println("Received")
-        
             var query = PFQuery(className: "KeywordFilter")
             query.whereKey("username", equalTo: user!.username!)
             var objectArr = query.findObjects() as! [PFObject]
-            if objectArr.count > 0 {
+            /*
+            if objectArr.count > 0 { // Username in list
                 var keyObj = objectArr[0]
+                switch type {
+                    case "Hometown":
+                        if var filter = keyObj["homeFilter"] as? NSMutableArray { // Has already filtered by hometown
+                            if !filter.containsObject(input){ // keyword not already in list
+                                filter.addObject(input)
+                                keyObj["homeFilter"] = filter
+                                keyObj.save()
+                                println("added homefilter keywod")
+                            }
+                        } else { // Has not previously filtered by hometown, create new array
+                            var basic = NSMutableArray()
+                            basic.addObject(input)
+                            keyObj["homeFilter"] = basic
+                            keyObj.save()
+                            println("made new homefilter")
+                        }
+                    case "School":
+                        if var filter = keyObj["schoolFilter"] as? NSMutableArray { // Has already filtered by school
+                            if !filter.containsObject(input){
+                                filter.addObject(input)
+                                keyObj["schoolFilter"] = filter
+                                keyObj.save()
+                            }
+                        } else {
+                            var basic = NSMutableArray()
+                            basic.addObject(input)
+                            keyObj["schoolFilter"] = basic
+                            keyObj.save()
+                        }
+                    case "Occupation":
+                        if var filter = keyObj["occFilter"] as? NSMutableArray { // Has already filttered by occupation
+                            if !filter.containsObject(input){
+                                filter.addObject(input)
+                                keyObj["occFilter"] = filter
+                                keyObj.save()
+                            }
+                        } else {
+                            var basic = NSMutableArray()
+                            basic.addObject(input)
+                            keyObj["occFilter"] = basic
+                            keyObj.save()
+                        }
+                    default:
+                        println("No match" )
+                    
+                }
+            
+            } else { // Username not in list, create new row and add filter
+                var newKey = PFObject(className: "KeywordFilter")
+                newKey["username"] = user?.username
+                var basic = NSMutableArray()
+                basic.addObject(input)
+                switch type {
+                case "Hometown":
+                    newKey["homeFilter"] = basic
+                case "School":
+                    newKey["schoolFilter"] = basic
+                case "Occupation":
+                    newKey["occFilter"] = basic
+                default:
+                    println("No match")
+                }
+                newKey.save()
+                
+            }*/
+        }
+        sender.text = ""
+        
+          /*
                 if var basic = keyObj["basicFilter"] as? NSMutableArray {
                     if !basic.containsObject(input){
                         basic.addObject(input) 
@@ -60,31 +131,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             }
         }
         sender.text = ""
-        
-
-        
-        
-        /*
-        var query = PFQuery(className: "Friendships")
-        query.whereKey("username", equalTo: username)
-        var objectArr = query.findObjects() as! [PFObject]
-        if objectArr.count > 0 {
-        var friendshipObj = objectArr[0]
-        if var friendsArr = friendshipObj["friends"] as? NSMutableArray {
-        friendsArr.addObject(friendData)
-        friendshipObj["friends"] = friendsArr
-        friendshipObj.save()
-        }
-        } else {
-        var newFriendship = PFObject(className: "Friendships")
-        newFriendship["username"] = username
-        var friendsArr = NSMutableArray()
-        friendsArr.addObject(friendData)
-        newFriendship["friends"] = friendsArr
-        newFriendship.save()
-        }
         */
-        
 
     }
 
@@ -194,43 +241,11 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 segment.selectedSegmentIndex = 2
         }
         keyword.delegate = self
-        /*
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
-    */
-    }
-    /*
-    func handleKeyboardWillShowNotification(notification: NSNotification) {
-        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: true)
-    }
-    
-    func handleKeyboardWillHideNotification(notification: NSNotification) {
-        keyboardWillChangeFrameWithNotification(notification, showsKeyboard: false)
-    }
-    
-    func keyboardWillChangeFrameWithNotification(notification: NSNotification, showsKeyboard: Bool) {
-        let userInfo = notification.userInfo!
+        keySeg.selectedSegmentIndex = 0
         
-        let animationDuration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        let keyboardScreenBeginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        
-        let keyboardViewBeginFrame = view.convertRect(keyboardScreenBeginFrame, fromView: view.window)
-        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
-        let originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
 
-        
-        view.setNeedsUpdateConstraints()
-        
-        UIView.animateWithDuration(animationDuration, delay: 0, options: .BeginFromCurrentState, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        
-        // Scroll to the selected text once the keyboard frame changes.
-        // let selectedRange = textView.selectedRange
-        // textView.scrollRangeToVisible(selectedRange)
-    }*/
+    }
+
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)

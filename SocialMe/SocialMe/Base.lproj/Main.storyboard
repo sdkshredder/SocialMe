@@ -383,13 +383,13 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Keyword" id="R9U-GO-lRB">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="pb4-3U-3kH">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="120" id="pb4-3U-3kH">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pb4-3U-3kH" id="Yt2-fa-TED">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter keywords" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="coX-Bs-REI">
-                                                    <rect key="frame" x="8" y="17" width="250" height="30"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter keywords" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="coX-Bs-REI">
+                                                    <rect key="frame" x="8" y="8" width="300" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="ZGm-hf-Wkc"/>
                                                         <constraint firstAttribute="width" constant="221" id="wGp-IL-MZ0"/>
@@ -400,13 +400,26 @@
                                                         <action selector="addKey:" destination="Xmk-0W-le7" eventType="editingDidEnd" id="WXZ-uX-fPe"/>
                                                     </connections>
                                                 </textField>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="k3P-e6-ktR">
+                                                    <rect key="frame" x="8" y="45" width="300" height="29"/>
+                                                    <segments>
+                                                        <segment title="Hometown"/>
+                                                        <segment title="School"/>
+                                                        <segment title="Occupation"/>
+                                                    </segments>
+                                                    <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                                                </segmentedControl>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPq-PE-9xr">
+                                                    <rect key="frame" x="126" y="81" width="64" height="30"/>
+                                                    <state key="normal" title="Remove">
+                                                        <color key="titleColor" red="0.84003459999999996" green="0.75899660999999996" blue="0.98547339" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="coX-Bs-REI" secondAttribute="bottom" constant="17" id="2xR-EY-OOc"/>
-                                                <constraint firstAttribute="trailing" secondItem="coX-Bs-REI" secondAttribute="trailing" constant="371" id="9xk-Sl-Ion"/>
-                                                <constraint firstItem="coX-Bs-REI" firstAttribute="top" secondItem="Yt2-fa-TED" secondAttribute="top" constant="17" id="Hg2-Kh-8QE"/>
-                                                <constraint firstAttribute="centerY" secondItem="coX-Bs-REI" secondAttribute="centerY" id="QLJ-WJ-mKs"/>
-                                                <constraint firstItem="coX-Bs-REI" firstAttribute="leading" secondItem="Yt2-fa-TED" secondAttribute="leading" constant="8" id="ipV-06-lW6"/>
+                                                <constraint firstItem="lPq-PE-9xr" firstAttribute="centerX" secondItem="k3P-e6-ktR" secondAttribute="centerX" id="JJm-JZ-Rj2"/>
+                                                <constraint firstItem="k3P-e6-ktR" firstAttribute="centerX" secondItem="coX-Bs-REI" secondAttribute="centerX" id="Ta3-MU-qfx"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -420,6 +433,8 @@
                     </tableView>
                     <connections>
                         <outlet property="distanceValue" destination="1BT-AY-SXE" id="n7l-2O-1Ng"/>
+                        <outlet property="keyRemove" destination="lPq-PE-9xr" id="DKH-SB-9YF"/>
+                        <outlet property="keySeg" destination="k3P-e6-ktR" id="Izk-uB-UHt"/>
                         <outlet property="keyword" destination="coX-Bs-REI" id="16V-hX-OL1"/>
                         <outlet property="lowerAge" destination="HYH-f4-Log" id="Gsz-n0-aoO"/>
                         <outlet property="segment" destination="Nzi-yz-caX" id="Nub-Vh-2tY"/>

@@ -141,10 +141,52 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
             */
-			/* Uncomment this to implement distance fileter.......
+			/* Uncomment this to implement distance filter.......
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
 				query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
 			*/
+            /*
+            var keywordQuery = PFQuery(className: "KeywordFilter")
+            keywordQuery.whereKey("username", equalTo: user!.username!)
+            var objectArr = keywordQuery.findObjects() as! [PFObject]
+            if objectArr.count > 0 { // Username exists in keyword filters
+                var keyObj = objectArr[0]
+                
+                if var filter = keyObj["homeFilter"] as? NSMutableArray {
+                    var home = query
+                    home!.whereKey("Hometown", containsString: (filter[0] as! String))
+                    for keyword in filter {
+                        var find = query
+                        find!.whereKey("Hometown", containsString: (keyword as! String))
+                        home = PFQuery.orQueryWithSubqueries([home!, find!])
+                    }
+                    query = home
+                }
+                if var filter = keyObj["schoolFilter"] as? NSMutableArray {
+                    var school = query
+                    school!.whereKey("School", containsString: (filter[0] as! String))
+                    for keyword in filter {
+                        var find = query
+                        find!.whereKey("School", containsString: (keyword as! String))
+                        school = PFQuery.orQueryWithSubqueries([school!, find!])
+                    }
+                    query = school
+                }
+                if var filter = keyObj["occFilter"] as? NSMutableArray {
+                    var occ = query
+                    occ!.whereKey("Occupation", containsString: (filter[0] as! String))
+                    for keyword in filter {
+                        var find = query
+                        find!.whereKey("Occupation", containsString: (keyword as! String))
+                        occ = PFQuery.orQueryWithSubqueries([occ!, find!])
+                    }
+                    query = occ
+                }
+            }
+*/
+            
+            
+            
             var res : NSArray = query!.findObjects()!
                     
             dispatch_async(dispatch_get_main_queue()) {
