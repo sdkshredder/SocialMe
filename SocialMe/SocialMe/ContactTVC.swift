@@ -56,6 +56,8 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         table.endUpdates()
         
     }
+	
+	
     
     @IBAction func showFriendRequests(sender: UIBarButtonItem) {
         let vc = storyboard?.instantiateViewControllerWithIdentifier("friendRequestTVC") as! FriendRequestsTVC
@@ -71,9 +73,9 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selected.containsObject(indexPath.row) {
-            return 200
+            return 225
         }
-        return 62
+        return 50
     }
 	
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,15 +85,17 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
+	
+	
+	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("contact") as! ContentTVCell
 		if let user = data[indexPath.row] as? PFUser {
 			let username = user.objectForKey("username") as! String!
-			cell.nameLabel.text = username
+			cell.nameLabel.text = username.uppercaseString
 			cell.specAttrLabel.text = "Occupation"
 			cell.specAttrContentLabel.text = user.objectForKey("Occupation") as! String!
-			cell.button.tag = indexPath.row
+			cell.expandInfoButton.tag = indexPath.row
 			cell.showImg(username)
 			cell.friendPicture.tag = indexPath.row
 		}
@@ -105,6 +109,26 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 		table.separatorInset = UIEdgeInsetsZero
 		table.layoutMargins = UIEdgeInsetsZero
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector:"showProfile:", name: "showUserProfile", object: nil)
 		retrieveFriends()
 	}
+	
+
+	
+	func showProfile(notification: NSNotification) {
+		let info = notification.userInfo as! [String : Int]
+		let index = info["index"]
+		println("index")
+		
+		let vc = storyboard?.instantiateViewControllerWithIdentifier("profileVC") as! ProfileVC
+		
+		// Get correct user from index and set username appropriately
+		var requestObject = data[index!] as! PFObject
+		vc.username = requestObject["username"] as! NSString
+		
+		navigationController?.pushViewController(vc, animated: true)
+		
+	}
+
 }

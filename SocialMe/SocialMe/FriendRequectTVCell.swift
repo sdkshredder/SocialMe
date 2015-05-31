@@ -165,6 +165,8 @@ class FriendRequectTVCell: UITableViewCell {
 		reactToRequest("blocked")
 
     }
+	
+	
     
     @IBAction func profilePictureTouched(sender: UIButton) {
         println(profilePicture.tag)

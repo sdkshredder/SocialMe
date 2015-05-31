@@ -15,7 +15,30 @@ class ContentTVCell: UITableViewCell {
 	@IBOutlet weak var specAttrContentLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var friendPicture: UIImageView!
-    @IBOutlet weak var button: UIButton!
+	
+	@IBOutlet weak var expandInfoButton: UIButton!
+	
+	@IBAction func goToProfile(sender: UIButton) {
+		println("Yeah we got it bro")
+		var info = [String : Int]()
+		info["index"] = friendPicture.tag
+		NSNotificationCenter.defaultCenter().postNotificationName("showUserProfile", object: nil, userInfo: info)
+	}
+	@IBAction func tap(sender: UIButton) {
+		var info = [String : Int]()
+		info["index"] = sender.tag
+		let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+		rotateAnimation.fromValue = 0.0
+		rotateAnimation.toValue = CGFloat(M_PI * 2.0)
+		rotateAnimation.duration = 0.2
+		sender.layer.addAnimation(rotateAnimation, forKey: nil)
+		NSNotificationCenter.defaultCenter().postNotificationName("cellNotification", object: nil, userInfo: info)
+		handleTextField()
+	}
+	
+	
+
+
 	
 	func showImg(username: NSString) {
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
@@ -43,18 +66,6 @@ class ContentTVCell: UITableViewCell {
 		}
 	}
 	
-    @IBAction func tap(sender: UIButton) {
-
-        var info = [String : Int]()
-        info["index"] = sender.tag
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotateAnimation.fromValue = 0.0
-        rotateAnimation.toValue = CGFloat(M_PI * 2.0)
-        rotateAnimation.duration = 0.2
-        sender.layer.addAnimation(rotateAnimation, forKey: nil) 
-        NSNotificationCenter.defaultCenter().postNotificationName("cellNotification", object: nil, userInfo: info)
-        handleTextField()
-    }
     
     func handleTextField() {
         if nameLabel.enabled {
