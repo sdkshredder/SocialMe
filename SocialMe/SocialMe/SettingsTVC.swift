@@ -42,7 +42,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             var query = PFQuery(className: "KeywordFilter")
             query.whereKey("username", equalTo: user!.username!)
             var objectArr = query.findObjects() as! [PFObject]
-            /*
+            
             if objectArr.count > 0 { // Username in list
                 var keyObj = objectArr[0]
                 switch type {
@@ -109,7 +109,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 }
                 newKey.save()
                 
-            }*/
+            }
         }
         sender.text = ""
         
