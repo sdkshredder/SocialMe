@@ -84,7 +84,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 7
+        return 8
     }
     
     
@@ -100,7 +100,9 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         } else if a == "" {
             return "logoutCell"
         }
-        
+        else if a == "Privacy" {
+            return "privacyCell"
+        }
         else if a == "Profile Picture"{
             return "profilePictureCell"
         }
@@ -130,9 +132,16 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 6 {
+            performSegueWithIdentifier("privacyVC", sender: nil)
+        }
+        println(indexPath.section)
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let ID = getCellID(indexPath.section)
-        
+        println(ID)
         if ID == "profilePictureCell" {
             var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! ProfilePictureTVCell
             
@@ -155,6 +164,11 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! LogOutTVCell
             return cell
         }
+            
+        else if ID == "locationCell" {
+            var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! UITableViewCell
+            return cell
+        }
         
         else if ID == "tableCell" {
             var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! TableTVCell
@@ -172,6 +186,9 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return cell
         } else if ID == "ageCell" {
             var b = tableView.dequeueReusableCellWithIdentifier(ID) as! AgeTVCell
+            return b
+        } else if ID == "privacyCell" {
+            var b = tableView.dequeueReusableCellWithIdentifier(ID) as! UITableViewCell
             return b
         } else {
             var c = tableView.dequeueReusableCellWithIdentifier(ID) as! LocationTVCell
@@ -239,7 +256,6 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             } else {
                 println("error saving image")
             }
-    
         }
         
         dismissViewControllerAnimated(true, completion: nil)
@@ -266,10 +282,10 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return 90
         } else if a == "Profile Picture" {
             return 240
-        } else if a == "Log Out" {
-            return 50
+        } else if a == "Log Out" || a == "Privacy" {
+            return 44
         }
-        return 60
+        return 44
     }
     
     func getTitleForPath(path : Int) -> String {
@@ -286,6 +302,8 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return "Occupation"
         case 5:
             return "Location"
+        case 6:
+            return "Privacy"
         default:
             return ""
         }

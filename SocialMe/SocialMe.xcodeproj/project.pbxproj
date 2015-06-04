@@ -44,6 +44,7 @@
 		FE77BBE51B1319890069D761 /* ConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBE41B1319890069D761 /* ConversationVC.swift */; };
 		FE77BBE71B1322620069D761 /* ConvoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBE61B1322620069D761 /* ConvoTVCell.swift */; };
 		FE77BBE91B1475480069D761 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBE81B1475480069D761 /* MessageLabel.swift */; };
+		FE77BBEB1B157F380069D761 /* PrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBEA1B157F380069D761 /* PrivacyVC.swift */; };
 		FE8A48DA1AF298D30022C339 /* RootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8A48D91AF298D30022C339 /* RootVC.swift */; };
 		FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46801ADCEFEF00FA9EA3 /* AppDelegate.swift */; };
 		FE8B46861ADCEFEF00FA9EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE8B46841ADCEFEF00FA9EA3 /* Main.storyboard */; };
@@ -156,6 +157,7 @@
 		FE77BBE41B1319890069D761 /* ConversationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationVC.swift; sourceTree = "<group>"; };
 		FE77BBE61B1322620069D761 /* ConvoTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvoTVCell.swift; sourceTree = "<group>"; };
 		FE77BBE81B1475480069D761 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
+		FE77BBEA1B157F380069D761 /* PrivacyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyVC.swift; sourceTree = "<group>"; };
 		FE8A48D91AF298D30022C339 /* RootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootVC.swift; sourceTree = "<group>"; };
 		FE8B467B1ADCEFEF00FA9EA3 /* SocialMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE8B467F1ADCEFEF00FA9EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 		FE77BBC11B0F418C0069D761 /* TVs */ = {
 			isa = PBXGroup;
 			children = (
+				FE77BBEA1B157F380069D761 /* PrivacyVC.swift */,
 				FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */,
 				FE77BBCA1B119B220069D761 /* MessagesVC.swift */,
 				FE77BBE41B1319890069D761 /* ConversationVC.swift */,
@@ -623,6 +626,7 @@
 				DDFC45AA1AEDCE4700D92FE3 /* ProfileVC.swift in Sources */,
 				FEBD878E1AE4F63D006452FD /* LoginVC.swift in Sources */,
 				FE45F1ED1AFAEADF000AECE4 /* TableTVCell.swift in Sources */,
+				FE77BBEB1B157F380069D761 /* PrivacyVC.swift in Sources */,
 				FE9D23F71AFC7228005E065E /* AgeTVCell.swift in Sources */,
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
 				FE55B0931B092A2E00B2A7A0 /* ProfilePictureTVCell.swift in Sources */,
