@@ -1877,6 +1877,7 @@
         <image name="near-me@3x.png" width="177" height="177"/>
         <image name="podcasts.png" width="50" height="55"/>
         <image name="socialme-word.png" width="1630" height="978"/>
+        <image name="swag-60.png" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="D4c-x3-Bbm"/>
