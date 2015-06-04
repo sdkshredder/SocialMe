@@ -54,42 +54,40 @@
                                     <action selector="addFriendAction:" destination="2vW-9m-5N4" eventType="touchUpInside" id="Zig-M2-GQX"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8XU-3Z-0Ue">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8XU-3Z-0Ue">
                                 <rect key="frame" x="0.0" y="298" width="600" height="253"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profileCell" id="552-vp-owY" customClass="ProfileTVCell" customModule="SocialMe" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profileCell" rowHeight="70" id="552-vp-owY" customClass="ProfileTVCell" customModule="SocialMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="552-vp-owY" id="qhk-Fq-dtO">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAc-2C-eDC">
-                                                    <rect key="frame" x="8" y="11" width="140" height="21"/>
+                                                    <rect key="frame" x="8" y="8" width="140" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="140" id="Zwn-bC-onu"/>
-                                                        <constraint firstAttribute="height" constant="21" id="wfD-wy-i7A"/>
+                                                        <constraint firstAttribute="height" constant="21" id="IHS-D1-TfA"/>
+                                                        <constraint firstAttribute="width" constant="140" id="czX-tL-Wr0"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iaQ-Wo-5Z7">
-                                                    <rect key="frame" x="156" y="11" width="200" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="200" id="4wy-zm-azo"/>
-                                                        <constraint firstAttribute="height" constant="21" id="sbS-2D-hc5"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="8" y="37" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="XAc-2C-eDC" firstAttribute="leading" secondItem="qhk-Fq-dtO" secondAttribute="leadingMargin" id="9Da-Ib-geI"/>
-                                                <constraint firstItem="iaQ-Wo-5Z7" firstAttribute="leading" secondItem="XAc-2C-eDC" secondAttribute="trailing" constant="8" id="Jnl-Ce-g3c"/>
-                                                <constraint firstAttribute="centerY" secondItem="XAc-2C-eDC" secondAttribute="centerY" id="n5e-eg-PB8"/>
-                                                <constraint firstAttribute="centerY" secondItem="iaQ-Wo-5Z7" secondAttribute="centerY" id="yBc-31-2d5"/>
+                                                <constraint firstItem="iaQ-Wo-5Z7" firstAttribute="top" secondItem="XAc-2C-eDC" secondAttribute="bottom" constant="8" id="5f8-Of-seg"/>
+                                                <constraint firstItem="iaQ-Wo-5Z7" firstAttribute="leading" secondItem="qhk-Fq-dtO" secondAttribute="leading" constant="8" id="Cnh-gb-Lgy"/>
+                                                <constraint firstItem="XAc-2C-eDC" firstAttribute="top" secondItem="qhk-Fq-dtO" secondAttribute="top" constant="8" id="Ip7-vq-tXL"/>
+                                                <constraint firstAttribute="trailing" secondItem="iaQ-Wo-5Z7" secondAttribute="trailing" constant="8" id="VcL-T8-FX6"/>
+                                                <constraint firstItem="XAc-2C-eDC" firstAttribute="leading" secondItem="qhk-Fq-dtO" secondAttribute="leading" constant="8" id="ggr-Mm-zq0"/>
+                                                <constraint firstAttribute="bottom" secondItem="iaQ-Wo-5Z7" secondAttribute="bottom" constant="11" id="zSM-p1-mTx"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -413,6 +411,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="SocialMe" id="rsA-G3-PFY">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Kzj-qF-epU"/>
                         <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Yq5-M4-x5j">
                             <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
                             <color key="tintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>

@@ -86,11 +86,13 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
 
     
-    
+    /*
     //set width and height by click.....ctrl drag on the center vertically to set it on the blue line
     func tableView(tableView: UITableView, heightForRowAtIndexPath: NSIndexPath) -> CGFloat {
         return 62
     }
+*/
+	
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -103,38 +105,47 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         cell.inputLabel.alpha = 0
         cell.separatorInset = UIEdgeInsetsZero
         cell.layoutMargins = UIEdgeInsetsZero
-        
+		cell.selectionStyle = .None
+		
         //let user = userData[0] as! PFUser
         println(user)
         if user != nil {
-            
-            if (indexPath.row == 0) {
-                cell.attrLabel?.text = "Name: "
+			
+			if (indexPath.row == 0) {
+				cell.attrLabel?.text = "About "+user.username!+""
+				if let aboutMe = user.objectForKey("aboutMe") as? String {
+					cell.inputLabel?.text = aboutMe
+					cell.inputLabel?.numberOfLines = 0
+				}
+			}
+            if (indexPath.row == 1) {
+                cell.attrLabel?.text = "Name "
                 cell.inputLabel?.text = user.username
             }
-            if (indexPath.row == 1) {
-                cell.attrLabel?.text = "Age: "
+            if (indexPath.row == 2) {
+                cell.attrLabel?.text = "Age "
                 if let age = user.objectForKey("Age") as? String {
                     cell.inputLabel?.text = age
+					
                 }
                 //cell.inputLabel?.text = user.objectForKey("Age") as? String
             }
-            if (indexPath.row == 2) {
-                cell.attrLabel?.text = "Hometown: "
+            if (indexPath.row == 3) {
+                cell.attrLabel?.text = "Hometown "
                 if let hometown = user.objectForKey("Hometown") as? String {
                     cell.inputLabel?.text = hometown
                 }
                 //cell.inputLabel?.text = user.objectForKey("Hometown") as? String
             }
-            if (indexPath.row == 3) {
-                cell.attrLabel?.text = "Occupation: "
+            if (indexPath.row == 4) {
+                cell.attrLabel?.text = "Occupation "
                 if let occupation = user.objectForKey("Occupation") as? String {
                     cell.inputLabel?.text = occupation
                 }
                 //cell.inputLabel?.text = user.objectForKey("Occupation") as? String
             }
-            if (indexPath.row == 4) {
-                cell.attrLabel?.text = "Alma Mater: "
+            if (indexPath.row == 5) {
+                cell.attrLabel?.text = "Alma Mater "
                 if let school = user.objectForKey("School") as? String {
                     cell.inputLabel?.text =  school
                 }
@@ -315,6 +326,10 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.layoutMargins = UIEdgeInsetsZero
+		//Below Set Style for the Table View to allow For the aboutMe
+		tableView.estimatedRowHeight = 60;
+		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.separatorColor = UIColor.clearColor()
     }
     
     func styleUserPic() {
@@ -339,6 +354,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         styleUserPic()
         getUserInfo()
         styleButtons()
+
+		
     }
     
 }
