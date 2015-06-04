@@ -112,7 +112,12 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         if user != nil {
 			
 			if (indexPath.row == 0) {
-				cell.attrLabel?.text = "About "+user.username!+""
+				var name = user.username!
+				var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+				capLet = capLet.uppercaseString
+				var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+				name = (capLet as String) + (rest as String)
+				cell.attrLabel?.text = "About "+name
 				if let aboutMe = user.objectForKey("aboutMe") as? String {
 					cell.inputLabel?.text = aboutMe
 					cell.inputLabel?.numberOfLines = 0
