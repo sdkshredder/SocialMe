@@ -110,6 +110,10 @@
 		FEE6B6D31B184942004D8E1F /* smile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE6B6D21B184942004D8E1F /* smile@2x.png */; };
 		FEE6B6D51B184AC4004D8E1F /* smilez@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE6B6D41B184AC4004D8E1F /* smilez@2x.png */; };
 		FEE6B6D71B184B1C004D8E1F /* smilez-0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEE6B6D61B184B1C004D8E1F /* smilez-0@2x.png */; };
+		FEE6B6D91B184CB2004D8E1F /* Provile_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE6B6D81B184CB2004D8E1F /* Provile_VC.swift */; };
+		FEE6B6DB1B184F0E004D8E1F /* bg-default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FEE6B6DA1B184F0E004D8E1F /* bg-default.jpg */; };
+		FEE6B6DF1B184FA9004D8E1F /* PVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE6B6DE1B184FA9004D8E1F /* PVC.swift */; };
+		FEE824F31B1E7ADA00BA32CE /* AboutMeTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE824F21B1E7ADA00BA32CE /* AboutMeTVCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,6 +235,10 @@
 		FEE6B6D21B184942004D8E1F /* smile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smile@2x.png"; sourceTree = "<group>"; };
 		FEE6B6D41B184AC4004D8E1F /* smilez@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smilez@2x.png"; sourceTree = "<group>"; };
 		FEE6B6D61B184B1C004D8E1F /* smilez-0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smilez-0@2x.png"; sourceTree = "<group>"; };
+		FEE6B6D81B184CB2004D8E1F /* Provile_VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provile_VC.swift; sourceTree = "<group>"; };
+		FEE6B6DA1B184F0E004D8E1F /* bg-default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-default.jpg"; sourceTree = "<group>"; };
+		FEE6B6DE1B184FA9004D8E1F /* PVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVC.swift; sourceTree = "<group>"; };
+		FEE824F21B1E7ADA00BA32CE /* AboutMeTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutMeTVCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +288,7 @@
 		FE77BBBE1B0F41470069D761 /* TVCells */ = {
 			isa = PBXGroup;
 			children = (
+				FEE824F21B1E7ADA00BA32CE /* AboutMeTVCell.swift */,
 				FE77BBE61B1322620069D761 /* ConvoTVCell.swift */,
 				FE77BBCC1B119DCB0069D761 /* FriendRequectTVCell.swift */,
 				FE55B0921B092A2E00B2A7A0 /* ProfilePictureTVCell.swift */,
@@ -288,7 +297,6 @@
 				FE9D23F61AFC7228005E065E /* AgeTVCell.swift */,
 				FE45F1EC1AFAEADF000AECE4 /* TableTVCell.swift */,
 				FE0A91CD1AF6FAA700CA41B2 /* ContentTVCell.swift */,
-				FE0A91CF1AF6FCC600CA41B2 /* ContactTVC.swift */,
 				FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */,
 				FE77BBE21B130E230069D761 /* MessageTVCell.swift */,
 			);
@@ -320,13 +328,16 @@
 		FE77BBC11B0F418C0069D761 /* TVs */ = {
 			isa = PBXGroup;
 			children = (
+				FEE6B6D81B184CB2004D8E1F /* Provile_VC.swift */,
 				FE77BBEA1B157F380069D761 /* PrivacyVC.swift */,
 				FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */,
 				FE77BBCA1B119B220069D761 /* MessagesVC.swift */,
 				FE77BBE41B1319890069D761 /* ConversationVC.swift */,
+				FE0A91CF1AF6FCC600CA41B2 /* ContactTVC.swift */,
 				FE77BBBE1B0F41470069D761 /* TVCells */,
 				FE45F1EA1AFAEAB1000AECE4 /* TableVC.swift */,
 				DDE757051B0928180090B35D /* SettingsTVC.swift */,
+				FEE6B6DE1B184FA9004D8E1F /* PVC.swift */,
 			);
 			name = TVs;
 			sourceTree = "<group>";
@@ -405,6 +416,7 @@
 				FE77BBDC1B12C8FC0069D761 /* messages-icon.png */,
 				FEBD878F1AE55289006452FD /* profile-icon@2x.png */,
 				FE77BBD81B12C7A40069D761 /* friend-requests@2x.png */,
+				FEE6B6DA1B184F0E004D8E1F /* bg-default.jpg */,
 				FEA6B2891AE7138A00D9B9A9 /* button@2x.png */,
 				FEBD86891AE1FD06006452FD /* swag-60@2x.png */,
 				FEBD87931AE5588C006452FD /* location-icon@2x.png */,
@@ -575,6 +587,7 @@
 				FE9D23FB1AFC7707005E065E /* SI-60@2x.png in Resources */,
 				FE1C1BBB1AED9C260075F689 /* general.png in Resources */,
 				FEA6B29F1AE73E6900D9B9A9 /* contacts@3x.png in Resources */,
+				FEE6B6DB1B184F0E004D8E1F /* bg-default.jpg in Resources */,
 				FEA6B2BA1AE76FD000D9B9A9 /* favorites.png in Resources */,
 				FEA6B29D1AE73E6900D9B9A9 /* contacts.png in Resources */,
 				FEA6B2AF1AE7436A00D9B9A9 /* back@2x.png in Resources */,
@@ -643,6 +656,8 @@
 				FE8B46811ADCEFEF00FA9EA3 /* AppDelegate.swift in Sources */,
 				FE55B0931B092A2E00B2A7A0 /* ProfilePictureTVCell.swift in Sources */,
 				FE5D6F851B03186C002691D4 /* CustomTextField.swift in Sources */,
+				FEE6B6D91B184CB2004D8E1F /* Provile_VC.swift in Sources */,
+				FEE6B6DF1B184FA9004D8E1F /* PVC.swift in Sources */,
 				FE77BBE31B130E230069D761 /* MessageTVCell.swift in Sources */,
 				FE77BBC91B119AF30069D761 /* FriendRequestsTVC.swift in Sources */,
 				FE77BBCB1B119B220069D761 /* MessagesVC.swift in Sources */,
@@ -655,6 +670,7 @@
 				FE6718771AEE0E32006C03FC /* annotation.swift in Sources */,
 				FE45F1EB1AFAEAB1000AECE4 /* TableVC.swift in Sources */,
 				FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */,
+				FEE824F31B1E7ADA00BA32CE /* AboutMeTVCell.swift in Sources */,
 				FE77BBE71B1322620069D761 /* ConvoTVCell.swift in Sources */,
 				FE9D23FD1AFC909B005E065E /* TBC.swift in Sources */,
 				FE0A91D01AF6FCC600CA41B2 /* ContactTVC.swift in Sources */,

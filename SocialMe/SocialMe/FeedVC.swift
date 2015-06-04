@@ -91,7 +91,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let userImageFile = user.objectForKey("photo") as? PFFile {
             userImageFile.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
+                if imageData != nil {
                     profilePicture.image = UIImage(data:imageData!)!
+                }
                 profilePicture.contentMode = .ScaleAspectFill
             }
         } else {

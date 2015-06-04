@@ -12,7 +12,7 @@ import MobileCoreServices
 // import CoreImage
 
 
-class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     let locationManager = CLLocationManager()
     let picker = UIImagePickerController()
@@ -20,6 +20,8 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     @IBOutlet weak var constraint: NSLayoutConstraint!
     @IBOutlet weak var table: UITableView!
     var editingAge = false
+    var editingAbout = false
+    var aboutMeText : String!
     
     func colorTable() {
         for subview in table.subviews {
@@ -29,6 +31,9 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     
     func registerNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleNotification:", name: "ageNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"updateAboutMeText:", name: "updateAboutMe", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleAboutMeNotification:", name: "aboutMeNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleAboutMeEndNotification:", name: "aboutMeNotificationEnd", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"handleImageNotification:", name: "imageNotification", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
@@ -62,7 +67,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         var originDelta = keyboardViewEndFrame.origin.y - keyboardViewBeginFrame.origin.y
         
         if showsKeyboard == false {
-            self.table.frame.size.height = 470
+            self.table.frame.size.height = view.frame.height - (49 + 64)
         } else {
                             var height = self.table.frame.size.height
                             println(height)
@@ -79,12 +84,18 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         //textView.scrollRangeToVisible(selectedRange)
     }
     
+    func updateAboutMeText(notification: NSNotification) {
+        if let info = notification.userInfo as? [String : String] {
+            aboutMeText = info["value"]
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 8
+        return 9
     }
     
     
@@ -108,6 +119,8 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         }
         else if a == "Location" {
             return "locationCell"
+        } else if a == "About Me" {
+            return "aboutMeCell"
         }
         return "tableCell"
     }
@@ -133,7 +146,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 6 {
+        if indexPath.section == 7 {
             performSegueWithIdentifier("privacyVC", sender: nil)
         }
         println(indexPath.section)
@@ -141,7 +154,6 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let ID = getCellID(indexPath.section)
-        println(ID)
         if ID == "profilePictureCell" {
             var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! ProfilePictureTVCell
             
@@ -158,16 +170,45 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
                     }
                 }
             }
-            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else if ID == "logoutCell" {
             var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! LogOutTVCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            return cell
+        }
+            
+        else if ID == "aboutMeCell" {
+            var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! AboutMeTVCell
+            cell.aboutMeLabel.numberOfLines = 0
+            println(aboutMeText)
+            if aboutMeText == "" {
+                let user = PFUser.currentUser()
+                if let aboutMe = user!.objectForKey("aboutMe") as? String {
+                    cell.aboutMeLabel.text = aboutMe
+                    aboutMeText = aboutMe
+                } else {
+                    cell.aboutMeLabel.text = ""
+                }
+            } else {
+                cell.aboutMeLabel.text = aboutMeText
+            }
+            cell.aboutMeTF.delegate = self
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }
             
         else if ID == "locationCell" {
-            var cell = tableView.dequeueReusableCellWithIdentifier(ID) as! UITableViewCell
-            return cell
+            var c = tableView.dequeueReusableCellWithIdentifier(ID) as! LocationTVCell
+            if (CLLocationManager.authorizationStatus() == .AuthorizedAlways) {
+                c.control.selectedSegmentIndex = 0
+            } else if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse) {
+                c.control.selectedSegmentIndex = 1
+            } else {
+                c.control.selectedSegmentIndex = 2
+            }
+            c.selectionStyle = UITableViewCellSelectionStyle.None
+            return c
         }
         
         else if ID == "tableCell" {
@@ -176,19 +217,23 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             cell.separatorInset = UIEdgeInsetsZero
             let title = getTitleForPath(indexPath.section)
             cell.editButton.tag = indexPath.section
-            cell.textField.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName : UIColor.purpleColor()])
+            cell.textField.delegate = self
+            cell.textField.attributedPlaceholder = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName : UIColor.darkGrayColor()])
             let user = PFUser.currentUser()
             let attr = getTitleForPath(indexPath.section)
             
             if let val = user?.objectForKey(attr) as? String {
                 cell.textField.attributedPlaceholder = NSAttributedString(string: val, attributes: [NSForegroundColorAttributeName : UIColor.darkGrayColor()])
             }
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         } else if ID == "ageCell" {
             var b = tableView.dequeueReusableCellWithIdentifier(ID) as! AgeTVCell
+            b.selectionStyle = UITableViewCellSelectionStyle.None
             return b
         } else if ID == "privacyCell" {
             var b = tableView.dequeueReusableCellWithIdentifier(ID) as! UITableViewCell
+            b.selectionStyle = UITableViewCellSelectionStyle.Blue
             return b
         } else {
             var c = tableView.dequeueReusableCellWithIdentifier(ID) as! LocationTVCell
@@ -199,6 +244,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             } else {
                 c.control.selectedSegmentIndex = 2
             }
+            c.selectionStyle = UITableViewCellSelectionStyle.None
             return c
         }
     }
@@ -208,6 +254,11 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         table.delegate = self
         table.dataSource = self
         registerNotifications()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        table.reloadData()
     }
     
     func presentPicker(type : UIImagePickerControllerSourceType) {
@@ -222,6 +273,35 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             picker.allowsEditing = true
             presentViewController(picker, animated: true, completion: nil)
         }
+    }
+    
+    func handleAbouMeNotification(notification: NSNotification) {
+        /*
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        actionSheet.addAction(UIAlertAction(title:"Upload Photo", style:UIAlertActionStyle.Default, handler:{ action in
+            let type = UIImagePickerControllerSourceType.PhotoLibrary
+            self.presentPicker(type)
+        }))
+        actionSheet.addAction(UIAlertAction(title:"Take a Picture", style:UIAlertActionStyle.Default, handler:{ action in
+            let type = UIImagePickerControllerSourceType.Camera
+            self.presentPicker(type)
+        }))
+        actionSheet.addAction(UIAlertAction(title:"Cancel", style:UIAlertActionStyle.Cancel, handler:nil))
+        
+        presentViewController(actionSheet, animated:true, completion:nil)
+        */
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if range.length + range.location > 300 {
+            return false
+        }
+        return true
     }
     
     func handleImageNotification(notification: NSNotification) {
@@ -274,6 +354,15 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         NSNotificationCenter.defaultCenter().postNotificationName("pickerNotification", object: nil)
     }
     
+    func handleAboutMeNotification(notification: NSNotification) {
+        editingAbout = !editingAbout
+        if editingAbout == true {
+            
+        }
+        table.beginUpdates()
+        table.endUpdates()
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let a = getTitleForPath(indexPath.section)
         if a == "Age" && editingAge == true {
@@ -284,6 +373,21 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return 240
         } else if a == "Log Out" || a == "Privacy" {
             return 44
+        } else if a == "About Me" && editingAbout == false {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("aboutMeCell") as! AboutMeTVCell
+            let maxWidth = CGFloat(cell.aboutMeLabel.frame.width)
+            let maxHeight = CGFloat(10000.0)
+            let size = CGSizeMake(maxWidth, maxHeight)
+            if let aboutMe = aboutMeText {
+                
+            } else {
+                aboutMeText = ""
+            }
+            let frame = NSString(string: aboutMeText).boundingRectWithSize(size, options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(17)], context: nil)
+            
+            return frame.height + 40
+            
         }
         return 44
     }
@@ -293,16 +397,18 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         case 0:
             return "Profile Picture"
         case 1:
-            return "Name"
+            return "About Me"
         case 2:
-            return "Hometown"
+            return "Name"
         case 3:
-            return "School"
+            return "Hometown"
         case 4:
-            return "Occupation"
+            return "School"
         case 5:
-            return "Location"
+            return "Occupation"
         case 6:
+            return "Location"
+        case 7:
             return "Privacy"
         default:
             return ""
