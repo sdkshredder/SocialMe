@@ -31,13 +31,13 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLocationManager()
+        
         registerForNotification()
         var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("logLocation"), userInfo: nil, repeats: true)
+        
         setupMap()
         styleDisplay()
         showPeopleNearby()
-        //setupDisplay(
-        
     }
     
     func styleDisplay() {
@@ -59,13 +59,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     func mapView(mapView: MKMapView!,
         regionDidChangeAnimated animated: Bool) {
-            /*
-            if self.arrow.alpha == 0 {
-                UIView.animateWithDuration(0.2, animations: {
-                    self.arrow.alpha = 1
-                })
-            }
-            */
     }
     
     func rotateArrow() {
@@ -101,29 +94,21 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func showPeopleNearby() {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            
             let location : PFGeoPoint = self.getLocation()
             let query = PFUser.query()
             query!.whereKey("location", nearGeoPoint: location)
             let nearby = query!.findObjects() as! [PFUser]
-            
             dispatch_async(dispatch_get_main_queue()) {
-                
                 self.plotPlaces(nearby)
             }
         }
-        
-        
-        
     }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if !(annotation is CustomAnnotation) {
             return nil
         }
-        
         let reuseId = "test"
-        
         var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
         if anView == nil {
             anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -160,13 +145,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             annotation.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
             annotations.append(annotation)
 
-            /*
-            let artwork = annotation(title: "King David Kalakaua",
-                locationName: "Waikiki Gateway Park",
-                discipline: "Sculpture",
-                coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
-            mapView.addAnnotation(artwork)
-            */
         }
         
         map.addAnnotations(annotations)
@@ -267,12 +245,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func locationManager(manager: CLLocationManager!,
         didChangeAuthorizationStatus status: CLAuthorizationStatus)
     {
-        /*
-        if status == .Authorized || status == .AuthorizedWhenInUse {
-            manager.startUpdatingLocation()
-            // ...
-        }
-*/
     }
     
     func returnAction(sender: UIButton) {
@@ -294,31 +266,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         presentMainVC()
     }
-
-
-    func handleMap() {
-        /*
-        mapView.delegate = self
-        mapView.frame = view.frame
-        mapView.showsUserLocation = true
-        addLocationToggleToView(mapView)
-        view.addSubview(mapView)
-        */
-    }
     
     func orientMapView() {
-        /*
-        CLGeocoder().reverseGeocodeLocation(locationManager.location, completionHandler: { (placemarks, error) -> Void in
-            if (error != nil) {
-                println("Error: " + error.localizedDescription)
-                return
-            }
-            if placemarks.count > 0 {
-                let pm = placemarks[0] as! CLPlacemark
-                self.zoomToUserLocation(pm)
-            }
-        })
-        */
     }
     
     func zoomToUserLocation(placemark: CLPlacemark) {
