@@ -204,7 +204,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let user : PFUser = data[path!.row] as! PFUser
         destination.username = user.username!
         destination.navigationItem.title = user.username!
-        
     }
 
 }

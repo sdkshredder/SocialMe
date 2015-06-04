@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B0985ACE-C192-43DA-B357-224D76A5AE1A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>SocialMe</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>577BE9BC569A858A27B365CF52B14F721CCBDA5F</key>
 		<string>https://github.com/sdkshredder/SocialMe.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>SocialMe/SocialMe.xcodeproj</string>
+	<string>SocialMe/SocialMe.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>577BE9BC569A858A27B365CF52B14F721CCBDA5F</key>
