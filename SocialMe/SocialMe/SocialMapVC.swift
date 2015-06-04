@@ -31,13 +31,12 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLocationManager()
+        
         registerForNotification()
         var timer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("logLocation"), userInfo: nil, repeats: true)
         setupMap()
         styleDisplay()
         showPeopleNearby()
-        //setupDisplay(
-        
     }
     
     func styleDisplay() {
@@ -60,13 +59,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     func mapView(mapView: MKMapView!,
         regionDidChangeAnimated animated: Bool) {
-            /*
-            if self.arrow.alpha == 0 {
-                UIView.animateWithDuration(0.2, animations: {
-                    self.arrow.alpha = 1
-                })
-            }
-            */
     }
     
     func rotateArrow() {
@@ -102,14 +94,11 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func showPeopleNearby() {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            
             let location : PFGeoPoint = self.getLocation()
             let query = PFUser.query()
             query!.whereKey("location", nearGeoPoint: location)
             let nearby = query!.findObjects() as! [PFUser]
-            
             dispatch_async(dispatch_get_main_queue()) {
-                
                 self.plotPlaces(nearby)
             }
         }
@@ -119,9 +108,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         if !(annotation is CustomAnnotation) {
             return nil
         }
-        
         let reuseId = "test"
-        
         var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
         if anView == nil {
             anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -240,12 +227,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func locationManager(manager: CLLocationManager!,
         didChangeAuthorizationStatus status: CLAuthorizationStatus)
     {
-        /*
-        if status == .Authorized || status == .AuthorizedWhenInUse {
-            manager.startUpdatingLocation()
-            // ...
-        }
-*/
     }
     
     func returnAction(sender: UIButton) {
