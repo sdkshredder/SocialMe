@@ -29,6 +29,7 @@
 		FE5D6F891B03D128002691D4 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5D6F881B03D128002691D4 /* CustomAnnotation.swift */; };
 		FE5D6F8B1B03D476002691D4 /* balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = FE5D6F8A1B03D476002691D4 /* balloon.png */; };
 		FE6718771AEE0E32006C03FC /* annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6718761AEE0E32006C03FC /* annotation.swift */; };
+		FE72C8C41B22640900A94F59 /* SI-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE72C8C31B22640900A94F59 /* SI-60@2x.png */; };
 		FE77BBC51B1130A50069D761 /* LogOutTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */; };
 		FE77BBC71B117EBD0069D761 /* ProfileTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */; };
 		FE77BBC91B119AF30069D761 /* FriendRequestsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */; };
@@ -53,7 +54,6 @@
 		FE8B46971ADCEFEF00FA9EA3 /* SocialMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46961ADCEFEF00FA9EA3 /* SocialMeTests.swift */; };
 		FE8B46A51ADDC1C900FA9EA3 /* SocialMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */; };
 		FE9D23F71AFC7228005E065E /* AgeTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9D23F61AFC7228005E065E /* AgeTVCell.swift */; };
-		FE9D23FB1AFC7707005E065E /* SI-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9D23FA1AFC7707005E065E /* SI-60@2x.png */; };
 		FE9D23FD1AFC909B005E065E /* TBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9D23FC1AFC909B005E065E /* TBC.swift */; };
 		FE9D23FF1AFC97F0005E065E /* opaqueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9D23FE1AFC97F0005E065E /* opaqueButton.png */; };
 		FEA6B28A1AE7138A00D9B9A9 /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA6B2891AE7138A00D9B9A9 /* button@2x.png */; };
@@ -149,6 +149,7 @@
 		FE5D6F881B03D128002691D4 /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		FE5D6F8A1B03D476002691D4 /* balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balloon.png; sourceTree = "<group>"; };
 		FE6718761AEE0E32006C03FC /* annotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = annotation.swift; sourceTree = "<group>"; };
+		FE72C8C31B22640900A94F59 /* SI-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SI-60@2x.png"; sourceTree = "<group>"; };
 		FE77BBC41B1130A50069D761 /* LogOutTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTVCell.swift; sourceTree = "<group>"; };
 		FE77BBC61B117EBD0069D761 /* ProfileTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTVCell.swift; sourceTree = "<group>"; };
 		FE77BBC81B119AF30069D761 /* FriendRequestsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestsTVC.swift; sourceTree = "<group>"; };
@@ -177,7 +178,6 @@
 		FE8B46961ADCEFEF00FA9EA3 /* SocialMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMeTests.swift; sourceTree = "<group>"; };
 		FE8B46A41ADDC1C900FA9EA3 /* SocialMapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMapVC.swift; sourceTree = "<group>"; };
 		FE9D23F61AFC7228005E065E /* AgeTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgeTVCell.swift; sourceTree = "<group>"; };
-		FE9D23FA1AFC7707005E065E /* SI-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SI-60@2x.png"; sourceTree = "<group>"; };
 		FE9D23FC1AFC909B005E065E /* TBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBC.swift; sourceTree = "<group>"; };
 		FE9D23FE1AFC97F0005E065E /* opaqueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = opaqueButton.png; sourceTree = "<group>"; };
 		FEA6B2891AE7138A00D9B9A9 /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
@@ -410,6 +410,7 @@
 				FEE6B6D61B184B1C004D8E1F /* smilez-0@2x.png */,
 				FEE6B6D41B184AC4004D8E1F /* smilez@2x.png */,
 				FEE6B6D21B184942004D8E1F /* smile@2x.png */,
+				FE72C8C31B22640900A94F59 /* SI-60@2x.png */,
 				FE77BBE01B12F9E20069D761 /* x_@2x.png */,
 				FE77BBD61B12C6E40069D761 /* my-profile@2x.png */,
 				FE77BBDE1B12CAD80069D761 /* friend-request@2x.png */,
@@ -425,7 +426,6 @@
 				FE02867F1B0DC72F00E3D56D /* socialme-word.png */,
 				FE0286791B0DAA6000E3D56D /* line.png */,
 				FE9D23FE1AFC97F0005E065E /* opaqueButton.png */,
-				FE9D23FA1AFC7707005E065E /* SI-60@2x.png */,
 				FE55B08A1B0914D300B2A7A0 /* Default.png */,
 				FE55B08B1B0914D300B2A7A0 /* Default@2x.png */,
 				FE55B08E1B09150500B2A7A0 /* Default-iOS8-667h@2x.png */,
@@ -584,7 +584,6 @@
 				FEA6B2B31AE7586F00D9B9A9 /* check-outline@2x.png in Resources */,
 				FE02867A1B0DAA6000E3D56D /* line.png in Resources */,
 				FE55B0901B09150500B2A7A0 /* Default-iOS8-667h@2x.png in Resources */,
-				FE9D23FB1AFC7707005E065E /* SI-60@2x.png in Resources */,
 				FE1C1BBB1AED9C260075F689 /* general.png in Resources */,
 				FEA6B29F1AE73E6900D9B9A9 /* contacts@3x.png in Resources */,
 				FEE6B6DB1B184F0E004D8E1F /* bg-default.jpg in Resources */,
@@ -624,6 +623,7 @@
 				FEA6B2B71AE75BD000D9B9A9 /* x@2x.png in Resources */,
 				FEA6B2B51AE7587F00D9B9A9 /* check@2x.png in Resources */,
 				FE77BBDF1B12CAD80069D761 /* friend-request@2x.png in Resources */,
+				FE72C8C41B22640900A94F59 /* SI-60@2x.png in Resources */,
 				FE5D6F8B1B03D476002691D4 /* balloon.png in Resources */,
 				FE1C1BBC1AED9C260075F689 /* general@2x.png in Resources */,
 				FE5D6F871B031EF6002691D4 /* socialme-logo.png in Resources */,

@@ -20,7 +20,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     @IBOutlet weak var mapContainer: UIView!
     @IBOutlet weak var returnButton: UIButton!
     @IBOutlet weak var arrow: UIVisualEffectView!
-    
     @IBOutlet weak var zoomToggle: UIImageView!
     
     @IBAction func tooltipTap(sender: UITapGestureRecognizer) {
