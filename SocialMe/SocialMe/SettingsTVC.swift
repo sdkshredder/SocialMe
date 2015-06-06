@@ -27,8 +27,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var keyRemove: UIButton!
     @IBOutlet weak var keyCell: UIView!
     @IBOutlet var keyTVC: UITableViewCell!
-    
-  
 
     @IBOutlet var noContentLabel: UILabel!
     
@@ -118,12 +116,52 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         
         return button
     }
+    
+    
+    func addButton(input: String, type: String) {
+        let color = UIColor(red: 57.0/255.0, green: 29.0/255.0, blue: 130.0/255.0, alpha: 1)
+        switch type {
+            case "Hometown":
+                if homeButtons.count <= 3 {
+                    var button = makeButton(Double(self.homeButtons.count), label: input)
+                    button.tintColor = color
+                    button.layer.borderColor = color.CGColor
+                    button.layer.borderWidth = 1
+                    button.layer.cornerRadius = 4
+                    self.homeButtons.append(button)
+                    self.keyCell.addSubview(button)
+                }
+            case "School":
+                if schoolButtons.count <= 3 {
+                    var button = makeButton(Double(self.schoolButtons.count), label: input)
+                    button.tintColor = color
+                    button.layer.borderColor = color.CGColor
+                    button.layer.borderWidth = 1
+                    button.layer.cornerRadius = 4
+                    self.schoolButtons.append(button)
+                    self.keyCell.addSubview(button)
+                }
+            case "Occupation":
+                if occButtons.count <= 3 {
+                    var button = makeButton(Double(self.occButtons.count), label: input)
+                    button.tintColor = color
+                    button.layer.borderColor = color.CGColor
+                    button.layer.borderWidth = 1
+                    button.layer.cornerRadius = 4
+                    self.occButtons.append(button)
+                    self.keyCell.addSubview(button)
+                }
+        default:
+            println("no match")
+        }
+    }
+    
 
     
     @IBAction func addKey(sender: UITextField) {
         let input = sender.text
         let type = self.keySeg.titleForSegmentAtIndex(self.keySeg.selectedSegmentIndex)!
-        
+        addButton(input, type: type)
         if input != "" {
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -141,6 +179,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                                     filter.addObject(input)
                                     keyObj["homeFilter"] = filter
                                     keyObj.save()
+
                                 } else if filter.count > 3 {
                                     let alert = UIAlertView(title: "Keyword Limit Reached", message: "Delete a keyword before adding a new one", delegate: nil, cancelButtonTitle: "OK")
                                     alert.show()
@@ -305,7 +344,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         keyword.resignFirstResponder()
         keyword.endEditing(true)
-        return false
+        return true
     }
     
     
@@ -351,6 +390,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         v.removeFromSuperview()
                     }
                 }
+                
+                
                 switch type {
                 case "Hometown":
                     if var filter = keyObj["homeFilter"] as? NSMutableArray {
@@ -360,9 +401,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         for keyword in filter {
                             println("Count is...")
                             println(Double(homeButtons.count))
-                            var button = makeButton(Double(homeButtons.count), label: keyword as! NSString)
-                            homeButtons.append(button)
-                            self.keyCell.addSubview(button)
+                            addButton(keyword as! String, type: type)
                         }
                         if homeButtons.count == 0 {
                             noContentLabel.hidden = false
@@ -376,9 +415,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         schoolButtons.removeAll(keepCapacity: false)
                         
                         for keyword in filter {
-                            let button = makeButton(Double(schoolButtons.count), label: keyword as! NSString)
-                            schoolButtons.append(button)
-                            self.keyCell.addSubview(button)
+                            addButton(keyword as! String, type: type)
                         }
                         if schoolButtons.count == 0 {
                             noContentLabel.hidden = false
@@ -391,9 +428,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         noContentLabel.hidden = true
                         occButtons.removeAll(keepCapacity: false)
                         for keyword in filter {
-                            let button = makeButton(Double(occButtons.count), label: keyword as! NSString)
-                            occButtons.append(button)
-                            self.keyCell.addSubview(button)
+                            addButton(keyword as! String, type: type)
                         }
                         if occButtons.count == 0 {
                             noContentLabel.hidden = false
