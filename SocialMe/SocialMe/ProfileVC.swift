@@ -28,6 +28,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var addUserButton: UIButton!
     @IBAction func addFriendAction(sender: UIButton) {
         sendFriendRequest(user, fromUser: loggedInUser)
+        updateButtonUI()
     }
     
     func sendFriendRequest(toUser : PFUser, fromUser : PFUser)  {
@@ -282,6 +283,16 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         return true
     }
     
+    func updateButtonUI() {
+        let a = addUserButton.frame.origin.x
+        let b = a - messageButton.frame.origin.x
+        UIView.animateWithDuration(0.2, animations: {
+            self.messageButton.frame.origin.x = self.view.frame.width/2.0 - self.messageButton.frame.width/2.0
+            self.addUserButton.enabled = false
+            self.addUserButton.alpha = 0
+        })
+    }
+    
     func getQueryKey(a: String, b: String) -> String {
         if a > b {
             return "\(a)\(b)"
@@ -359,8 +370,30 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         styleUserPic()
         getUserInfo()
         styleButtons()
-
+        checkUIUpdates()
 		
     }
+    
+    func checkUIUpdates() {
+        var requestQuery = PFQuery(className: "FriendRequests")
+        requestQuery.whereKey("toUser", equalTo: user.username!)
+        requestQuery.whereKey("fromUser", equalTo: loggedInUser.username!)
+        
+        var requestQuery2 = PFQuery(className: "FriendRequests")
+        requestQuery2.whereKey("toUser", equalTo: PFUser.currentUser()!.username!)
+        requestQuery2.whereKey("fromUser", equalTo: user.username!)
+        
+        var query = PFQuery.orQueryWithSubqueries([requestQuery,requestQuery2])
+        var status : NSString?
+        query.findObjectsInBackgroundWithBlock{
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if (objects?.count > 0) {
+                self.updateButtonUI()
+            }
+            
+        }
+    }
+    
     
 }

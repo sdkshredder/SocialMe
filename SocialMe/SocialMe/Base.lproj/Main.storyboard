@@ -544,9 +544,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="G7W-7k-Ckb" secondAttribute="trailing" id="bSO-fC-LHJ"/>
                                                 </constraints>
                                             </view>
-                                            <vibrancyEffect>
-                                                <blurEffect style="extraLight"/>
-                                            </vibrancyEffect>
+                                            <blurEffect style="dark"/>
                                         </visualEffectView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="daj-T8-Miw">
                                             <rect key="frame" x="0.0" y="536" width="600" height="64"/>
@@ -555,7 +553,7 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                             <state key="normal" title="Sign Up">
-                                                <color key="titleColor" red="0.23137254901960785" green="0.17647058823529413" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="titleColor" red="0.9882352941176471" green="1" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -569,7 +567,7 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                             <state key="normal" title="Log In">
-                                                <color key="titleColor" red="0.23137254901960785" green="0.17647058823529413" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="titleColor" red="0.9882352941176471" green="1" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -590,7 +588,7 @@
                                         <constraint firstAttribute="trailing" secondItem="aiC-ik-kbV" secondAttribute="trailing" id="yKN-NR-2m9"/>
                                     </constraints>
                                 </view>
-                                <blurEffect style="extraLight"/>
+                                <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
