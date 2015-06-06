@@ -105,7 +105,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     func enableLogInButton() {
         logInButton.enabled = true
         UIView.animateWithDuration(0.2, animations: {
-            self.logInButton.backgroundColor = UIColor(red: 0, green: 1, blue: 128/255.0, alpha: 1)
+            self.logInButton.backgroundColor = UIColor(red: 57.0/255.0, green: 29.0/155.0, blue: 130.0/255.0, alpha: 1)
             self.logInButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
             self.logInButton.alpha = 1
         })
