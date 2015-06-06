@@ -16,8 +16,8 @@ class AgeTVCell: UITableViewCell {
     
     @IBAction func editTouched(sender: UIButton) {
         editButton.titleLabel!.text = "Save"
-        handlePicker()
         NSNotificationCenter.defaultCenter().postNotificationName("ageNotification", object: nil)
+        handlePicker()
     }
     
     func handlePicker() {

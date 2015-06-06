@@ -12,8 +12,9 @@ class TBC: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.purpleColor()], forState:.Selected)
-        UITabBar.appearance().tintColor = UIColor.purpleColor()
+        let color = UIColor(red: 59.0/255.0, green: 45.0/255.0, blue: 128.0/255.0, alpha: 1.0)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: color], forState:.Selected)
+        UITabBar.appearance().tintColor = color // UIColor.grayColor()
     }
 
     

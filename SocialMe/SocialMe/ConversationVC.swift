@@ -108,7 +108,7 @@ class ConversationVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         println(PFUser.currentUser()!.username!)
         
         var ID = "myConvoCell"
-        var color = UIColor.blueColor()
+        var color = UIColor(red: 59.0/255.0, green: 45.0/255.0, blue: 128.0/255.0, alpha: 1)
         var textColor = UIColor.whiteColor()
         if sender != PFUser.currentUser()!.username! {
             ID = "convoCell"
@@ -123,11 +123,11 @@ class ConversationVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.messageLabel.textColor = textColor
         cell.messageLabel.backgroundColor = color
         cell.messageLabel.clipsToBounds = true
-        cell.messageLabel.font = UIFont.systemFontOfSize(16)
-        cell.messageLabel.layer.cornerRadius = 4
-        let messageBG = UIView(frame: cell.messageLabel.frame)
-        messageBG.backgroundColor = UIColor.purpleColor()
-        cell.addSubview(messageBG)
+        cell.messageLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        cell.messageLabel.layer.cornerRadius = 13
+        //cell.messageLabel.frame.width = 20
+        
+        
         return cell
     }
 }

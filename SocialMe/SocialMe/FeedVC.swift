@@ -91,7 +91,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let userImageFile = user.objectForKey("photo") as? PFFile {
             userImageFile.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
+                if imageData != nil {
                     profilePicture.image = UIImage(data:imageData!)!
+                }
                 profilePicture.contentMode = .ScaleAspectFill
             }
         } else {
@@ -250,7 +252,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let user : PFUser = data[path!.row] as! PFUser
         destination.username = user.username!
         destination.navigationItem.title = user.username!
-        
     }
 
 }

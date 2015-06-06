@@ -20,7 +20,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     @IBOutlet weak var mapContainer: UIView!
     @IBOutlet weak var returnButton: UIButton!
     @IBOutlet weak var arrow: UIVisualEffectView!
-    
     @IBOutlet weak var zoomToggle: UIImageView!
     
     @IBAction func tooltipTap(sender: UITapGestureRecognizer) {
@@ -31,13 +30,12 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLocationManager()
+        
         registerForNotification()
-        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("logLocation"), userInfo: nil, repeats: true)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("logLocation"), userInfo: nil, repeats: true)
         setupMap()
         styleDisplay()
         showPeopleNearby()
-        //setupDisplay(
-        
     }
     
     func styleDisplay() {
@@ -47,7 +45,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func setupMap() {
         map.delegate = self
         map.setUserTrackingMode(.Follow, animated: true)
-        map.frame = mapContainer.frame
+        map.showsUserLocation = true
+        map.frame = view.frame
         mapContainer.addSubview(map)
     }
     
@@ -59,13 +58,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     
     func mapView(mapView: MKMapView!,
         regionDidChangeAnimated animated: Bool) {
-            /*
-            if self.arrow.alpha == 0 {
-                UIView.animateWithDuration(0.2, animations: {
-                    self.arrow.alpha = 1
-                })
-            }
-            */
     }
     
     func rotateArrow() {
@@ -92,7 +84,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             user!.saveInBackgroundWithBlock {
                 (succeeded, error) -> Void in
                 if error == nil {
-                    println("success for user \(user!.username)")
+                    println("success for user: \(user!.username)")
                 }
             }
         }
@@ -101,29 +93,21 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func showPeopleNearby() {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            
             let location : PFGeoPoint = self.getLocation()
             let query = PFUser.query()
             query!.whereKey("location", nearGeoPoint: location)
             let nearby = query!.findObjects() as! [PFUser]
-            
             dispatch_async(dispatch_get_main_queue()) {
-                
                 self.plotPlaces(nearby)
             }
         }
-        
-        
-        
     }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if !(annotation is CustomAnnotation) {
             return nil
         }
-        
         let reuseId = "test"
-        
         var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
         if anView == nil {
             anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -146,7 +130,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             let a = CLLocation(latitude: location.latitude, longitude: location.longitude)
             let annotation = CustomAnnotation()
             annotation.title = person.username
-            annotation.imageName = "balloon.png"
+            annotation.imageName = "smilez-0.png"
             
             if let lastSeen : Double = person.objectForKey("lastSeen") as? Double {
                 var date = NSDate(timeIntervalSince1970: lastSeen)
@@ -160,13 +144,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             annotation.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
             annotations.append(annotation)
 
-            /*
-            let artwork = annotation(title: "King David Kalakaua",
-                locationName: "Waikiki Gateway Park",
-                discipline: "Sculpture",
-                coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
-            mapView.addAnnotation(artwork)
-            */
         }
         
         map.addAnnotations(annotations)
@@ -177,13 +154,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func presentMainVC () {
         let vc : UINavigationController = storyboard!.instantiateViewControllerWithIdentifier("nav") as! UINavigationController
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
-        //let vc = navigationController!.viewControllers[0] as! UINavigationController
-        //navigationController?.popToViewController(vc, animated: true)
-        //navigationController?.popToViewController(navigationController!.viewControllers[2], animated: true)
-        // navigationController?.popViewControllerAnimated(true)
-        
-        //popToRootViewControllerAnimated(true)
-        
     }
     
     func returnToMap(sender: UIButton) {
@@ -197,19 +167,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             }, completion: {
                 (value: Bool) in
                 self.hidden = false
-                //self.setNeedsStatusBarAppearanceUpdate()
         })
     }
-    
-    /*
-    func addMapReturnButton() {
-        let returnButton = UIButton(frame: CGRectMake(0, view.frame.height - 50, view.frame.width, 50))
-        returnButton.addTarget(self, action: "returnToMap:", forControlEvents: UIControlEvents.TouchUpInside)
-        returnButton.backgroundColor = UIColor.clearColor()
-        view.addSubview(returnButton)
-    }
-*/
-    
     
     @IBAction func returnTap(sender: UIButton) {
         returnAction(sender)
@@ -250,13 +209,13 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         let type = info["pref"]
         if type == "always" {
             if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
-                locationManager.startUpdatingLocation()
                 locationManager.requestAlwaysAuthorization()
+                locationManager.startUpdatingLocation()
             }
         } else if type == "while" {
             if CLLocationManager.authorizationStatus() != .AuthorizedWhenInUse {
-                locationManager.startUpdatingLocation()
                 locationManager.requestWhenInUseAuthorization()
+                locationManager.startUpdatingLocation()
             }
             
         } else {
@@ -267,12 +226,6 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func locationManager(manager: CLLocationManager!,
         didChangeAuthorizationStatus status: CLAuthorizationStatus)
     {
-        /*
-        if status == .Authorized || status == .AuthorizedWhenInUse {
-            manager.startUpdatingLocation()
-            // ...
-        }
-*/
     }
     
     func returnAction(sender: UIButton) {
@@ -294,20 +247,8 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
         presentMainVC()
     }
-
-
-    func handleMap() {
-        /*
-        mapView.delegate = self
-        mapView.frame = view.frame
-        mapView.showsUserLocation = true
-        addLocationToggleToView(mapView)
-        view.addSubview(mapView)
-        */
-    }
     
     func orientMapView() {
-        /*
         CLGeocoder().reverseGeocodeLocation(locationManager.location, completionHandler: { (placemarks, error) -> Void in
             if (error != nil) {
                 println("Error: " + error.localizedDescription)
@@ -318,21 +259,17 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
                 self.zoomToUserLocation(pm)
             }
         })
-        */
     }
     
     func zoomToUserLocation(placemark: CLPlacemark) {
         self.map.setRegion(MKCoordinateRegion(center: placemark.location.coordinate,
-            span: MKCoordinateSpanMake(0.01, 0.01)), animated: true)
+            span: MKCoordinateSpanMake(0.005, 0.005)), animated: true)
     }
-    
-    
-    
+
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         locationManager.requestWhenInUseAuthorization()
-        
     }
 }

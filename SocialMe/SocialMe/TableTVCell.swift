@@ -24,7 +24,6 @@ class TableTVCell: UITableViewCell {
                     self.textField.becomeFirstResponder()
             })
             sender.setTitle("Save", forState: .Normal)
-            
         } else {
             var user = PFUser.currentUser()
             var attr = getTitleForPath(sender.tag)
@@ -36,8 +35,7 @@ class TableTVCell: UITableViewCell {
             user!.saveInBackgroundWithBlock {
                 (succeeded, error) -> Void in
                 if error == nil {
-                    println("success for user \(user!.username)")
-                    
+                    println("success - for user \(user!.username)")
                 } else {
                     println("handle error")
                 }
@@ -49,19 +47,19 @@ class TableTVCell: UITableViewCell {
     
     func getTitleForPath(row: Int) -> String {
         var res = ""
+        print(row)
+        println("----")
         switch row {
-        case 0:
-            res = "Name"
-        case 1:
-            res = "Age"
         case 2:
-            res = "Hometown"
+            res = "Name"
         case 3:
-            res = "School"
+            res = "Hometown"
         case 4:
+            res = "School"
+        case 5:
             res = "Occupation"
         default:
-            res = "hello"
+            res = ""
         }
         return res
     }

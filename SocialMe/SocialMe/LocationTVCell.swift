@@ -22,25 +22,29 @@ class LocationTVCell: UITableViewCell, UIAlertViewDelegate, CLLocationManagerDel
             control.enabled = true
         } else {
             editButton.setTitle("Edit", forState: .Normal)
+            editButton.enabled = false 
             control.enabled = false
             var type = "none"
             if control.selectedSegmentIndex == 0 {
-                //locationManager.requestAlwaysAuthorization()
                 type = "always"
             } else if control.selectedSegmentIndex == 1 {
                 type = "while"
             }
-            //NSNotificationCenter.defaultCenter().postNotificationName("hideSettings", object: nil)
             NSNotificationCenter.defaultCenter().postNotificationName("locationPreferences", object: nil, userInfo: ["pref":type])
         }
     }
     
     @IBAction func info(sender: UIButton) {
-        let alert = UIAlertView(title: "Location Preferences", message: "Specify whether your location is visible to other users", delegate: self, cancelButtonTitle: "Got it")
-        alert.show()
     }
     
     @IBAction func change(sender: UISegmentedControl) {
-        
+        switch (sender.selectedSegmentIndex) {
+        case 0:
+            locationManager.requestAlwaysAuthorization()
+        case 1:
+            locationManager.requestWhenInUseAuthorization()
+        default:
+            UIApplication.sharedApplication().openURL(NSURL(string: "app-settings:")!)
+        }
     }
 }
