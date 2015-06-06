@@ -108,7 +108,7 @@ class ConversationVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         println(PFUser.currentUser()!.username!)
         
         var ID = "myConvoCell"
-        var color = UIColor.purpleColor()
+        var color = UIColor(red: 59.0/255.0, green: 45.0/255.0, blue: 128.0/255.0, alpha: 1)
         var textColor = UIColor.whiteColor()
         if sender != PFUser.currentUser()!.username! {
             ID = "convoCell"
