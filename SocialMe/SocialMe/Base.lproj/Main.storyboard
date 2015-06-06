@@ -296,7 +296,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
                                                     <rect key="frame" x="88" y="15" width="424" height="31"/>
                                                     <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -406,6 +406,64 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Keyword" id="R9U-GO-lRB">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="120" id="pb4-3U-3kH">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pb4-3U-3kH" id="Yt2-fa-TED">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter keywords" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="coX-Bs-REI">
+                                                    <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="e1e-Hq-fEC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="addKey:" destination="Xmk-0W-le7" eventType="editingDidEnd" id="WXZ-uX-fPe"/>
+                                                    </connections>
+                                                </textField>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="k3P-e6-ktR">
+                                                    <rect key="frame" x="8" y="46" width="584" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="uDe-bk-sF5"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="Hometown"/>
+                                                        <segment title="School"/>
+                                                        <segment title="Occupation"/>
+                                                    </segments>
+                                                    <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="switchKeySeg:" destination="Xmk-0W-le7" eventType="valueChanged" id="dCv-d2-E0Q"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Current Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7r-st-1LR">
+                                                    <rect key="frame" x="8" y="82" width="159" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="ceq-v7-26P"/>
+                                                        <constraint firstAttribute="width" constant="159" id="gHM-Rt-bAn"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="k3P-e6-ktR" firstAttribute="leading" secondItem="Yt2-fa-TED" secondAttribute="leading" constant="8" id="2Cz-Sy-RVx"/>
+                                                <constraint firstAttribute="trailing" secondItem="k3P-e6-ktR" secondAttribute="trailing" constant="8" id="V3A-Oe-agb"/>
+                                                <constraint firstItem="I7r-st-1LR" firstAttribute="top" secondItem="k3P-e6-ktR" secondAttribute="bottom" constant="8" id="Xc1-JG-4CL"/>
+                                                <constraint firstAttribute="trailing" secondItem="coX-Bs-REI" secondAttribute="trailing" constant="8" id="gvd-OF-g4W"/>
+                                                <constraint firstItem="coX-Bs-REI" firstAttribute="top" secondItem="Yt2-fa-TED" secondAttribute="top" constant="8" id="mq8-5V-8mL"/>
+                                                <constraint firstItem="coX-Bs-REI" firstAttribute="leading" secondItem="Yt2-fa-TED" secondAttribute="leading" constant="8" id="nv5-3T-gGP"/>
+                                                <constraint firstItem="k3P-e6-ktR" firstAttribute="top" secondItem="coX-Bs-REI" secondAttribute="bottom" constant="8" id="xCG-dT-GkQ"/>
+                                                <constraint firstItem="I7r-st-1LR" firstAttribute="leading" secondItem="Yt2-fa-TED" secondAttribute="leading" constant="8" id="zzl-Gp-S7t"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Xmk-0W-le7" id="ZtD-Su-tZt"/>
@@ -414,7 +472,12 @@
                     </tableView>
                     <connections>
                         <outlet property="distanceValue" destination="1BT-AY-SXE" id="n7l-2O-1Ng"/>
+                        <outlet property="keyCell" destination="Yt2-fa-TED" id="ogF-pM-ocj"/>
+                        <outlet property="keySeg" destination="k3P-e6-ktR" id="Izk-uB-UHt"/>
+                        <outlet property="keyTVC" destination="pb4-3U-3kH" id="HWW-IA-Stj"/>
+                        <outlet property="keyword" destination="coX-Bs-REI" id="16V-hX-OL1"/>
                         <outlet property="lowerAge" destination="HYH-f4-Log" id="Gsz-n0-aoO"/>
+                        <outlet property="noContentLabel" destination="I7r-st-1LR" id="93n-WJ-wHu"/>
                         <outlet property="segment" destination="Nzi-yz-caX" id="Nub-Vh-2tY"/>
                         <outlet property="slider" destination="jnN-NG-Ddh" id="g0W-BF-Ne0"/>
                         <outlet property="upperAge" destination="JT3-hy-GXM" id="Wno-ot-K2h"/>
@@ -1862,6 +1925,6 @@
         <image name="swag-60.png" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="D4c-x3-Bbm"/>
+        <segue reference="o4m-dp-fgm"/>
     </inferredMetricsTieBreakers>
 </document>

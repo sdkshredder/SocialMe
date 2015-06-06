@@ -164,6 +164,19 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.inputLabel.alpha = 1
         })
         
+        //cell.inputLabel?.text = input
+        
+        //tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        
+        //let user = data[indexPath.row] as! PFUser
+        //println(user)
+        /*
+        cell.textLabel!.text = user.username
+        cell.detailTextLabel!.text = user.email
+        cell.imageView?.image = UIImage(named: "podcasts")
+        cell.separatorInset = UIEdgeInsetsZero
+        */
+        // cell.contentView.backgroundColor = UIColor.grayColor()
         return cell
     }
     
