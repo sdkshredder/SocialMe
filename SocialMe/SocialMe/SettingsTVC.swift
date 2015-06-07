@@ -11,12 +11,13 @@ import Parse
 
 class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+	@IBOutlet weak var relatGoalLabel: UILabel!
+	@IBOutlet weak var relatGoalPicker: UIPickerView!
     
     var homeButtons = [UIButton]()
     var schoolButtons = [UIButton]()
     var occButtons = [UIButton]()
-    
-    
+	
     @IBOutlet weak var lowerAge: UIPickerView!
     @IBOutlet weak var upperAge: UIPickerView!
     @IBOutlet weak var distanceValue: UILabel!
@@ -414,6 +415,9 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         let distance = user?.objectForKey("distanceFilter") as! Int
         slider.value = Float(distance)
         distanceValue.text = "\(distance) ft"
+		relatGoalPicker.delegate = self
+		relatGoalPicker.dataSource = self
+		//lookingForPicker.selectRow((user?.objectForKey("lookingForStatus") as! Int), inComponent: 0, animated: true )
         lowerAge.delegate = self
         lowerAge.dataSource = self
         lowerAge.selectRow((user?.objectForKey("lowerAgeFilter") as! Int) - 18, inComponent: 0, animated: true)

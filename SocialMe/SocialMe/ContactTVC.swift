@@ -130,7 +130,6 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 		vc.username = profUsername
 		
 		navigationController?.pushViewController(vc, animated: true)
-		
 	}
 
 }
