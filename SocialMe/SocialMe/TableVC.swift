@@ -95,7 +95,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 9
+        return 8
     }
     
     
@@ -408,8 +408,6 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             return "Occupation"
         case 6:
             return "Location"
-        case 7:
-            return "Privacy"
         default:
             return ""
         }

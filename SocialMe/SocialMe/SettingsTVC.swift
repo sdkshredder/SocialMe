@@ -39,6 +39,36 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
 
     }
     
+    @IBAction func controlSwitch(sender: UISegmentedControl) {
+        
+        var aAlpha = 1
+        var bAlpha = 1
+        var cAlpha = 1
+        
+        if sender.selectedSegmentIndex == 0 {
+            bAlpha = 0
+            cAlpha = 0
+        } else if sender.selectedSegmentIndex == 1 {
+            aAlpha = 0
+            cAlpha = 0
+        } else {
+            aAlpha = 0
+            bAlpha = 0
+        }
+        
+        UIView.animateWithDuration(0.2, animations: {
+            for button in self.homeButtons {
+                button.alpha = CGFloat(aAlpha)
+            }
+            for button in self.schoolButtons {
+                button.alpha = CGFloat(bAlpha)
+            }
+            for button in self.occButtons {
+                button.alpha = CGFloat(cAlpha)
+            }
+        })
+    }
+    
     func deleteKey(sender: UIButton) {
         println("Deleting key")
         println(sender.titleLabel!.text!)
@@ -80,7 +110,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     println("Error determining keyword filter type")
             }
             
-            viewDidLoad()
         }
     
 
@@ -254,8 +283,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     newKey.save()
                 
                 }
-                
-                self.viewDidLoad()
             }
             
             sender.text = ""
@@ -266,6 +293,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     
     @IBAction func segmentValueChange(sender: UISegmentedControl) {
+        println("hello")
     }
 
     
@@ -288,7 +316,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     }
     
     @IBAction func switchKeySeg(sender: UISegmentedControl) {
-        viewDidLoad()
     }
     
     
