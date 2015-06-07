@@ -39,7 +39,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         swipeView.addGestureRecognizer(swipe)
         swipeView.addGestureRecognizer(tap)
         view.addSubview(swipeView)
-        
     }
     
     func swipeUp(sender: UISwipeGestureRecognizer) {
@@ -140,6 +139,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
+			var userRelationshipGoal = user?.objectForKey("relationshipGoal") as! String
+			if (userRelationshipGoal != "All") {
+				query!.whereKey("relationshipGoal", equalTo: userRelationshipGoal)
+			}
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
@@ -192,10 +195,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
-
-            
-            
-            
             var res : NSArray = query!.findObjects()!
                     
             dispatch_async(dispatch_get_main_queue()) {

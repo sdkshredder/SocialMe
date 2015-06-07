@@ -279,42 +279,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="Relationship Goals" id="g69-0A-eIw" userLabel="LookingFor">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="173" id="IP5-2f-Gpv">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IP5-2f-Gpv" id="7yK-8k-I87">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFQ-GG-b4u">
-                                                    <rect key="frame" x="257" y="21" width="87" height="162"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="130" id="2pF-in-Sic"/>
-                                                        <constraint firstAttribute="width" constant="87" id="lm2-8L-tmH"/>
-                                                    </constraints>
-                                                </pickerView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Relationship Goals" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AaA-Q0-Xq6">
-                                                    <rect key="frame" x="228" y="8" width="144" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="SaL-KM-zeK"/>
-                                                        <constraint firstAttribute="width" constant="144" id="f8t-Ml-ABm"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.22352941179999999" green="0.1137254902" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="centerX" secondItem="XFQ-GG-b4u" secondAttribute="centerX" constant="-0.5" id="8WW-lJ-Ho8"/>
-                                                <constraint firstAttribute="centerX" secondItem="AaA-Q0-Xq6" secondAttribute="centerX" id="OV0-8Z-cOK"/>
-                                                <constraint firstItem="XFQ-GG-b4u" firstAttribute="top" secondItem="AaA-Q0-Xq6" secondAttribute="bottom" constant="8" id="W2b-2a-BsE"/>
-                                                <constraint firstItem="AaA-Q0-Xq6" firstAttribute="top" secondItem="7yK-8k-I87" secondAttribute="top" constant="8" id="euI-oS-yG6"/>
-                                                <constraint firstItem="XFQ-GG-b4u" firstAttribute="top" secondItem="AaA-Q0-Xq6" secondAttribute="bottom" constant="8" id="ibd-VK-gxk"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Distance" id="kGq-np-Qg2">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="71" id="0zm-uL-3Q0">
@@ -332,13 +296,9 @@
                                                     <color key="textColor" red="0.22352941176470587" green="0.11372549019607843" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
+                                                <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
                                                     <rect key="frame" x="125" y="15" width="384" height="31"/>
                                                     <color key="tintColor" red="0.23137254901960785" green="0.10588235294117647" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="IMA-hV-DEJ"/>
-                                                        <constraint firstAttribute="width" constant="380" id="r1Q-0K-Pki"/>
-                                                    </constraints>
                                                     <connections>
                                                         <action selector="valueDidChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="2Ku-56-b3l"/>
                                                     </connections>
@@ -346,9 +306,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerX" secondItem="1BT-AY-SXE" secondAttribute="centerX" constant="248" id="0Hg-Bq-dZK"/>
-                                                <constraint firstAttribute="centerY" secondItem="jnN-NG-Ddh" secondAttribute="centerY" constant="5" id="BQa-pY-crc"/>
                                                 <constraint firstItem="1BT-AY-SXE" firstAttribute="top" secondItem="554-Op-fQm" secondAttribute="top" constant="19" id="F05-Tf-895"/>
-                                                <constraint firstAttribute="centerX" secondItem="jnN-NG-Ddh" secondAttribute="centerX" constant="-17" id="meZ-he-3Kh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -405,6 +363,42 @@
                                                 <constraint firstItem="HYH-f4-Log" firstAttribute="leading" secondItem="dIk-f2-bfX" secondAttribute="leading" constant="64" id="Tux-TA-drJ"/>
                                                 <constraint firstItem="Dph-Ur-Yzg" firstAttribute="top" secondItem="dIk-f2-bfX" secondAttribute="top" constant="8" id="elu-Az-8OF"/>
                                                 <constraint firstItem="fJP-Mo-irW" firstAttribute="top" secondItem="dIk-f2-bfX" secondAttribute="top" constant="8" id="xUx-xW-lag"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Relationship Goals" id="g69-0A-eIw" userLabel="LookingFor">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="71" id="IP5-2f-Gpv">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IP5-2f-Gpv" id="7yK-8k-I87">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="WLk-y5-hH4">
+                                                    <rect key="frame" x="8" y="21" width="584" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="584" id="q0g-JZ-W46"/>
+                                                        <constraint firstAttribute="height" constant="28" id="rN2-sY-Uky"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="Social"/>
+                                                        <segment title="Business"/>
+                                                        <segment title="Romantic"/>
+                                                        <segment title="All"/>
+                                                    </segments>
+                                                    <color key="tintColor" red="0.22352941179999999" green="0.1137254902" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="relatOptionChanged:" destination="Xmk-0W-le7" eventType="valueChanged" id="MFR-Pd-XJu"/>
+                                                        <action selector="segmentValueChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="ny8-lo-xLj"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerX" secondItem="WLk-y5-hH4" secondAttribute="centerX" id="3ib-53-rud"/>
+                                                <constraint firstItem="WLk-y5-hH4" firstAttribute="top" secondItem="7yK-8k-I87" secondAttribute="top" constant="21" id="Fzp-MX-m3W"/>
+                                                <constraint firstAttribute="trailing" secondItem="WLk-y5-hH4" secondAttribute="trailing" constant="8" id="N2x-eu-frg"/>
+                                                <constraint firstItem="WLk-y5-hH4" firstAttribute="leading" secondItem="7yK-8k-I87" secondAttribute="leading" constant="8" id="XWo-rf-iyK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -515,8 +509,7 @@
                         <outlet property="keyword" destination="coX-Bs-REI" id="16V-hX-OL1"/>
                         <outlet property="lowerAge" destination="HYH-f4-Log" id="Gsz-n0-aoO"/>
                         <outlet property="noContentLabel" destination="I7r-st-1LR" id="93n-WJ-wHu"/>
-                        <outlet property="relatGoalLabel" destination="AaA-Q0-Xq6" id="ZK1-5m-oIK"/>
-                        <outlet property="relatGoalPicker" destination="XFQ-GG-b4u" id="xgZ-qD-d7w"/>
+                        <outlet property="relationshipSegments" destination="WLk-y5-hH4" id="FVn-nY-1ve"/>
                         <outlet property="segment" destination="Nzi-yz-caX" id="Nub-Vh-2tY"/>
                         <outlet property="slider" destination="jnN-NG-Ddh" id="g0W-BF-Ne0"/>
                         <outlet property="upperAge" destination="JT3-hy-GXM" id="Wno-ot-K2h"/>
