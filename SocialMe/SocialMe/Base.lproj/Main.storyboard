@@ -595,6 +595,15 @@
                                                             <constraint firstAttribute="height" constant="151" id="ctV-Wk-m8M"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4y-Qq-qtN">
+                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="471"/>
+                                                        <state key="normal">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="tap:" destination="l9m-kj-Wv6" eventType="touchUpInside" id="DZt-Qk-3va"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="68i-dj-mha" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="51H-ib-QU8"/>
@@ -602,9 +611,13 @@
                                                     <constraint firstItem="G7W-7k-Ckb" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="5dm-FW-n7x"/>
                                                     <constraint firstItem="G7W-7k-Ckb" firstAttribute="top" secondItem="68i-dj-mha" secondAttribute="bottom" constant="64" id="H9T-aR-V9j"/>
                                                     <constraint firstAttribute="trailing" secondItem="68i-dj-mha" secondAttribute="trailing" id="K9S-aa-pPU"/>
+                                                    <constraint firstItem="P4y-Qq-qtN" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="KQN-lt-QKk"/>
+                                                    <constraint firstAttribute="trailing" secondItem="P4y-Qq-qtN" secondAttribute="trailing" id="LaC-SZ-Xt8"/>
                                                     <constraint firstAttribute="centerX" secondItem="IHr-Wg-edi" secondAttribute="centerX" constant="-0.5" id="NuX-oD-bdG"/>
+                                                    <constraint firstItem="G7W-7k-Ckb" firstAttribute="top" secondItem="P4y-Qq-qtN" secondAttribute="bottom" constant="64" id="Ve5-ig-vDs"/>
                                                     <constraint firstAttribute="bottom" secondItem="G7W-7k-Ckb" secondAttribute="bottom" constant="64" id="YS9-Ph-Cxg"/>
                                                     <constraint firstAttribute="trailing" secondItem="G7W-7k-Ckb" secondAttribute="trailing" id="bSO-fC-LHJ"/>
+                                                    <constraint firstItem="P4y-Qq-qtN" firstAttribute="top" secondItem="REQ-Xi-LLo" secondAttribute="top" id="lh8-6U-RBb"/>
                                                 </constraints>
                                             </view>
                                             <vibrancyEffect>

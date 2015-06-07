@@ -16,8 +16,6 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         animateBG()
-        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("animateBG"), userInfo: nil, repeats: true)
-        
     }
     
     
@@ -46,6 +44,10 @@ class HomeVC: UIViewController {
     @IBAction func signUpTouch(sender: UIButton) {
         let signupVC : SignUpVC = self.storyboard!.instantiateViewControllerWithIdentifier("signupVC") as! SignUpVC
         navigationController?.pushViewController(signupVC, animated: true)
+    }
+    
+    @IBAction func tap(sender: UIButton) {
+        animateBG()
     }
     
     func logo() {
