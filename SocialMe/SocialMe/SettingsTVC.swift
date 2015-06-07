@@ -80,7 +80,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         var objectArr = keywordQuery.findObjects() as! [PFObject]
         if objectArr.count > 0 { // Username exists in keyword filters
             var keyObj = objectArr[0]
-            //sender.removeFromSuperview()
+            sender.removeFromSuperview()
             switch type {
             case "Hometown":
                 if var filter = keyObj["homeFilter"] as? NSMutableArray {
@@ -90,6 +90,16 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         keyObj.save()
                     }
                 }
+                
+                var index = 0
+                for button in self.homeButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.homeButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+                
+                
             case "School":
                 if var filter = keyObj["schoolFilter"] as? NSMutableArray {
                     if filter.containsObject(toRemove){
@@ -98,6 +108,15 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         keyObj.save()
                     }
                 }
+                
+                var index =  0
+                for button in self.schoolButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.schoolButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+                
             case "Occupation":
                 if var filter = keyObj["occFilter"] as? NSMutableArray {
                     if filter.containsObject(toRemove){
@@ -106,6 +125,15 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         keyObj.save()
                     }
                 }
+                
+                var index = 0
+                for button in self.occButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.occButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+                
             default:
                     println("Error determining keyword filter type")
             }
