@@ -114,47 +114,50 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 			
 			if (indexPath.row == 0) {
 				var name = user.username!
-				var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
-				capLet = capLet.uppercaseString
-				var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
-				name = (capLet as String) + (rest as String)
+				name = capFirstLetter(name)
 				cell.attrLabel?.text = "About "+name
 				if let aboutMe = user.objectForKey("aboutMe") as? String {
 					cell.inputLabel?.text = aboutMe
 					cell.inputLabel?.numberOfLines = 0
+				} else {
+					cell.inputLabel?.text = "N/A"
 				}
 			}
             if (indexPath.row == 1) {
-                cell.attrLabel?.text = "Name "
-                cell.inputLabel?.text = user.username
+                cell.attrLabel?.text = "Age "
+                if let age = user.objectForKey("Age") as? NSInteger {
+					
+                    cell.inputLabel?.text = String(age)
+					
+				} else {
+					cell.inputLabel?.text = "N/A"
+				}
+				
             }
             if (indexPath.row == 2) {
-                cell.attrLabel?.text = "Age "
-                if let age = user.objectForKey("Age") as? String {
-                    cell.inputLabel?.text = age
-					
-                }
-                //cell.inputLabel?.text = user.objectForKey("Age") as? String
-            }
-            if (indexPath.row == 3) {
                 cell.attrLabel?.text = "Hometown "
                 if let hometown = user.objectForKey("Hometown") as? String {
                     cell.inputLabel?.text = hometown
-                }
+				}else {
+					cell.inputLabel?.text = "N/A"
+				}
                 //cell.inputLabel?.text = user.objectForKey("Hometown") as? String
             }
-            if (indexPath.row == 4) {
+            if (indexPath.row == 3) {
                 cell.attrLabel?.text = "Occupation "
                 if let occupation = user.objectForKey("Occupation") as? String {
                     cell.inputLabel?.text = occupation
-                }
-                //cell.inputLabel?.text = user.objectForKey("Occupation") as? String
+				} else {
+					cell.inputLabel?.text = "N/A"
+				}
             }
-            if (indexPath.row == 5) {
-                cell.attrLabel?.text = "Alma Mater "
+            if (indexPath.row == 4) {
+                cell.attrLabel?.text = "School "
                 if let school = user.objectForKey("School") as? String {
                     cell.inputLabel?.text =  school
-                }
+				}else {
+					cell.inputLabel?.text = "N/A"
+				}
                 //cell.inputLabel?.text = user.objectForKey("School") as? String
             }
             
@@ -375,7 +378,17 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         addUserButton.layer.cornerRadius = 4
         addUserButton.layer.borderColor = UIColor.purpleColor().CGColor
     }
-    
+	
+	func capFirstLetter(name: String) -> String {
+		if (name.isEmpty) {
+			return name
+		}
+		var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+		capLet = capLet.uppercaseString
+		var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+		 return (capLet as String) + (rest as String)
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         println(username)
@@ -383,7 +396,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         styleUserPic()
         getUserInfo()
         styleButtons()
-        checkUIUpdates()
+        //checkUIUpdates()
 		
     }
     
@@ -395,7 +408,6 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         var requestQuery2 = PFQuery(className: "FriendRequests")
         requestQuery2.whereKey("toUser", equalTo: PFUser.currentUser()!.username!)
         requestQuery2.whereKey("fromUser", equalTo: user.username!)
-        
         var query = PFQuery.orQueryWithSubqueries([requestQuery,requestQuery2])
         var status : NSString?
         query.findObjectsInBackgroundWithBlock{

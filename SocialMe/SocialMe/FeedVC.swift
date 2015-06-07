@@ -231,7 +231,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         fetchUsers()
 		println("You're logged in as \(PFUser.currentUser()?.username)")
     }
-    
+	func capFirstLetter(name: String) -> String {
+		if (name.isEmpty) {
+			return name
+		}
+		var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+		capLet = capLet.uppercaseString
+		var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+		return (capLet as String) + (rest as String)
+	}
+	
     override func viewDidAppear(animated: Bool) {
         if PFUser.currentUser() == nil {
             presentMainVC()
@@ -251,7 +260,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let user : PFUser = data[path!.row] as! PFUser
         destination.username = user.username!
-        destination.navigationItem.title = user.username!
+		
+		destination.navigationItem.title = capFirstLetter(user.username!)
+
     }
 
 }
