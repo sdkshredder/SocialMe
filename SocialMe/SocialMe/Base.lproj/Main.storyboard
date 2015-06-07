@@ -239,7 +239,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ohR-4G-lDG">
-                        <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Lmo-Cr-35q">
+                        <barButtonItem key="leftBarButtonItem" image="my-profile.png" id="Lmo-Cr-35q">
                             <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
                             <color key="tintColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
                             <connections>
@@ -247,7 +247,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="general.png" style="plain" id="wV7-mv-Rxe">
-                            <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
+                            <inset key="imageInsets" minX="40" minY="20" maxX="0.0" maxY="18"/>
                             <color key="tintColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
                             <connections>
                                 <action selector="showFilterPreferences:" destination="v17-xv-42k" id="wiv-Xc-lSV"/>
@@ -382,10 +382,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nzi-yz-caX">
-                                                    <rect key="frame" x="184" y="16" width="233" height="29"/>
+                                                    <rect key="frame" x="8" y="16" width="584" height="29"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="233" id="HYh-yE-mxn"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="233" id="Rmz-gJ-gIq"/>
+                                                        <constraint firstAttribute="height" constant="28" id="UCJ-BT-XzV"/>
                                                     </constraints>
                                                     <segments>
                                                         <segment title="Male"/>
@@ -399,8 +398,9 @@
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="Nzi-yz-caX" secondAttribute="centerY" constant="-0.5" id="Qgz-e0-o3r"/>
-                                                <constraint firstAttribute="centerX" secondItem="Nzi-yz-caX" secondAttribute="centerX" constant="-0.5" id="f3T-Sr-FJK"/>
+                                                <constraint firstItem="Nzi-yz-caX" firstAttribute="leading" secondItem="2WT-iD-Vh5" secondAttribute="leading" constant="8" id="2zb-rS-b3G"/>
+                                                <constraint firstAttribute="trailing" secondItem="Nzi-yz-caX" secondAttribute="trailing" constant="8" id="Kc6-tV-e0c"/>
+                                                <constraint firstAttribute="centerY" secondItem="Nzi-yz-caX" secondAttribute="centerY" constant="-0.25" id="zrC-cF-Xn1"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -436,6 +436,7 @@
                                                     </segments>
                                                     <color key="tintColor" red="0.22352941176470587" green="0.11372549019607843" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
+                                                        <action selector="controlSwitch:" destination="Xmk-0W-le7" eventType="valueChanged" id="4Bq-fT-dUd"/>
                                                         <action selector="switchKeySeg:" destination="Xmk-0W-le7" eventType="valueChanged" id="dCv-d2-E0Q"/>
                                                     </connections>
                                                 </segmentedControl>
@@ -502,7 +503,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="rsA-G3-PFY">
                         <barButtonItem key="backBarButtonItem" title=" " id="Kzj-qF-epU"/>
-                        <barButtonItem key="leftBarButtonItem" image="contacts.png" id="Yq5-M4-x5j">
+                        <barButtonItem key="leftBarButtonItem" image="my-profile.png" id="Yq5-M4-x5j">
                             <inset key="imageInsets" minX="0.0" minY="12" maxX="25" maxY="12"/>
                             <color key="tintColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
                             <connections>
@@ -510,7 +511,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="general.png" id="IGb-jh-NOo">
-                            <inset key="imageInsets" minX="33" minY="16" maxX="0.0" maxY="16"/>
+                            <inset key="imageInsets" minX="40" minY="20" maxX="0.0" maxY="18"/>
                             <color key="tintColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
                             <connections>
                                 <action selector="showSettings:" destination="iKc-BW-79x" id="D9H-aO-52o"/>
@@ -595,6 +596,15 @@
                                                             <constraint firstAttribute="height" constant="151" id="ctV-Wk-m8M"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4y-Qq-qtN">
+                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="471"/>
+                                                        <state key="normal">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="tap:" destination="l9m-kj-Wv6" eventType="touchUpInside" id="DZt-Qk-3va"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="68i-dj-mha" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="51H-ib-QU8"/>
@@ -602,9 +612,13 @@
                                                     <constraint firstItem="G7W-7k-Ckb" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="5dm-FW-n7x"/>
                                                     <constraint firstItem="G7W-7k-Ckb" firstAttribute="top" secondItem="68i-dj-mha" secondAttribute="bottom" constant="64" id="H9T-aR-V9j"/>
                                                     <constraint firstAttribute="trailing" secondItem="68i-dj-mha" secondAttribute="trailing" id="K9S-aa-pPU"/>
+                                                    <constraint firstItem="P4y-Qq-qtN" firstAttribute="leading" secondItem="REQ-Xi-LLo" secondAttribute="leading" id="KQN-lt-QKk"/>
+                                                    <constraint firstAttribute="trailing" secondItem="P4y-Qq-qtN" secondAttribute="trailing" id="LaC-SZ-Xt8"/>
                                                     <constraint firstAttribute="centerX" secondItem="IHr-Wg-edi" secondAttribute="centerX" constant="-0.5" id="NuX-oD-bdG"/>
+                                                    <constraint firstItem="G7W-7k-Ckb" firstAttribute="top" secondItem="P4y-Qq-qtN" secondAttribute="bottom" constant="64" id="Ve5-ig-vDs"/>
                                                     <constraint firstAttribute="bottom" secondItem="G7W-7k-Ckb" secondAttribute="bottom" constant="64" id="YS9-Ph-Cxg"/>
                                                     <constraint firstAttribute="trailing" secondItem="G7W-7k-Ckb" secondAttribute="trailing" id="bSO-fC-LHJ"/>
+                                                    <constraint firstItem="P4y-Qq-qtN" firstAttribute="top" secondItem="REQ-Xi-LLo" secondAttribute="top" id="lh8-6U-RBb"/>
                                                 </constraints>
                                             </view>
                                             <vibrancyEffect>
@@ -949,11 +963,11 @@
             </objects>
             <point key="canvasLocation" x="-3043" y="-1801"/>
         </scene>
-        <!--Feed-->
+        <!--Navigation Controller-->
         <scene sceneID="Krw-vK-r2g">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ApI-41-2Kd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feed" id="EUW-Uk-Bpq">
+                    <tabBarItem key="tabBarItem" systemItem="featured" id="EUW-Uk-Bpq">
                         <inset key="imageInsets" minX="10" minY="17" maxX="10" maxY="5"/>
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
@@ -965,7 +979,7 @@
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
-                            <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.23137254901960785" green="0.17647058823529413" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -977,11 +991,11 @@
             </objects>
             <point key="canvasLocation" x="-1473" y="723"/>
         </scene>
-        <!--Contacts-->
+        <!--Navigation Controller-->
         <scene sceneID="fD0-v1-Cnw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kmv-SW-aHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" id="jer-CQ-dEd">
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="jer-CQ-dEd">
                         <inset key="imageInsets" minX="5" minY="10" maxX="5" maxY="0.0"/>
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
@@ -1918,10 +1932,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="contacts.png" width="50" height="50"/>
         <image name="general.png" width="58" height="58"/>
         <image name="map.png" width="50" height="50"/>
         <image name="messages-icon.png" width="100" height="100"/>
+        <image name="my-profile.png" width="50" height="50"/>
         <image name="near-me@3x.png" width="177" height="177"/>
         <image name="podcasts.png" width="50" height="55"/>
         <image name="socialme-word.png" width="1630" height="978"/>

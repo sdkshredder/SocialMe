@@ -101,24 +101,25 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             profilePicture.contentMode = .ScaleAspectFit
         }
         
-        profilePicture.frame = CGRectMake(22, content.frame.height/2.0 - 10, 60, 60)
+        var frame = CGRectMake(22, content.frame.height/2.0 - 5, 50, 50)
+        profilePicture.frame = frame
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2.0
         profilePicture.clipsToBounds = true
         content.addSubview(profilePicture)
         
-        var nameLabel = UILabel(frame: CGRectMake(100, profilePicture.frame.origin.y, 200, 30))
+        var nameLabel = UILabel(frame: CGRectMake(100, profilePicture.frame.origin.y - 10, 200, 30))
         nameLabel.text = user.username
         nameLabel.font = UIFont.boldSystemFontOfSize(18)
         content.addSubview(nameLabel)
         
         var distance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
-        var distanceLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 24, 200, 20))
+        var distanceLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 26, 200, 20))
         distanceLabel.text = "\(round(100*distance)/100) ft"
         distanceLabel.font = UIFont.systemFontOfSize(16)
         content.addSubview(distanceLabel)
         
         if let occupation = user.objectForKey("Occupation") as? String {
-            var occupationLabel = UILabel(frame: CGRectMake(100, distanceLabel.frame.origin.y + 14, 200, 20))
+            var occupationLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
             occupationLabel.text = occupation
             occupationLabel.textColor = UIColor.lightGrayColor()
             occupationLabel.font = UIFont.systemFontOfSize(14)

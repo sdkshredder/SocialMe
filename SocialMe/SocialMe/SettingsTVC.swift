@@ -39,6 +39,36 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
 
     }
     
+    @IBAction func controlSwitch(sender: UISegmentedControl) {
+        
+        var aAlpha = 1
+        var bAlpha = 1
+        var cAlpha = 1
+        
+        if sender.selectedSegmentIndex == 0 {
+            bAlpha = 0
+            cAlpha = 0
+        } else if sender.selectedSegmentIndex == 1 {
+            aAlpha = 0
+            cAlpha = 0
+        } else {
+            aAlpha = 0
+            bAlpha = 0
+        }
+        
+        UIView.animateWithDuration(0.2, animations: {
+            for button in self.homeButtons {
+                button.alpha = CGFloat(aAlpha)
+            }
+            for button in self.schoolButtons {
+                button.alpha = CGFloat(bAlpha)
+            }
+            for button in self.occButtons {
+                button.alpha = CGFloat(cAlpha)
+            }
+        })
+    }
+    
     func deleteKey(sender: UIButton) {
         println("Deleting key")
         println(sender.titleLabel!.text!)
@@ -50,7 +80,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         var objectArr = keywordQuery.findObjects() as! [PFObject]
         if objectArr.count > 0 { // Username exists in keyword filters
             var keyObj = objectArr[0]
-            //sender.removeFromSuperview()
+            sender.removeFromSuperview()
             switch type {
             case "Hometown":
                 if var filter = keyObj["homeFilter"] as? NSMutableArray {
@@ -60,6 +90,16 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         keyObj.save()
                     }
                 }
+                
+                var index = 0
+                for button in self.homeButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.homeButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+                
+                
             case "School":
                 if var filter = keyObj["schoolFilter"] as? NSMutableArray {
                     if filter.containsObject(toRemove){
@@ -68,6 +108,15 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         keyObj.save()
                     }
                 }
+                
+                var index =  0
+                for button in self.schoolButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.schoolButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+                
             case "Occupation":
                 if var filter = keyObj["occFilter"] as? NSMutableArray {
                     if filter.containsObject(toRemove){
@@ -76,11 +125,19 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         keyObj.save()
                     }
                 }
+                
+                var index = 0
+                for button in self.occButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.occButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+                
             default:
                     println("Error determining keyword filter type")
             }
             
-            viewDidLoad()
         }
     
 
@@ -254,8 +311,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     newKey.save()
                 
                 }
-                
-                self.viewDidLoad()
             }
             
             sender.text = ""
@@ -266,6 +321,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     
     @IBAction func segmentValueChange(sender: UISegmentedControl) {
+        println("hello")
     }
 
     
@@ -288,7 +344,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     }
     
     @IBAction func switchKeySeg(sender: UISegmentedControl) {
-        viewDidLoad()
     }
     
     
