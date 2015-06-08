@@ -289,8 +289,8 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500 ft" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1BT-AY-SXE">
                                                     <rect key="frame" x="22" y="19" width="60" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="UQc-OI-kJr"/>
-                                                        <constraint firstAttribute="width" constant="60" id="gGb-t1-1Gg"/>
+                                                        <constraint firstAttribute="height" constant="21" id="Tcw-Be-gPA"/>
+                                                        <constraint firstAttribute="width" constant="60" id="bPo-js-bvx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.22352941176470587" green="0.11372549019607843" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -300,8 +300,8 @@
                                                     <rect key="frame" x="125" y="15" width="384" height="31"/>
                                                     <color key="tintColor" red="0.23137254901960785" green="0.10588235294117647" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="380" id="Izb-5D-i5V"/>
-                                                        <constraint firstAttribute="height" constant="30" id="Sqx-ci-AqJ"/>
+                                                        <constraint firstAttribute="height" constant="30" id="6HR-9q-gqZ"/>
+                                                        <constraint firstAttribute="width" constant="380" id="DVl-E0-R95"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="valueDidChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="2Ku-56-b3l"/>
@@ -309,13 +309,11 @@
                                                 </slider>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="1BT-AY-SXE" firstAttribute="top" secondItem="554-Op-fQm" secondAttribute="top" constant="19" id="5oL-3p-53L"/>
-                                                <constraint firstItem="1BT-AY-SXE" firstAttribute="leading" secondItem="554-Op-fQm" secondAttribute="leading" constant="22" id="D4M-ZB-CCq"/>
-                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="leading" secondItem="1BT-AY-SXE" secondAttribute="trailing" constant="45" id="YiO-hK-xGR"/>
-                                                <constraint firstAttribute="centerX" secondItem="jnN-NG-Ddh" secondAttribute="centerX" constant="-17" id="cL6-5h-JiH"/>
-                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="top" secondItem="554-Op-fQm" secondAttribute="top" constant="15" id="cjc-6g-gra"/>
-                                                <constraint firstAttribute="trailing" secondItem="jnN-NG-Ddh" secondAttribute="trailing" constant="93" id="dqR-Rb-hB2"/>
-                                                <constraint firstAttribute="centerX" secondItem="1BT-AY-SXE" secondAttribute="centerX" constant="248" id="oHz-rd-e9I"/>
+                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="leading" secondItem="1BT-AY-SXE" secondAttribute="trailing" constant="45" id="54O-Rv-gaw"/>
+                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="top" secondItem="554-Op-fQm" secondAttribute="top" constant="15" id="CZ4-OR-K80"/>
+                                                <constraint firstItem="1BT-AY-SXE" firstAttribute="top" secondItem="554-Op-fQm" secondAttribute="top" constant="19" id="EOD-RW-11c"/>
+                                                <constraint firstItem="1BT-AY-SXE" firstAttribute="leading" secondItem="554-Op-fQm" secondAttribute="leading" constant="22" id="KXA-YD-o7I"/>
+                                                <constraint firstAttribute="trailing" secondItem="jnN-NG-Ddh" secondAttribute="trailing" constant="93" id="jvN-gh-L3c"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
