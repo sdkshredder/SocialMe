@@ -82,7 +82,6 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
 					self.tableView.reloadData()
 				}
 			}
-			
 		}
 	}
 	

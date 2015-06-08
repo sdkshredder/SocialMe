@@ -26,7 +26,6 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 			var query = PFQuery(className: "Friendships")
 			query.whereKey("username", equalTo: self.loggedInUser!.username as NSString!)
 			query.includeKey("friends")
-			//query!.selectKeys(["friends"])
 			var res : NSArray = query.findObjects()!
 			var userObj : PFObject?
 			var userFriends = NSArray()
@@ -111,9 +110,14 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:"showProfile:", name: "showUserProfile", object: nil)
-		retrieveFriends()
+		//retrieveFriends()
 	}
 	
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		retrieveFriends()
+	}
 
 	
 	func showProfile(notification: NSNotification) {
