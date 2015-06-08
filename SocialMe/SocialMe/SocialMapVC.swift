@@ -16,6 +16,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
     let locationManager = CLLocationManager()
     var map = MKMapView()
     var hidden = false
+    var thePeople : [PFUser]!
     
     @IBOutlet weak var mapContainer: UIView!
     @IBOutlet weak var returnButton: UIButton!
@@ -98,6 +99,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             query!.whereKey("location", nearGeoPoint: location)
             let nearby = query!.findObjects() as! [PFUser]
             dispatch_async(dispatch_get_main_queue()) {
+                self.thePeople = nearby
                 self.plotPlaces(nearby)
             }
         }
@@ -107,7 +109,7 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         if !(annotation is CustomAnnotation) {
             return nil
         }
-        let reuseId = "test"
+        let reuseId = "mapID"
         var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
         if anView == nil {
             anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
@@ -120,30 +122,74 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
         let cpa = annotation as! CustomAnnotation
         anView.image = UIImage(named:cpa.imageName)
         
+        anView.leftCalloutAccessoryView = UIImageView(frame: CGRectMake(10, 10, 30, 30))
+        anView.rightCalloutAccessoryView = UIButton.buttonWithType(UIButtonType.InfoDark) as! UIButton
+        anView.rightCalloutAccessoryView.tintColor = UIColor.darkGrayColor()
+        
         return anView
+    }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        // performSegueWithIdentifier("profileSegue", sender: view)
+        // println("yo yo yooo!")
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("profileVC") as! ProfileVC
+        let b = view.annotation as! CustomAnnotation
+        vc.username = b.username
+        vc.navigationItem.title = b.username
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let a = sender as? MKAnnotationView {
+            let b = a.annotation as! CustomAnnotation
+            
+            // let path = tableView.indexPathForCell(cell)
+            let destination = segue.destinationViewController as! ProfileVC
+            
+            destination.username = b.username
+            destination.navigationItem.title = b.username
+        }
+    }
+    
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+        if let a = view.leftCalloutAccessoryView as? UIImageView {
+            if let b = view.annotation as? CustomAnnotation {
+                let c = thePeople[b.index]
+                if let picFile = c.objectForKey("photo") as? PFFile {
+                    picFile.getDataInBackgroundWithBlock {
+                        (imageData: NSData?, error: NSError?) -> Void in
+                        if error == nil {
+                            if let imageData = imageData {
+                                let image = UIImage(data:imageData)
+                                a.image = image
+                                a.clipsToBounds = true
+                                a.layer.cornerRadius = a.frame.height/2.0
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     private func plotPlaces(people: [PFUser]) {
         var annotations = [CustomAnnotation]()
+        var index = 0
         for person in people {
             let location : PFGeoPoint = person["location"] as! PFGeoPoint
             let a = CLLocation(latitude: location.latitude, longitude: location.longitude)
             let annotation = CustomAnnotation()
             annotation.title = person.username
             annotation.imageName = "smilez-0.png"
-            
-            if let lastSeen : Double = person.objectForKey("lastSeen") as? Double {
-                var date = NSDate(timeIntervalSince1970: lastSeen)
-                var formatter = NSDateFormatter()
-                formatter.dateStyle = .MediumStyle
-                formatter.timeStyle = .MediumStyle
-                let it = formatter.stringFromDate(date)
-                annotation.subtitle = it
+            annotation.index = index
+            annotation.username = person.username! 
+            if let occupation = person["Occupation"] as? String {
+                annotation.subtitle = occupation
             }
-            
             annotation.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
             annotations.append(annotation)
-
+            index += 1
         }
         
         map.addAnnotations(annotations)

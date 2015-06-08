@@ -165,6 +165,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             home = PFQuery.orQueryWithSubqueries([home, find])
                         }
                         query = PFQuery.orQueryWithSubqueries([home])
+                        var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()
+                        
                     }
                 }
                 if var filter = keyObj["schoolFilter"] as? NSMutableArray {
@@ -177,6 +182,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             school = PFQuery.orQueryWithSubqueries([school, find])
                         }
                         query = PFQuery.orQueryWithSubqueries([school])
+                        var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()
+                        
                     }
                 }
                 if var filter = keyObj["occFilter"] as? NSMutableArray {
@@ -189,12 +199,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             occ = PFQuery.orQueryWithSubqueries([occ, find])
                         }
                         query = PFQuery.orQueryWithSubqueries([occ])
+                        var res : NSArray = query!.findObjects()!
+                    
+                        self.data = res
+                        self.tableView.reloadData()
+                        
+                        
                     }
                 }
             }
 
+            println(query!)
             
-            
+            /*
             
             var res : NSArray = query!.findObjects()!
                     
@@ -203,7 +220,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
             }
 
-
+            */
         }
     }
 
