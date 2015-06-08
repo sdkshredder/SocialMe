@@ -465,18 +465,23 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             default:
                 segment.selectedSegmentIndex = 2
         }
-		let relationshipGoal = user?.objectForKey("relationshipGoal") as! String
+		if let relationshipGoal = user?.objectForKey("relationshipGoal") as? String {
 			switch relationshipGoal {
-				case "Business":
-					relationshipSegments.selectedSegmentIndex = 1
-				case "Romantic":
-					relationshipSegments.selectedSegmentIndex = 2
-				case "Social":
-					relationshipSegments.selectedSegmentIndex = 0
-				default:
-					relationshipSegments.selectedSegmentIndex = 3
+			case "Business":
+				relationshipSegments.selectedSegmentIndex = 1
+			case "Romantic":
+				relationshipSegments.selectedSegmentIndex = 2
+			case "Social":
+				relationshipSegments.selectedSegmentIndex = 0
+			default:
+				relationshipSegments.selectedSegmentIndex = 3
 			}
+		} else {
+			relationshipSegments.selectedSegmentIndex = 3
+
+		}
 		
+
         keyword.delegate = self
         if keySeg.selectedSegmentIndex == -1 {
             keySeg.selectedSegmentIndex = 0

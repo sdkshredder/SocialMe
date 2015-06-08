@@ -139,10 +139,12 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
-			var userRelationshipGoal = user?.objectForKey("relationshipGoal") as! String
-			if (userRelationshipGoal != "All") {
-				query!.whereKey("relationshipGoal", equalTo: userRelationshipGoal)
+			if let userRelationshipGoal = user?.objectForKey("relationshipGoal") as? String {
+				if (userRelationshipGoal != "All") {
+					query!.whereKey("relationshipGoal", equalTo: userRelationshipGoal)
+				}
 			}
+
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }

@@ -115,10 +115,11 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 			if (indexPath.row == 0) {
 				var name = user.username!
 				name = capFirstLetter(name)
-				cell.attrLabel?.text = "About "+name
-				if let aboutMe = user.objectForKey("aboutMe") as? String {
-					cell.inputLabel?.text = aboutMe
+				cell.attrLabel?.text = "Relationship Goals"
+				if let goal = user.objectForKey("relationshipGoal") as? String {
+					cell.inputLabel?.text = goal
 					cell.inputLabel?.numberOfLines = 0
+					
 				} else {
 					cell.inputLabel?.text = "N/A"
 				}
@@ -135,7 +136,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 				
             }
             if (indexPath.row == 2) {
-                cell.attrLabel?.text = "Hometown "
+                cell.attrLabel?.text = "Hometown"
                 if let hometown = user.objectForKey("Hometown") as? String {
                     cell.inputLabel?.text = hometown
 				}else {
