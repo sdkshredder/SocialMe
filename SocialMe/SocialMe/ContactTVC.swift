@@ -110,7 +110,6 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:"animateCellFrame:", name: "cellNotification", object: nil)
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector:"showProfile:", name: "showUserProfile", object: nil)
-		//retrieveFriends()
 	}
 	
 	
