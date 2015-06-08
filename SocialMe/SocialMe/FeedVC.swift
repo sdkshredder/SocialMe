@@ -220,7 +220,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
             }
 
-            */
+            
         }
     }
 
