@@ -157,6 +157,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             var keywordQuery = PFQuery(className: "KeywordFilter")
             keywordQuery.whereKey("username", equalTo: user!.username!)
             var objectArr = keywordQuery.findObjects() as! [PFObject]
+			
             if objectArr.count > 0 { // Username exists in keyword filters
                 var keyObj = objectArr[0]
                 

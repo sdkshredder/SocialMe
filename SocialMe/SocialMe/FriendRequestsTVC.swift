@@ -95,7 +95,6 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
 		res = temp as NSArray
 		
 		tableView.reloadData()
-		
 	}
 
 
