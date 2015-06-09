@@ -252,7 +252,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         
                         
                     }
-                }/*
+                }
                 if var filter = keyObj["aboutFilter"] as? NSMutableArray {
                     if filter.count > 0 {
                         var about = PFQuery.orQueryWithSubqueries([query!])
@@ -272,7 +272,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         
                         
                     }
-                }*/
+                }
             }
             var res : NSArray = query!.findObjects()!
                     
