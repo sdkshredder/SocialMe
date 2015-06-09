@@ -15,8 +15,9 @@ class ContentTVCell: UITableViewCell {
 	@IBOutlet weak var specAttrContentLabel: UILabel!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var friendPicture: UIImageView!
-	
 	@IBOutlet weak var expandInfoButton: UIButton!
+    @IBOutlet weak var messageButton: UIButton!
+    @IBOutlet weak var profileButton: UIButton!
 	
 	@IBAction func goToProfile(sender: UIButton) {
 		println("Yeah we got it bro")
@@ -24,6 +25,7 @@ class ContentTVCell: UITableViewCell {
 		info["index"] = friendPicture.tag
 		NSNotificationCenter.defaultCenter().postNotificationName("showUserProfile", object: nil, userInfo: info)
 	}
+    
 	@IBAction func tap(sender: UIButton) {
 		var info = [String : Int]()
 		info["index"] = sender.tag
@@ -37,9 +39,18 @@ class ContentTVCell: UITableViewCell {
 	}
 	
 	
+    override func awakeFromNib() {
+        println("yooo yo yo!")
+    }
 
-
+    @IBAction func messageTap(sender: UIButton) {
+        
+    }
 	
+    @IBAction func profileTap(sender: UIButton) {
+        
+    }
+    
 	func showImg(username: NSString) {
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {

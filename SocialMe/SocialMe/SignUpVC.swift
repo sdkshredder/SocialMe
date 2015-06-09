@@ -116,8 +116,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         user.setObject(PFGeoPoint(latitude: 0, longitude: 0), forKey: "location")
         
         let age = getAge()
-        
-        if age > 18 {
+        if age < 18 {
             let alert = UIAlertView(title: "Ops!", message: "Looks like your too young to use this service.", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
         } else {
@@ -139,7 +138,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     self.navigationController?.setNavigationBarHidden(true, animated: true)
                     self.performSegueWithIdentifier("signup", sender: self)
                 } else {
-                    let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
+                    let alert = UIAlertView(title: "Error", message: "Unable to sign you up with the provided information.  It may be that the email you have provided is already in use or is invalid.", delegate: self, cancelButtonTitle: "K whatever")
                     alert.show()
                 }
             }

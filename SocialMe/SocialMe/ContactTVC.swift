@@ -98,6 +98,15 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 			cell.expandInfoButton.tag = indexPath.row
 			cell.showImg(username)
 			cell.friendPicture.tag = indexPath.row
+            
+            cell.messageButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+            cell.messageButton.layer.cornerRadius = 5
+            cell.messageButton.clipsToBounds = true
+            cell.profileButton.layer.cornerRadius = 5
+            
+            cell.profileButton.clipsToBounds = true
+            
+            cell.profileButton.layer.borderColor = UIColor.lightGrayColor().CGColor
 		}
         cell.layoutMargins = UIEdgeInsetsZero
         cell.separatorInset = UIEdgeInsetsZero
