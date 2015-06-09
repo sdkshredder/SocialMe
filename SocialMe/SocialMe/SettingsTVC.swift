@@ -547,6 +547,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
+        navigationItem.title = "Filters"
+        
         initData()
         let user = PFUser.currentUser()
         let distance = user?.objectForKey("distanceFilter") as! Int

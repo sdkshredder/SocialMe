@@ -1031,7 +1031,7 @@
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
-                            <color key="textColor" red="0.23137254901960785" green="0.17647058823529413" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.23137254900000001" green="0.1764705882" blue="0.50196078430000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1059,7 +1059,7 @@
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
-                            <color key="textColor" red="0.23137254901960785" green="0.1764705882352941" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.23137254900000001" green="0.1764705882" blue="0.50196078430000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                             <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                         </textAttributes>
                     </navigationBar>
@@ -1916,7 +1916,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="30"/>
                             <state key="normal" title="Profile">
-                                <color key="titleColor" red="0.23137254901960785" green="0.1764705882352941" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.23137254900000001" green="0.1764705882" blue="0.50196078430000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -1988,7 +1988,7 @@
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
-                            <color key="textColor" red="0.23137254901960785" green="0.17647058823529413" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.23137254900000001" green="0.1764705882" blue="0.50196078430000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
