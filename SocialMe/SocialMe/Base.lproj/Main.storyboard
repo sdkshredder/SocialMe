@@ -302,29 +302,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jnN-NG-Ddh">
-                                                    <rect key="frame" x="74" y="20" width="450" height="31"/>
+                                                    <rect key="frame" x="74" y="20" width="520" height="31"/>
                                                     <color key="tintColor" red="0.23137254901960785" green="0.10588235294117647" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="q1g-NI-Lbh"/>
+                                                        <constraint firstAttribute="height" constant="30" id="cgp-eg-QG1"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="valueDidChange:" destination="Xmk-0W-le7" eventType="valueChanged" id="2Ku-56-b3l"/>
                                                     </connections>
                                                 </slider>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhn-ag-NhV">
-                                                    <rect key="frame" x="530" y="20" width="62" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="62" id="8gf-cC-snA"/>
-                                                        <constraint firstAttribute="height" constant="30" id="eOH-nw-Ga0"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Disabled">
-                                                        <color key="titleColor" red="0.23137254901960785" green="0.17647058823529413" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="distanceSwitched:" destination="Xmk-0W-le7" eventType="touchUpInside" id="70o-KT-MTj"/>
-                                                    </connections>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500 ft" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1BT-AY-SXE">
                                                     <rect key="frame" x="8" y="24" width="60" height="21"/>
                                                     <constraints>
@@ -332,18 +318,16 @@
                                                         <constraint firstAttribute="height" constant="21" id="Xa9-P6-hKE"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.22352941176470587" green="0.11372549019607843" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Fhn-ag-NhV" firstAttribute="leading" secondItem="jnN-NG-Ddh" secondAttribute="trailing" constant="8" id="II9-k9-Kbf"/>
                                                 <constraint firstItem="1BT-AY-SXE" firstAttribute="leading" secondItem="554-Op-fQm" secondAttribute="leading" constant="8" id="MIc-zr-dsQ"/>
+                                                <constraint firstAttribute="centerY" secondItem="jnN-NG-Ddh" secondAttribute="centerY" constant="0.25" id="V0p-mn-0f6"/>
                                                 <constraint firstAttribute="centerY" secondItem="1BT-AY-SXE" secondAttribute="centerY" constant="0.5" id="VgO-3u-qhe"/>
-                                                <constraint firstAttribute="centerY" secondItem="Fhn-ag-NhV" secondAttribute="centerY" id="YyY-HK-5lh"/>
-                                                <constraint firstAttribute="centerY" secondItem="jnN-NG-Ddh" secondAttribute="centerY" id="dXO-m4-GSg"/>
-                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="leading" secondItem="1BT-AY-SXE" secondAttribute="trailing" constant="8" id="h43-kf-yqb"/>
-                                                <constraint firstAttribute="trailing" secondItem="Fhn-ag-NhV" secondAttribute="trailing" constant="8" id="rWr-93-Zxu"/>
+                                                <constraint firstAttribute="trailing" secondItem="jnN-NG-Ddh" secondAttribute="trailing" constant="8" id="jpn-gT-Kf1"/>
+                                                <constraint firstItem="jnN-NG-Ddh" firstAttribute="leading" secondItem="1BT-AY-SXE" secondAttribute="trailing" constant="8" id="okw-gJ-pZv"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -539,7 +523,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="distanceSwitch" destination="Fhn-ag-NhV" id="CA9-dz-ZG6"/>
                         <outlet property="distanceValue" destination="1BT-AY-SXE" id="n7l-2O-1Ng"/>
                         <outlet property="keyCell" destination="Yt2-fa-TED" id="ogF-pM-ocj"/>
                         <outlet property="keySeg" destination="k3P-e6-ktR" id="Izk-uB-UHt"/>
