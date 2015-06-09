@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="txE-0p-xd7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="txE-0p-xd7">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -1454,7 +1454,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pcq-Pf-8dE" id="IDw-7b-lpa">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sjF-yK-E2P" customClass="MessageLabel" customModule="SocialMe" customModuleProvider="target">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sjF-yK-E2P" customClass="MessageLabel" customModule="SocialMe" customModuleProvider="target">
                                                     <rect key="frame" x="538" y="11" width="47" height="33"/>
                                                     <accessibility key="accessibilityConfiguration" hint="x"/>
                                                     <constraints>
@@ -1697,8 +1697,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y0r-PC-IZC" id="8fH-ee-7jq">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-BT-XAn">
-                                                    <rect key="frame" x="20" y="31" width="485" height="29"/>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-BT-XAn">
+                                                    <rect key="frame" x="8" y="31" width="584" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="1J4-EI-k3e"/>
+                                                    </constraints>
                                                     <segments>
                                                         <segment title="Always"/>
                                                         <segment title="While in use"/>
@@ -1709,14 +1712,14 @@
                                                         <action selector="change:" destination="y0r-PC-IZC" eventType="valueChanged" id="Wo0-QZ-YPO"/>
                                                     </connections>
                                                 </segmentedControl>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-6d-Xhg">
-                                                    <rect key="frame" x="549" y="25" width="43" height="40"/>
+                                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-6d-Xhg">
+                                                    <rect key="frame" x="165" y="25" width="270" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="YEK-Qb-wTn"/>
-                                                        <constraint firstAttribute="height" constant="40" id="sRN-aB-N2N"/>
+                                                        <constraint firstAttribute="width" constant="270" id="CiH-DS-3fe"/>
+                                                        <constraint firstAttribute="height" constant="40" id="ir9-BK-Rwn"/>
                                                     </constraints>
-                                                    <state key="normal" title="Edit">
-                                                        <color key="titleColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="Change Location Preferences">
+                                                        <color key="titleColor" red="0.23137254900000001" green="0.1764705882" blue="0.50196078430000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -1725,11 +1728,11 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="t3e-6d-Xhg" firstAttribute="leading" secondItem="yfV-BT-XAn" secondAttribute="trailing" constant="44" id="Eyj-NM-UHf"/>
-                                                <constraint firstAttribute="trailing" secondItem="t3e-6d-Xhg" secondAttribute="trailing" constant="8" id="Hby-S9-FlU"/>
-                                                <constraint firstAttribute="centerY" secondItem="t3e-6d-Xhg" secondAttribute="centerY" constant="-0.25" id="Vv1-qH-jB9"/>
-                                                <constraint firstItem="yfV-BT-XAn" firstAttribute="leading" secondItem="8fH-ee-7jq" secondAttribute="leading" constant="20" id="jD0-rh-Wia"/>
-                                                <constraint firstAttribute="centerY" secondItem="yfV-BT-XAn" secondAttribute="centerY" constant="-0.25" id="tCn-0R-Od9"/>
+                                                <constraint firstAttribute="centerX" secondItem="t3e-6d-Xhg" secondAttribute="centerX" id="Kgj-KD-PGQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="yfV-BT-XAn" secondAttribute="trailing" constant="8" id="Mh4-0U-zML"/>
+                                                <constraint firstAttribute="centerY" secondItem="t3e-6d-Xhg" secondAttribute="centerY" constant="-0.25" id="UaR-Po-uZ9"/>
+                                                <constraint firstAttribute="centerY" secondItem="yfV-BT-XAn" secondAttribute="centerY" constant="-0.25" id="VOV-7s-iqb"/>
+                                                <constraint firstItem="yfV-BT-XAn" firstAttribute="leading" secondItem="8fH-ee-7jq" secondAttribute="leading" constant="8" id="yan-N7-v5J"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
