@@ -297,6 +297,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         default:
             println("no match")
         }
+        tableView.reloadData()
+        
     }
     /*
     @IBAction func distanceSwitched(sender: UIButton) {
@@ -352,7 +354,11 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                                 if !filter.containsObject(input) && filter.count < 3 { // keyword not already in list
                                     println("Number filters:")
                                     println(filter.count)
-                                    self.addButton(input, type: type)
+                                    // (get_ma, <#block: dispatch_block_t##() -> Void#>
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.addButton(input, type: type)
+                                    })
+                                
                                     filter.addObject(input)
                                     keyObj["homeFilter"] = filter
                                     keyObj.save()
@@ -377,7 +383,9 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         case "School":
                             if var filter = keyObj["schoolFilter"] as? NSMutableArray { // Has already filtered by school
                                 if !filter.containsObject(input) && filter.count < 3 {
-                                    self.addButton(input, type: type)
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.addButton(input, type: type)
+                                    })
                                     filter.addObject(input)
                                     keyObj["schoolFilter"] = filter
                                     keyObj.save()
@@ -395,7 +403,9 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         case "Occupation":
                             if var filter = keyObj["occFilter"] as? NSMutableArray { // Has already filttered by occupation
                                 if !filter.containsObject(input) && filter.count < 3 {
-                                    self.addButton(input, type: type)
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.addButton(input, type: type)
+                                    })
                                     filter.addObject(input)
                                     keyObj["occFilter"] = filter
                                     keyObj.save()
@@ -523,11 +533,12 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     
     func setupDistanceSwitch() {
+        /*
         distanceSwitch.layer.cornerRadius = 4
         distanceSwitch.layer.borderColor = UIColor.purpleColor().CGColor
         distanceSwitch.layer.borderWidth = 1
         distanceSwitch.clipsToBounds = true
-        
+        */
     }
     
     override func viewDidLoad() {

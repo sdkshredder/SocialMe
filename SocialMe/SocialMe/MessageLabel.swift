@@ -11,11 +11,13 @@ import UIKit
 class MessageLabel: UILabel {
     
     override func drawTextInRect(rect: CGRect) {
-        var inset = UIEdgeInsetsMake(0, 10, 5, 0)
+        var inset = UIEdgeInsetsMake(0, 10, 0, 0)
         if (self.accessibilityHint == "x") {
-            inset = UIEdgeInsetsMake(0, 0, 5, 10)
+            println("yoooo")
+            inset = UIEdgeInsetsMake(0, 0, 0, 10)
         }
-        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(0, 10, 0, 10)))
+        // super.drawTextInRect(UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(0, 10, 0, 10)))
+        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, inset))
     }
     
     override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {

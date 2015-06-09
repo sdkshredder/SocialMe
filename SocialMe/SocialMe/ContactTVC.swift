@@ -107,6 +107,7 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 			cell.expandInfoButton.tag = indexPath.row
 			cell.showImg(username)
 			cell.friendPicture.tag = indexPath.row
+            
 		}
         cell.layoutMargins = UIEdgeInsetsZero
         cell.separatorInset = UIEdgeInsetsZero

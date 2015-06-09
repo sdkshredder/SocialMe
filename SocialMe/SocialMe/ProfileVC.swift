@@ -31,6 +31,30 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         updateButtonUI()
     }
     
+    @IBAction func profileTap(sender: UIButton) {
+        
+        let a = (UINib(nibName: "aboutMeView", bundle: nil
+            ).instantiateWithOwner(nil, options: nil)[0] as? AboutMeView)!
+        a.frame = CGRectMake(view.frame.width/2.0 - 140, -100, 280, 200)
+        a.title.text = "About \(user.username!)"
+        a.layer.cornerRadius = 5
+        a.layer.borderWidth = 1
+        a.layer.borderColor = UIColor.lightGrayColor().CGColor
+        a.clipsToBounds = true 
+        
+        if let about = user.objectForKey("aboutMe") as? String {
+            a.info.text = about
+        } else {
+            a.info.text = ":P"
+        }
+        
+        view.addSubview(a)
+        UIView.animateWithDuration(1, delay: 0.0, usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 0.4, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                a.frame.origin = CGPointMake(a.frame.origin.x, 140)
+            }, completion: nil)
+    }
+    
     func sendFriendRequest(toUser : PFUser, fromUser : PFUser)  {
 		//let predicate = NSPredicate(format: "toUser = '@s' and fromUser = '@s' ",toUser.username!,fromUser.username!)
 		var requestQuery = PFQuery(className: "FriendRequests")
@@ -368,6 +392,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func styleUserPic() {
         userProfilePic.layer.cornerRadius = userProfilePic.frame.height / 2.0
         userProfilePic.clipsToBounds = true
+        addShadow()
     }
     
     func styleButtons() {
@@ -392,13 +417,19 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(username)
+        addShadow()
         initTableView()
         styleUserPic()
         getUserInfo()
         styleButtons()
         //checkUIUpdates()
 		
+    }
+    
+    func addShadow() {
+        userProfilePic.layer.borderColor = UIColor.darkGrayColor().CGColor
+        userProfilePic.layer.borderWidth = 1
+        userProfilePic.clipsToBounds = true
     }
     
     func checkUIUpdates() {
