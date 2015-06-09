@@ -149,17 +149,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
             
-			/*
+			
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
             query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
-			*/
+			
             
             var keywordQuery = PFQuery(className: "KeywordFilter")
             keywordQuery.whereKey("username", equalTo: user!.username!)
             var objectArr = keywordQuery.findObjects() as! [PFObject]
             if objectArr.count > 0 { // Username exists in keyword filters
                 var keyObj = objectArr[0]
-                                
+                
                 if var filter = keyObj["homeFilter"] as? NSMutableArray {
                     if filter.count > 0 {
                         var home = PFQuery.orQueryWithSubqueries([query!])
