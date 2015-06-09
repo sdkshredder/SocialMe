@@ -96,7 +96,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 profilePicture.contentMode = .ScaleAspectFill
             }
         } else {
-            profilePicture.image = UIImage(named: "podcasts")
+            profilePicture.image = UIImage(named: "SI-60@2x.png")
             profilePicture.contentMode = .ScaleAspectFit
         }
         
@@ -113,16 +113,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         var distance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
         var distanceLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 26, 200, 20))
-        distanceLabel.text = "\(round(100*distance)/100) ft"
+        distanceLabel.text = "\(round(distance)) ft"
         distanceLabel.font = UIFont.systemFontOfSize(16)
         content.addSubview(distanceLabel)
         
-        if let occupation = user.objectForKey("Occupation") as? String {
-            var occupationLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
-            occupationLabel.text = occupation
-            occupationLabel.textColor = UIColor.lightGrayColor()
-            occupationLabel.font = UIFont.systemFontOfSize(14)
-            content.addSubview(occupationLabel)
+        if let goal = user.objectForKey("relationshipGoal") as? String {
+            var goalLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
+            goalLabel.text = goal
+            goalLabel.textColor = UIColor.lightGrayColor()
+            goalLabel.font = UIFont.systemFontOfSize(14)
+            content.addSubview(goalLabel)
         }
     
     }
@@ -149,10 +149,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
             
-			/*
+			
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
             query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
-			*/
+			
             
             var keywordQuery = PFQuery(className: "KeywordFilter")
             keywordQuery.whereKey("username", equalTo: user!.username!)
@@ -160,64 +160,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             if objectArr.count > 0 { // Username exists in keyword filters
                 var keyObj = objectArr[0]
-                /*
-                if var filter = keyObj["homeFilter"] as? NSMutableArray {
-                    if filter.count > 0 {
-                        query.whereKey("Hometown", containsString: (filter[0] as! String))
-                        
-                        var res : NSArray = query!.findObjects()!
-                        
-                        self.data = res
-                        self.tableView.reloadData()
-                        
-                    }
-                }
-                if var filter = keyObj["schoolFilter"] as? NSMutableArray {
-                    if filter.count > 0 {
-                        var school = PFQuery.orQueryWithSubqueries([query!])
-                        school.whereKey("School", containsString: (filter[0] as! String))
-                        println("First filter is")
-                        println(filter[0] as! String)
-                        for keyword in filter {
-                            var tQuery = PFUser.query()
-                            tQuery!.whereKey("School", containsString: (keyword as! String))
-                            
-                            //var find = PFQuery.orQueryWithSubqueries([query!])
-                            println("This is our school query")
-                            println(keyword as! String)
-                            println(query?.description)
-                            //find.whereKey("School", containsString: (keyword as! String))
-                            school = PFQuery.orQueryWithSubqueries([school, tQuery!])
-                        }
-                        query = PFQuery.orQueryWithSubqueries([school])
-                        var res : NSArray = query!.findObjects()!
-                        
-                        self.data = res
-                        self.tableView.reloadData()
-                        
-                    }
-                }
-                if var filter = keyObj["occFilter"] as? NSMutableArray {
-                    if filter.count > 0 {
-                        var occ = PFQuery.orQueryWithSubqueries([query!])
-                        occ.whereKey("Occupation", containsString: (filter[0] as! String))
-                        for keyword in filter {
-                            var find = PFQuery.orQueryWithSubqueries([query!])
-                            find.whereKey("Occupation", containsString: (keyword as! String))
-                            occ = PFQuery.orQueryWithSubqueries([occ, find])
-                        }
-                        query = PFQuery.orQueryWithSubqueries([occ])
-                        var res : NSArray = query!.findObjects()!
-                        
-                        self.data = res
-                        self.tableView.reloadData()
-                        
-                        
-                    }
-
-                */
-                
-                
                 
                 if var filter = keyObj["homeFilter"] as? NSMutableArray {
                     if filter.count > 0 {

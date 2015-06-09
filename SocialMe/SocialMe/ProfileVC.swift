@@ -261,7 +261,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 }
             }
         } else {
-            userProfilePic.image = UIImage(named: "swag-60@2x.png")
+            userProfilePic.image = UIImage(named: "SI-60@2x.png")
         }
     }
     
