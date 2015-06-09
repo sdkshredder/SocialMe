@@ -100,8 +100,8 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         var cell = tableView.dequeueReusableCellWithIdentifier("contact") as! ContentTVCell
 		if let user = data[indexPath.row] as? PFUser {
 			var username = user.objectForKey("username") as! String!
-			username = capFirstLetter(username)
-			cell.nameLabel.text = username
+			var capUsername = capFirstLetter(username)
+			cell.nameLabel.text = capUsername
 			cell.specAttrLabel.text = "Occupation"
 			cell.specAttrContentLabel.text = user.objectForKey("Occupation") as! String!
 			cell.expandInfoButton.tag = indexPath.row

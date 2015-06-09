@@ -39,6 +39,8 @@ class ContentTVCell: UITableViewCell {
 	}
     
 	func showImg(username: NSString) {
+		println("The Username is")
+		println(username)
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
 			var storedError : NSError!
@@ -60,6 +62,12 @@ class ContentTVCell: UITableViewCell {
 				}
 				self.friendPicture.image = profImg
 				self.friendPicture.contentMode = .ScaleAspectFill
+				self.friendPicture.layer.cornerRadius = self.friendPicture.frame.height / 2.0
+				self.friendPicture.clipsToBounds = true
+				self.friendPicture.layer.borderColor = UIColor.darkGrayColor().CGColor
+				self.friendPicture.layer.borderWidth = 1
+				self.friendPicture.clipsToBounds = true
+				
 			}
 			dispatch_group_leave(downloadGroup)
 			dispatch_group_wait(downloadGroup, 5000)

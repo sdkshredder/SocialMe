@@ -394,7 +394,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         userProfilePic.clipsToBounds = true
         addShadow()
     }
-    
+	
     func styleButtons() {
         messageButton.layer.borderWidth = 1
         messageButton.layer.cornerRadius = 4
