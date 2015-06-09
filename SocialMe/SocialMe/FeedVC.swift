@@ -96,7 +96,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 profilePicture.contentMode = .ScaleAspectFill
             }
         } else {
-            profilePicture.image = UIImage(named: "podcasts")
+            profilePicture.image = UIImage(named: "SI-60@2x.png")
             profilePicture.contentMode = .ScaleAspectFit
         }
         
