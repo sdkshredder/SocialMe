@@ -122,13 +122,14 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
 		println("index")
 		
 		let vc = storyboard?.instantiateViewControllerWithIdentifier("profileVC") as! ProfileVC
-		
+
 		// Get correct user from index and set username appropriately
 		var requestObject = data[index!] as! PFObject
-		vc.username = requestObject["username"] as! NSString
+		var profUsername = requestObject["username"] as! NSString
+		vc.navigationItem.title = profUsername as String
+		vc.username = profUsername
 		
 		navigationController?.pushViewController(vc, animated: true)
-		
 	}
 
 }

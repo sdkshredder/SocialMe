@@ -38,6 +38,8 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
         cell.acceptButton.layer.borderWidth = 1
         cell.acceptButton.layer.borderColor = UIColor(red: 57.0/255.0, green: 45.0/155.0, blue: 130.0/255.0, alpha: 1).CGColor
 		
+		cell.acceptButton.tag = indexPath.row
+		
         cell.rejectButton.layer.cornerRadius = 4
         cell.rejectButton.layer.borderWidth = 1
         cell.rejectButton.layer.borderColor = UIColor(red: 223.0/255.0, green: 45.0/155.0, blue: 128.0/255.0, alpha: 1).CGColor
@@ -63,6 +65,8 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.layoutMargins = UIEdgeInsetsZero
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"showProfile:", name: "showUserProfile", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"updateTable:", name: "updateRequestTable", object: nil)
+
 		getRequestInfo()
     }
 	
@@ -81,12 +85,26 @@ class FriendRequestsTVC: UITableViewController, UITableViewDelegate, UITableView
 			
 		}
 	}
+	
+	func updateTable(notification: NSNotification) {
+		let info = notification.userInfo as!  [String:Int]
+		let index = info["index"]
+		println(index)
+		var requestToRemove = res[index!] as! PFObject
+		var temp = res.mutableCopy() as! NSMutableArray
+		temp.removeObjectAtIndex(index!)
+		res = temp as NSArray
+		
+		tableView.reloadData()
+		
+	}
+
 
     func showProfile(notification: NSNotification) {
         let info = notification.userInfo as! [String : Int]
         let index = info["index"]
         println("index")
-        
+		
         let vc = storyboard?.instantiateViewControllerWithIdentifier("profileVC") as! ProfileVC
         
         // Get correct user from index and set username appropriately 

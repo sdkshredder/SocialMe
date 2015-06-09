@@ -39,7 +39,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         swipeView.addGestureRecognizer(swipe)
         swipeView.addGestureRecognizer(tap)
         view.addSubview(swipeView)
-        
     }
     
     func swipeUp(sender: UISwipeGestureRecognizer) {
@@ -140,13 +139,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
+			if let userRelationshipGoal = user?.objectForKey("relationshipGoal") as? String {
+				if (userRelationshipGoal != "All") {
+                    query!.whereKey("relationshipGoal", matchesRegex: userRelationshipGoal)
+				}
+			}
+
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
             
-			/* Uncomment this to implement distance filter.......
+			/*
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
-				query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
+            query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
 			*/
             
             var keywordQuery = PFQuery(className: "KeywordFilter")
@@ -155,17 +160,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             if objectArr.count > 0 { // Username exists in keyword filters
                 var keyObj = objectArr[0]
-                
+                /*
                 if var filter = keyObj["homeFilter"] as? NSMutableArray {
                     if filter.count > 0 {
-                        var home = PFQuery.orQueryWithSubqueries([query!])
-                        home.whereKey("Hometown", containsString: (filter[0] as! String))
-                        for keyword in filter {
-                            var find = PFQuery.orQueryWithSubqueries([query!])
-                            find.whereKey("Hometown", containsString: (keyword as! String))
-                            home = PFQuery.orQueryWithSubqueries([home, find])
-                        }
-                        query = PFQuery.orQueryWithSubqueries([home])
+                        query.whereKey("Hometown", containsString: (filter[0] as! String))
+                        
                         var res : NSArray = query!.findObjects()!
                         
                         self.data = res
@@ -177,10 +176,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     if filter.count > 0 {
                         var school = PFQuery.orQueryWithSubqueries([query!])
                         school.whereKey("School", containsString: (filter[0] as! String))
+                        println("First filter is")
+                        println(filter[0] as! String)
                         for keyword in filter {
-                            var find = PFQuery.orQueryWithSubqueries([query!])
-                            find.whereKey("School", containsString: (keyword as! String))
-                            school = PFQuery.orQueryWithSubqueries([school, find])
+                            var tQuery = PFUser.query()
+                            tQuery!.whereKey("School", containsString: (keyword as! String))
+                            
+                            //var find = PFQuery.orQueryWithSubqueries([query!])
+                            println("This is our school query")
+                            println(keyword as! String)
+                            println(query?.description)
+                            //find.whereKey("School", containsString: (keyword as! String))
+                            school = PFQuery.orQueryWithSubqueries([school, tQuery!])
                         }
                         query = PFQuery.orQueryWithSubqueries([school])
                         var res : NSArray = query!.findObjects()!
@@ -201,19 +208,78 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         }
                         query = PFQuery.orQueryWithSubqueries([occ])
                         var res : NSArray = query!.findObjects()!
-                    
+                        
                         self.data = res
                         self.tableView.reloadData()
                         
                         
                     }
+
+                */
+                
+                
+                
+                if var filter = keyObj["homeFilter"] as? NSMutableArray {
+                    if filter.count > 0 {
+                        var home = PFQuery.orQueryWithSubqueries([query!])
+                        home.whereKey("Hometown", containsString: (filter[0] as! String))
+                        for keyword in filter {
+                            var find = PFQuery.orQueryWithSubqueries([query!])
+                            find.whereKey("Hometown", containsString: (keyword as! String))
+                            home = PFQuery.orQueryWithSubqueries([home, find])
+                        }
+                        query = PFQuery.orQueryWithSubqueries([home])
+                        /*var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()*/
+                        
+                    }
+                }
+                if var filter = keyObj["schoolFilter"] as? NSMutableArray {
+                    if filter.count > 0 {
+                        var school = PFQuery.orQueryWithSubqueries([query!])
+                        school.whereKey("School", containsString: (filter[0] as! String))
+                        println("First filter is")
+                        println(filter[0] as! String)
+                        for keyword in filter {
+                            //var tQuery = PFUser.query()
+                            //tQuery!.whereKey("School", containsString: (keyword as! String))
+                            
+                            var find = PFQuery.orQueryWithSubqueries([query!])
+                            println("This is our school query")
+                            println(keyword as! String)
+                            println(query?.description)
+                            find.whereKey("School", containsString: (keyword as! String))
+                            school = PFQuery.orQueryWithSubqueries([school, find])
+                        }
+                        query = PFQuery.orQueryWithSubqueries([school])
+                        /*var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()*/
+                        
+                    }
+                }
+                if var filter = keyObj["occFilter"] as? NSMutableArray {
+                    if filter.count > 0 {
+                        var occ = PFQuery.orQueryWithSubqueries([query!])
+                        occ.whereKey("Occupation", containsString: (filter[0] as! String))
+                        for keyword in filter {
+                            var find = PFQuery.orQueryWithSubqueries([query!])
+                            find.whereKey("Occupation", containsString: (keyword as! String))
+                            occ = PFQuery.orQueryWithSubqueries([occ, find])
+                        }
+                        query = PFQuery.orQueryWithSubqueries([occ])
+                        /*var res : NSArray = query!.findObjects()!
+                    
+                        self.data = res
+                        self.tableView.reloadData()*/
+                        
+                        
+                    }
                 }
             }
-
-            println(query!)
-            
-            /*
-            
             var res : NSArray = query!.findObjects()!
                     
             dispatch_async(dispatch_get_main_queue()) {
@@ -221,7 +287,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
             }
 
-            */
+            
         }
     }
 
@@ -250,7 +316,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         fetchUsers()
 		println("You're logged in as \(PFUser.currentUser()?.username)")
     }
-    
+	func capFirstLetter(name: String) -> String {
+		if (name.isEmpty) {
+			return name
+		}
+		var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+		capLet = capLet.uppercaseString
+		var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+		return (capLet as String) + (rest as String)
+	}
+	
     override func viewDidAppear(animated: Bool) {
         if PFUser.currentUser() == nil {
             presentMainVC()
@@ -270,7 +345,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let user : PFUser = data[path!.row] as! PFUser
         destination.username = user.username!
-        destination.navigationItem.title = user.username!
+		
+		destination.navigationItem.title = capFirstLetter(user.username!)
+
     }
 
 }
