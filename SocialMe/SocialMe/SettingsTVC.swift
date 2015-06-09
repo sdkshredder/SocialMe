@@ -56,19 +56,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
 			bAlpha = 0
 		}
 		
-		UIView.animateWithDuration(0.2, animations: {
-			for button in self.homeButtons {
-				button.alpha = CGFloat(aAlpha)
-			}
-			for button in self.schoolButtons {
-				button.alpha = CGFloat(bAlpha)
-			}
-			for button in self.occButtons {
-				button.alpha = CGFloat(cAlpha)
-			}
-		})
-
-		
 	}
     @IBAction func controlSwitch(sender: UISegmentedControl) {
 		
@@ -366,6 +353,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         default:
             println("no match")
         }
+        tableView.reloadData()
+        
     }
     /*
     @IBAction func distanceSwitched(sender: UIButton) {
@@ -421,7 +410,11 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                                 if !filter.containsObject(input) && filter.count < 3 { // keyword not already in list
                                     println("Number filters:")
                                     println(filter.count)
-                                    self.addButton(input, type: type)
+                                    // (get_ma, <#block: dispatch_block_t##() -> Void#>
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.addButton(input, type: type)
+                                    })
+                                
                                     filter.addObject(input)
                                     keyObj["homeFilter"] = filter
                                     keyObj.save()
@@ -446,7 +439,9 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         case "School":
                             if var filter = keyObj["schoolFilter"] as? NSMutableArray { // Has already filtered by school
                                 if !filter.containsObject(input) && filter.count < 3 {
-                                    self.addButton(input, type: type)
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.addButton(input, type: type)
+                                    })
                                     filter.addObject(input)
                                     keyObj["schoolFilter"] = filter
                                     keyObj.save()
@@ -464,7 +459,9 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         case "Occupation":
                             if var filter = keyObj["occFilter"] as? NSMutableArray { // Has already filttered by occupation
                                 if !filter.containsObject(input) && filter.count < 3 {
-                                    self.addButton(input, type: type)
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.addButton(input, type: type)
+                                    })
                                     filter.addObject(input)
                                     keyObj["occFilter"] = filter
                                     keyObj.save()
@@ -610,11 +607,12 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     
     
     func setupDistanceSwitch() {
+        /*
         distanceSwitch.layer.cornerRadius = 4
         distanceSwitch.layer.borderColor = UIColor.purpleColor().CGColor
         distanceSwitch.layer.borderWidth = 1
         distanceSwitch.clipsToBounds = true
-        
+        */
     }
     
     override func viewDidLoad() {
@@ -623,6 +621,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
+        navigationItem.title = "Filters"
+        
         initData()
         let user = PFUser.currentUser()
         let distance = user?.objectForKey("distanceFilter") as! Int

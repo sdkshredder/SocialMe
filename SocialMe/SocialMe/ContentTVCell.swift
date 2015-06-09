@@ -37,19 +37,6 @@ class ContentTVCell: UITableViewCell {
 		NSNotificationCenter.defaultCenter().postNotificationName("cellNotification", object: nil, userInfo: info)
 		handleTextField()
 	}
-	
-	
-    override func awakeFromNib() {
-        println("yooo yo yo!")
-    }
-
-    @IBAction func messageTap(sender: UIButton) {
-        
-    }
-	
-    @IBAction func profileTap(sender: UIButton) {
-        
-    }
     
 	func showImg(username: NSString) {
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
@@ -61,17 +48,19 @@ class ContentTVCell: UITableViewCell {
 			var userQuery = PFUser.query()
 			userQuery?.whereKey("username", equalTo: username)
 			var userArr = userQuery?.findObjects() as! [PFUser]
-			var user = userArr[0]
-			
-			var profImg : UIImage
-			if let userImageFile = user.objectForKey("photo") as? PFFile {
-				var imageData = userImageFile.getData() as NSData!
-				profImg =  UIImage(data:imageData!)!
-			} else {
-				profImg = UIImage(named: "swag-60@2x.png")!
+			if (userArr.count > 0 ) {
+				var user = userArr[0]
+				
+				var profImg : UIImage
+				if let userImageFile = user.objectForKey("photo") as? PFFile {
+					var imageData = userImageFile.getData() as NSData!
+					profImg =  UIImage(data:imageData!)!
+				} else {
+					profImg = UIImage(named: "swag-60@2x.png")!
+				}
+				self.friendPicture.image = profImg
+				self.friendPicture.contentMode = .ScaleAspectFill
 			}
-			self.friendPicture.image = profImg
-			self.friendPicture.contentMode = .ScaleAspectFill
 			dispatch_group_leave(downloadGroup)
 			dispatch_group_wait(downloadGroup, 5000)
 		}
