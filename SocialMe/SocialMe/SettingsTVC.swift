@@ -218,7 +218,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBAction func addKey(sender: UITextField) {
         let input = sender.text
         let type = self.keySeg.titleForSegmentAtIndex(self.keySeg.selectedSegmentIndex)!
-        addButton(input, type: type)
+            
         if input != "" {
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -232,12 +232,15 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     switch type {
                         case "Hometown":
                             if var filter = keyObj["homeFilter"] as? NSMutableArray { // Has already filtered by hometown
-                                if !filter.containsObject(input) && filter.count <= 3 { // keyword not already in list
+                                if !filter.containsObject(input) && filter.count < 3 { // keyword not already in list
+                                    println("Number filters:")
+                                    println(filter.count)
+                                    self.addButton(input, type: type)
                                     filter.addObject(input)
                                     keyObj["homeFilter"] = filter
                                     keyObj.save()
 
-                                } else if filter.count > 3 {
+                                } else if filter.count >= 3 {
                                     let alert = UIAlertView(title: "Keyword Limit Reached", message: "Delete a keyword before adding a new one", delegate: nil, cancelButtonTitle: "OK")
                                     alert.show()
                                 }
@@ -256,11 +259,12 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                             //self.homeButtons.append(self.makeButton(Double(self.homeButtons.count), label: sender.text))
                         case "School":
                             if var filter = keyObj["schoolFilter"] as? NSMutableArray { // Has already filtered by school
-                                if !filter.containsObject(input) && filter.count <= 3 {
+                                if !filter.containsObject(input) && filter.count < 3 {
+                                    self.addButton(input, type: type)
                                     filter.addObject(input)
                                     keyObj["schoolFilter"] = filter
                                     keyObj.save()
-                                } else if filter.count > 3 {
+                                } else if filter.count >= 3 {
                                     let alert = UIAlertView(title: "Keyword Limit Reached", message: "Delete a keyword before adding a new one", delegate: nil, cancelButtonTitle: "OK")
                                     alert.show()
                                 }
@@ -273,11 +277,12 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                             //self.schoolButtons.append(self.makeButton(Double(self.schoolButtons.count), label: sender.text))
                         case "Occupation":
                             if var filter = keyObj["occFilter"] as? NSMutableArray { // Has already filttered by occupation
-                                if !filter.containsObject(input) && filter.count <= 3 {
+                                if !filter.containsObject(input) && filter.count < 3 {
+                                    self.addButton(input, type: type)
                                     filter.addObject(input)
                                     keyObj["occFilter"] = filter
                                     keyObj.save()
-                                } else if filter.count > 3 {
+                                } else if filter.count >= 3 {
                                     let alert = UIAlertView(title: "Keyword Limit Reached", message: "Delete a keyword before adding a new one", delegate: nil, cancelButtonTitle: "OK")
                                     alert.show()
                                 }
@@ -434,13 +439,16 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             keySeg.selectedSegmentIndex = 0
         }
         
-        if var type = self.keySeg.titleForSegmentAtIndex(keySeg.selectedSegmentIndex) {
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        if var type = self.keySeg.titleForSegmentAtIndex(self.keySeg.selectedSegmentIndex) {
+            
             var keywordQuery = PFQuery(className: "KeywordFilter")
             keywordQuery.whereKey("username", equalTo: user!.username!)
             var objectArr = keywordQuery.findObjects() as! [PFObject]
             if objectArr.count > 0 { // Username exists in keyword filters
                 var keyObj = objectArr[0]
-                for v in keyCell.subviews {
+                for v in self.keyCell.subviews {
                     if v is UIButton {
                         v.removeFromSuperview()
                     }
@@ -450,53 +458,54 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 switch type {
                 case "Hometown":
                     if var filter = keyObj["homeFilter"] as? NSMutableArray {
-                        noContentLabel.hidden = true
-                        homeButtons.removeAll(keepCapacity: false)
+                        self.noContentLabel.hidden = true
+                        self.homeButtons.removeAll(keepCapacity: false)
                         
                         for keyword in filter {
                             println("Count is...")
-                            println(Double(homeButtons.count))
-                            addButton(keyword as! String, type: type)
+                            println(Double(self.homeButtons.count))
+                            self.addButton(keyword as! String, type: type)
                         }
-                        if homeButtons.count == 0 {
-                            noContentLabel.hidden = false
+                        if self.homeButtons.count == 0 {
+                            self.noContentLabel.hidden = false
                         }
                     } else {
-                        noContentLabel.hidden = false
+                        self.noContentLabel.hidden = false
                     }
                 case "School":
                     if var filter = keyObj["schoolFilter"] as? NSMutableArray {
-                        noContentLabel.hidden = true
-                        schoolButtons.removeAll(keepCapacity: false)
+                        self.noContentLabel.hidden = true
+                        self.schoolButtons.removeAll(keepCapacity: false)
                         
                         for keyword in filter {
-                            addButton(keyword as! String, type: type)
+                            self.addButton(keyword as! String, type: type)
                         }
-                        if schoolButtons.count == 0 {
-                            noContentLabel.hidden = false
+                        if self.schoolButtons.count == 0 {
+                            self.noContentLabel.hidden = false
                         }
                     } else {
-                        noContentLabel.hidden = false
+                        self.noContentLabel.hidden = false
                     }
                 case "Occupation":
                     if var filter = keyObj["occFilter"] as? NSMutableArray {
-                        noContentLabel.hidden = true
-                        occButtons.removeAll(keepCapacity: false)
+                        self.noContentLabel.hidden = true
+                        self.occButtons.removeAll(keepCapacity: false)
                         for keyword in filter {
-                            addButton(keyword as! String, type: type)
+                            self.addButton(keyword as! String, type: type)
                         }
-                        if occButtons.count == 0 {
-                            noContentLabel.hidden = false
+                        if self.occButtons.count == 0 {
+                            self.noContentLabel.hidden = false
                         }
                     } else {
-                        noContentLabel.hidden = false
+                        self.noContentLabel.hidden = false
                     }
                 default:
                     println("Error determining keyword filter type")
                 }
             } else {
-                noContentLabel.hidden = false
+                self.noContentLabel.hidden = false
             }
+        }
         }
     
 
