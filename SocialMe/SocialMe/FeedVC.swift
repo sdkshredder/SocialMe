@@ -105,8 +105,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2.0
         profilePicture.clipsToBounds = true
         content.addSubview(profilePicture)
-        
-        var nameLabel = UILabel(frame: CGRectMake(100, profilePicture.frame.origin.y - 10, 200, 30))
+		
+		var nameLabel = UILabel(frame: CGRectMake(100, profilePicture.frame.origin.y - 10, 200,30))
         nameLabel.text = user.username
         nameLabel.font = UIFont.boldSystemFontOfSize(18)
         content.addSubview(nameLabel)
@@ -116,17 +116,47 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         distanceLabel.text = "\(round(distance)) ft"
         distanceLabel.font = UIFont.systemFontOfSize(16)
         content.addSubview(distanceLabel)
-        
+		
+		var goalLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
+		
+		
         if let goal = user.objectForKey("relationshipGoal") as? String {
-            var goalLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
-            goalLabel.text = goal
-            goalLabel.textColor = UIColor.lightGrayColor()
-            goalLabel.font = UIFont.systemFontOfSize(14)
-            content.addSubview(goalLabel)
-        }
-    
+			var relatGoal = "Relationship Goal: "
+			
+			let prefix = NSMutableAttributedString(string: relatGoal + goal)
+			
+			var color : UIColor
+			
+			if (goal == "Romantic") {
+				color = UIColor(red: 299.0/255.0, green: 79.0/255.0, blue: 122.0/255.0, alpha: 1)
+				
+
+			} else if (goal == "Business") {
+				color = UIColor.blueColor()
+			} else if (goal == "Social") {
+				color = UIColor(red: 58.0/255.0, green: 45.0/255.0, blue: 128.0/255.0, alpha: 1)
+			} else {
+				color = UIColor.greenColor()
+			}
+			
+			prefix.addAttribute(NSForegroundColorAttributeName, value: color, range: NSMakeRange(count(relatGoal), count(goal)))
+			goalLabel.attributedText = prefix
+			
+		} else {
+			var goal = "All"
+			var relatGoal = "Relationship Goal: "
+			
+			let prefix = NSMutableAttributedString(string: relatGoal + goal)
+			prefix.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSMakeRange(count(relatGoal), count(goal)))
+			goalLabel.attributedText = prefix
+		}
+		
+		
+		goalLabel.font = UIFont.systemFontOfSize(14)
+		content.addSubview(goalLabel)
+		
     }
-    
+	
     func fetchUsers() {
         let value = NSArray()
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
@@ -149,71 +179,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
             
-			/*
+			
             let kilometers = (user?.objectForKey("distanceFilter") as! Double) / 3280.84
             query!.whereKey("location", nearGeoPoint: user?.objectForKey("location") as! PFGeoPoint, withinKilometers: kilometers)
-			*/
+			
             
             var keywordQuery = PFQuery(className: "KeywordFilter")
             keywordQuery.whereKey("username", equalTo: user!.username!)
             var objectArr = keywordQuery.findObjects() as! [PFObject]
             if objectArr.count > 0 { // Username exists in keyword filters
                 var keyObj = objectArr[0]
-                /*
-                if var filter = keyObj["homeFilter"] as? NSMutableArray {
-                    if filter.count > 0 {
-                        query.whereKey("Hometown", containsString: (filter[0] as! String))
-                        
-                        var res : NSArray = query!.findObjects()!
-                        
-                        self.data = res
-                        self.tableView.reloadData()
-                        
-                    }
-                }
-                if var filter = keyObj["schoolFilter"] as? NSMutableArray {
-                    if filter.count > 0 {
-                        var school = PFQuery.orQueryWithSubqueries([query!])
-                        school.whereKey("School", containsString: (filter[0] as! String))
-                        println("First filter is")
-                        println(filter[0] as! String)
-                        for keyword in filter {
-                            var tQuery = PFUser.query()
-                            tQuery!.whereKey("School", containsString: (keyword as! String))
-                            
-                            //var find = PFQuery.orQueryWithSubqueries([query!])
-                            println("This is our school query")
-                            println(keyword as! String)
-                            println(query?.description)
-                            //find.whereKey("School", containsString: (keyword as! String))
-                            school = PFQuery.orQueryWithSubqueries([school, tQuery!])
-                        }
-                        query = PFQuery.orQueryWithSubqueries([school])
-                        var res : NSArray = query!.findObjects()!
-                        
-                        self.data = res
-                        self.tableView.reloadData()
-                        
-                    }
-                }
-                if var filter = keyObj["occFilter"] as? NSMutableArray {
-                    if filter.count > 0 {
-                        var occ = PFQuery.orQueryWithSubqueries([query!])
-                        occ.whereKey("Occupation", containsString: (filter[0] as! String))
-                        for keyword in filter {
-                            var find = PFQuery.orQueryWithSubqueries([query!])
-                            find.whereKey("Occupation", containsString: (keyword as! String))
-                            occ = PFQuery.orQueryWithSubqueries([occ, find])
-                        }
-                        query = PFQuery.orQueryWithSubqueries([occ])
-                        var res : NSArray = query!.findObjects()!
-                        
-                        self.data = res
-                        self.tableView.reloadData()
-                        
-                        
-                    }
-                */
                 
                 
                 
