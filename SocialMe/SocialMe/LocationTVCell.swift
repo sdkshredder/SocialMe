@@ -17,6 +17,9 @@ class LocationTVCell: UITableViewCell, UIAlertViewDelegate, CLLocationManagerDel
     @IBOutlet weak var control: UISegmentedControl!
     
     @IBAction func edit(sender: UIButton) {
+        UIApplication.sharedApplication().openURL(NSURL(string: "app-settings:")!)
+        /*
+        
         if sender.titleLabel!.text == "Edit" {
             editButton.setTitle("Save", forState: .Normal)
             control.enabled = true
@@ -32,6 +35,7 @@ class LocationTVCell: UITableViewCell, UIAlertViewDelegate, CLLocationManagerDel
             }
             NSNotificationCenter.defaultCenter().postNotificationName("locationPreferences", object: nil, userInfo: ["pref":type])
         }
+        */
     }
     
     @IBAction func info(sender: UIButton) {
@@ -46,5 +50,11 @@ class LocationTVCell: UITableViewCell, UIAlertViewDelegate, CLLocationManagerDel
         default:
             UIApplication.sharedApplication().openURL(NSURL(string: "app-settings:")!)
         }
+        self.editButton.enabled = true 
+        UIView.animateWithDuration(0.2, animations: {
+            self.editButton.alpha = 1
+            self.control.alpha = 0
+        })
+        
     }
 }

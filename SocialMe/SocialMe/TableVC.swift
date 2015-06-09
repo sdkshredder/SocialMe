@@ -215,14 +215,18 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
             
         else if ID == "locationCell" {
             var c = tableView.dequeueReusableCellWithIdentifier(ID) as! LocationTVCell
-            if (CLLocationManager.authorizationStatus() == .AuthorizedAlways) {
-                c.control.selectedSegmentIndex = 0
-            } else if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse) {
-                c.control.selectedSegmentIndex = 1
+            if c.editButton.enabled == true {
+                c.editButton.alpha = 1
             } else {
-                c.control.selectedSegmentIndex = 2
+                if (CLLocationManager.authorizationStatus() == .AuthorizedAlways) {
+                    c.control.selectedSegmentIndex = 0
+                } else if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse) {
+                    c.control.selectedSegmentIndex = 1
+                } else {
+                    c.control.selectedSegmentIndex = 2
+                }
+                c.selectionStyle = UITableViewCellSelectionStyle.None
             }
-            c.selectionStyle = UITableViewCellSelectionStyle.None
             return c
         }
         

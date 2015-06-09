@@ -252,7 +252,27 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         
                         
                     }
-                }
+                }/*
+                if var filter = keyObj["aboutFilter"] as? NSMutableArray {
+                    if filter.count > 0 {
+                        var about = PFQuery.orQueryWithSubqueries([query!])
+                        about.whereKey("aboutMe", containsString: (filter[0] as! String))
+                        for keyword in filter {
+                            var find = PFQuery.orQueryWithSubqueries([query!])
+                            find.whereKey("aboutMe", containsString: (keyword as! String))
+                            about = PFQuery.orQueryWithSubqueries([about, find])
+                            println("Heeere")
+                            println(keyword)
+                        }
+                        query = PFQuery.orQueryWithSubqueries([about])
+                        /*var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()*/
+                        
+                        
+                    }
+                }*/
             }
             var res : NSArray = query!.findObjects()!
                     
