@@ -252,7 +252,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     } else {
                         self.noContentLabel.hidden = false
                     }
-                    /*case "About":
+                    case "About":
                     if var filter = keyObj["aboutFilter"] as? NSMutableArray {
                         self.noContentLabel.hidden = true
                         self.aboutButtons.removeAll(keepCapacity: false)
@@ -264,7 +264,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         }
                     } else {
                         self.noContentLabel.hidden = false
-                    }*/
+                    }
                 default:
                     println("Error determining keyword filter type")
                 }
@@ -340,7 +340,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     self.occButtons.append(button)
                     self.keyCell.addSubview(button)
                 }
-        /*case "About":
+        case "About":
             if occButtons.count <= 3 {
                 var button = makeButton(Double(self.aboutButtons.count), label: input)
                 button.tintColor = color
@@ -349,7 +349,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 button.layer.cornerRadius = 4
                 self.aboutButtons.append(button)
                 self.keyCell.addSubview(button)
-            }*/
+            }
         default:
             println("no match")
         }
@@ -476,7 +476,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                                 keyObj.save()
                             }
                             //self.occButtons.append(self.makeButton(Double(self.occButtons.count), label: sender.text))
-                    /*case "About":
+                    case "About":
                         if var filter = keyObj["aboutFilter"] as? NSMutableArray { // Has already filttered by occupation
                             if !filter.containsObject(input) && filter.count < 3 {
                                 self.addButton(input, type: type)
@@ -492,7 +492,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                             basic.addObject(input)
                             keyObj["aboutFilter"] = basic
                             keyObj.save()
-                        }*/
+                        }
 
                         default:
                             println("No match" )
@@ -732,7 +732,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         } else {
                             self.noContentLabel.hidden = false
                         }
-                    /*case "About":
+                    case "About":
                         if var filter = keyObj["aboutFilter"] as? NSMutableArray {
                             if self.aboutButtons.count <= 0 {
                                 self.noContentLabel.hidden = false
@@ -746,7 +746,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                             
                         } else {
                             self.noContentLabel.hidden = false
-                        }*/
+                        }
 
                     default:
                         println("Error determining keyword filter type")

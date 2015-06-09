@@ -480,6 +480,7 @@
                                                         <segment title="Hometown"/>
                                                         <segment title="School"/>
                                                         <segment title="Occupation"/>
+                                                        <segment title="About"/>
                                                     </segments>
                                                     <color key="tintColor" red="0.22352941176470587" green="0.11372549019607843" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
@@ -1095,7 +1096,7 @@
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SI-60.png" translatesAutoresizingMaskIntoConstraints="NO" id="7tz-C5-mls">
-                                            <rect key="frame" x="270.5" y="63" width="60" height="60"/>
+                                            <rect key="frame" x="271" y="63" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="LaZ-SC-nE9"/>
                                                 <constraint firstAttribute="width" constant="60" id="RDQ-BO-gGO"/>
