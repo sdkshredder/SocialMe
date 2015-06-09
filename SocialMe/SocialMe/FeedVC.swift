@@ -96,7 +96,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 profilePicture.contentMode = .ScaleAspectFill
             }
         } else {
-            profilePicture.image = UIImage(named: "podcasts")
+            profilePicture.image = UIImage(named: "SI-60@2x.png")
             profilePicture.contentMode = .ScaleAspectFit
         }
         
@@ -113,16 +113,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         var distance = ((user.objectForKey("location") as? PFGeoPoint)!.distanceInKilometersTo(PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint)) * 3280.84
         var distanceLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 26, 200, 20))
-        distanceLabel.text = "\(round(100*distance)/100) ft"
+        distanceLabel.text = "\(round(distance)) ft"
         distanceLabel.font = UIFont.systemFontOfSize(16)
         content.addSubview(distanceLabel)
         
-        if let occupation = user.objectForKey("Occupation") as? String {
-            var occupationLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
-            occupationLabel.text = occupation
-            occupationLabel.textColor = UIColor.lightGrayColor()
-            occupationLabel.font = UIFont.systemFontOfSize(14)
-            content.addSubview(occupationLabel)
+        if let goal = user.objectForKey("relationshipGoal") as? String {
+            var goalLabel = UILabel(frame: CGRectMake(100, nameLabel.frame.origin.y + 44, 200, 20))
+            goalLabel.text = goal
+            goalLabel.textColor = UIColor.lightGrayColor()
+            goalLabel.font = UIFont.systemFontOfSize(14)
+            content.addSubview(goalLabel)
         }
     
     }

@@ -15,7 +15,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     var homeButtons = [UIButton]()
     var schoolButtons = [UIButton]()
     var occButtons = [UIButton]()
-	
+	var center = NSNotificationCenter.defaultCenter()
+    
     @IBOutlet weak var lowerAge: UIPickerView!
     @IBOutlet weak var upperAge: UIPickerView!
     @IBOutlet weak var distanceValue: UILabel!
@@ -23,15 +24,15 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var keyword: UITextField!
     @IBOutlet weak var keySeg: UISegmentedControl!
-    @IBOutlet weak var keyRemove: UIButton!
     @IBOutlet weak var keyCell: UIView!
     @IBOutlet var keyTVC: UITableViewCell!
 
     @IBOutlet var noContentLabel: UILabel!
     
-    
+    @IBOutlet var distanceSwitch: UIButton!
+    var distanceEnabled = true
     var pickerData = [18]
-    
+    var purple = UIColor(red: 59.0/255.0, green: 45.0/255.0, blue: 128.0/255.0, alpha: 1)
     @IBAction func valueDidChange(sender: UISlider) {
         var distance = Int(sender.value)
         distanceValue.text = "\(distance) ft"
@@ -160,6 +161,75 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         
     }
     
+    @IBAction func loadKeys(sender: UISegmentedControl) {
+        let user = PFUser.currentUser()
+        if var type = self.keySeg.titleForSegmentAtIndex(self.keySeg.selectedSegmentIndex) {
+            
+            var keywordQuery = PFQuery(className: "KeywordFilter")
+            keywordQuery.whereKey("username", equalTo: user!.username!)
+            var objectArr = keywordQuery.findObjects() as! [PFObject]
+            if objectArr.count > 0 { // Username exists in keyword filters
+                var keyObj = objectArr[0]
+                for v in self.keyCell.subviews {
+                    if v is UIButton {
+                        v.removeFromSuperview()
+                    }
+                }
+                
+                
+                switch type {
+                case "Hometown":
+                    if var filter = keyObj["homeFilter"] as? NSMutableArray {
+                        self.noContentLabel.hidden = true
+                        self.homeButtons.removeAll(keepCapacity: false)
+                        
+                        for keyword in filter {
+                            self.addButton(keyword as! String, type: type)
+                        }
+                        if self.homeButtons.count == 0 {
+                            self.noContentLabel.hidden = false
+                        }
+                    } else {
+                        self.noContentLabel.hidden = false
+                    }
+                case "School":
+                    if var filter = keyObj["schoolFilter"] as? NSMutableArray {
+                        self.noContentLabel.hidden = true
+                        self.schoolButtons.removeAll(keepCapacity: false)
+                        
+                        for keyword in filter {
+                            self.addButton(keyword as! String, type: type)
+                        }
+                        if self.schoolButtons.count == 0 {
+                            self.noContentLabel.hidden = false
+                        }
+                    } else {
+                        self.noContentLabel.hidden = false
+                    }
+                case "Occupation":
+                    if var filter = keyObj["occFilter"] as? NSMutableArray {
+                        self.noContentLabel.hidden = true
+                        self.occButtons.removeAll(keepCapacity: false)
+                        for keyword in filter {
+                            self.addButton(keyword as! String, type: type)
+                        }
+                        if self.occButtons.count == 0 {
+                            self.noContentLabel.hidden = false
+                        }
+                    } else {
+                        self.noContentLabel.hidden = false
+                    }
+                default:
+                    println("Error determining keyword filter type")
+                }
+            } else {
+                self.noContentLabel.hidden = false
+            }
+        }
+
+    }
+    
+    
     func makeButton(order: Double, label: NSString)->UIButton{
         println("creatingbutton")
         println(label)
@@ -228,7 +298,38 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             println("no match")
         }
     }
-    
+    /*
+    @IBAction func distanceSwitched(sender: UIButton) {
+        let title = sender.titleForState(.Normal)?.lowercaseString
+        var hello = String()
+        var color = UIColor()
+        var tColor = UIColor()
+        distanceEnabled = !distanceEnabled
+        var info = [String : Bool]()
+        info["value"] = distanceEnabled
+        center.postNotificationName("distanceNote", object: nil, userInfo: info)
+        
+        if title == "disabled" {
+            hello = "Enabled"
+            color = UIColor.whiteColor()
+            tColor = purple
+            
+        } else {
+            hello = "Disabled"
+            color = purple
+            tColor = UIColor.whiteColor()
+            // sender.setTitle("Disabled", forState: .Normal)
+            
+        }
+        
+        UIView.animateWithDuration(0.2, animations: {
+            sender.setTitle(hello, forState: .Normal)
+            sender.backgroundColor = color
+            sender.setTitleColor(tColor, forState: .Normal)
+        })
+        
+        
+    }*/
 
     
     @IBAction func addKey(sender: UITextField) {
@@ -425,10 +526,18 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     }
     
     
-
+    func setupDistanceSwitch() {
+        distanceSwitch.layer.cornerRadius = 4
+        distanceSwitch.layer.borderColor = UIColor.purpleColor().CGColor
+        distanceSwitch.layer.borderWidth = 1
+        distanceSwitch.clipsToBounds = true
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDistanceSwitch()
+        
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
         initData()
