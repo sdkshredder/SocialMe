@@ -15,6 +15,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     var homeButtons = [UIButton]()
     var schoolButtons = [UIButton]()
     var occButtons = [UIButton]()
+    var aboutButtons = [UIButton]()
 	var center = NSNotificationCenter.defaultCenter()
     
     @IBOutlet weak var lowerAge: UIPickerView!
@@ -55,19 +56,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
 			bAlpha = 0
 		}
 		
-		UIView.animateWithDuration(0.2, animations: {
-			for button in self.homeButtons {
-				button.alpha = CGFloat(aAlpha)
-			}
-			for button in self.schoolButtons {
-				button.alpha = CGFloat(bAlpha)
-			}
-			for button in self.occButtons {
-				button.alpha = CGFloat(cAlpha)
-			}
-		})
-
-		
 	}
     @IBAction func controlSwitch(sender: UISegmentedControl) {
 		
@@ -98,6 +86,22 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             }
         })
     }
+    /*
+    func capFirstLetter(name: String) -> String {
+        if (name.isEmpty) {
+            return name
+        }
+        var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+        capLet = capLet.uppercaseString
+        let needle: Character = " "
+        if let idx = find(name, needle){
+            let pos = distance(name,stateIndex, idx)
+            var rest = capFirstLetter(
+            
+        } else {
+            var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+            return (capLet as String) + (rest as String)
+    }*/
     
     func deleteKey(sender: UIButton) {
         println("Deleting key")
@@ -160,6 +164,22 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 for button in self.occButtons {
                     if button.titleLabel!.text == toRemove {
                         self.occButtons.removeAtIndex(index)
+                    }
+                    index++
+                }
+            case "About":
+                if var filter = keyObj["aboutFilter"] as? NSMutableArray {
+                    if filter.containsObject(toRemove){
+                        filter.removeObject(toRemove)
+                        keyObj["aboutFilter"] = filter
+                        keyObj.save()
+                    }
+                }
+                
+                var index = 0
+                for button in self.aboutButtons {
+                    if button.titleLabel!.text == toRemove {
+                        self.aboutButtons.removeAtIndex(index)
                     }
                     index++
                 }
@@ -232,6 +252,19 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     } else {
                         self.noContentLabel.hidden = false
                     }
+                    /*case "About":
+                    if var filter = keyObj["aboutFilter"] as? NSMutableArray {
+                        self.noContentLabel.hidden = true
+                        self.aboutButtons.removeAll(keepCapacity: false)
+                        for keyword in filter {
+                            self.addButton(keyword as! String, type: type)
+                        }
+                        if self.aboutButtons.count == 0 {
+                            self.noContentLabel.hidden = false
+                        }
+                    } else {
+                        self.noContentLabel.hidden = false
+                    }*/
                 default:
                     println("Error determining keyword filter type")
                 }
@@ -307,6 +340,16 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                     self.occButtons.append(button)
                     self.keyCell.addSubview(button)
                 }
+        /*case "About":
+            if occButtons.count <= 3 {
+                var button = makeButton(Double(self.aboutButtons.count), label: input)
+                button.tintColor = color
+                button.layer.borderColor = color.CGColor
+                button.layer.borderWidth = 1
+                button.layer.cornerRadius = 4
+                self.aboutButtons.append(button)
+                self.keyCell.addSubview(button)
+            }*/
         default:
             println("no match")
         }
@@ -433,6 +476,24 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                                 keyObj.save()
                             }
                             //self.occButtons.append(self.makeButton(Double(self.occButtons.count), label: sender.text))
+                    /*case "About":
+                        if var filter = keyObj["aboutFilter"] as? NSMutableArray { // Has already filttered by occupation
+                            if !filter.containsObject(input) && filter.count < 3 {
+                                self.addButton(input, type: type)
+                                filter.addObject(input)
+                                keyObj["aboutFilter"] = filter
+                                keyObj.save()
+                            } else if filter.count >= 3 {
+                                let alert = UIAlertView(title: "Keyword Limit Reached", message: "Delete a keyword before adding a new one", delegate: nil, cancelButtonTitle: "OK")
+                                alert.show()
+                            }
+                        } else {
+                            var basic = NSMutableArray()
+                            basic.addObject(input)
+                            keyObj["aboutFilter"] = basic
+                            keyObj.save()
+                        }*/
+
                         default:
                             println("No match" )
                     
@@ -671,6 +732,22 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         } else {
                             self.noContentLabel.hidden = false
                         }
+                    /*case "About":
+                        if var filter = keyObj["aboutFilter"] as? NSMutableArray {
+                            if self.aboutButtons.count <= 0 {
+                                self.noContentLabel.hidden = false
+                            } else {
+                                self.noContentLabel.hidden = true
+                            }
+                            self.aboutButtons.removeAll(keepCapacity: false)
+                            for keyword in filter {
+                                self.addButton(keyword as! String, type: type)
+                            }
+                            
+                        } else {
+                            self.noContentLabel.hidden = false
+                        }*/
+
                     default:
                         println("Error determining keyword filter type")
                     }
