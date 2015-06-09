@@ -46,7 +46,10 @@ class FriendRequectTVCell: UITableViewCell {
 	func reactToRequest(response :NSString) {
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
 		dispatch_async(dispatch_get_global_queue(priority, 0)) {
-		
+			
+			var info = [String:Int]()
+			info["index"] = self.acceptButton.tag
+			
 			var toUserQuery = PFUser.query()
 			toUserQuery?.whereKey("username", equalTo: self.toUsername)
 			var toUserArr = toUserQuery?.findObjects() as! [PFUser]
@@ -117,6 +120,7 @@ class FriendRequectTVCell: UITableViewCell {
 					let alert = UIAlertView(title: "Blocked", message: "You have blocked this user", delegate: nil, cancelButtonTitle: "OK")
 					alert.show()
 				}
+				NSNotificationCenter.defaultCenter().postNotificationName("updateRequestTable", object: nil, userInfo: info)
 			}
 		}
 	}

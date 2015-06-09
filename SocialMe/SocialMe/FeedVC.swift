@@ -39,7 +39,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         swipeView.addGestureRecognizer(swipe)
         swipeView.addGestureRecognizer(tap)
         view.addSubview(swipeView)
-        
     }
     
     func swipeUp(sender: UISwipeGestureRecognizer) {
@@ -140,6 +139,12 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             query!.whereKey("Age", greaterThan: (user?.objectForKey("lowerAgeFilter") as! Int) - 1)
             query!.whereKey("Age", lessThan: (user?.objectForKey("upperAgeFilter") as! Int) + 1)
+			if let userRelationshipGoal = user?.objectForKey("relationshipGoal") as? String {
+				if (userRelationshipGoal != "All") {
+					query!.whereKey("relationshipGoal", equalTo: userRelationshipGoal)
+				}
+			}
+
             if user?.objectForKey("genderFilter") as! String != "Both"{
                 query!.whereKey("gender", matchesRegex: (user?.objectForKey("genderFilter") as! String))
             }
@@ -165,6 +170,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             home = PFQuery.orQueryWithSubqueries([home, find])
                         }
                         query = PFQuery.orQueryWithSubqueries([home])
+                        var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()
+                        
                     }
                 }
                 if var filter = keyObj["schoolFilter"] as? NSMutableArray {
@@ -177,6 +187,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             school = PFQuery.orQueryWithSubqueries([school, find])
                         }
                         query = PFQuery.orQueryWithSubqueries([school])
+                        var res : NSArray = query!.findObjects()!
+                        
+                        self.data = res
+                        self.tableView.reloadData()
+                        
                     }
                 }
                 if var filter = keyObj["occFilter"] as? NSMutableArray {
@@ -189,13 +204,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             occ = PFQuery.orQueryWithSubqueries([occ, find])
                         }
                         query = PFQuery.orQueryWithSubqueries([occ])
+                        var res : NSArray = query!.findObjects()!
+                    
+                        self.data = res
+                        self.tableView.reloadData()
+                        
+                        
                     }
                 }
             }
-
-            
-            
-            
             var res : NSArray = query!.findObjects()!
                     
             dispatch_async(dispatch_get_main_queue()) {
@@ -203,7 +220,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
             }
 
-
+            
         }
     }
 
@@ -232,7 +249,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         fetchUsers()
 		println("You're logged in as \(PFUser.currentUser()?.username)")
     }
-    
+	func capFirstLetter(name: String) -> String {
+		if (name.isEmpty) {
+			return name
+		}
+		var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+		capLet = capLet.uppercaseString
+		var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+		return (capLet as String) + (rest as String)
+	}
+	
     override func viewDidAppear(animated: Bool) {
         if PFUser.currentUser() == nil {
             presentMainVC()
@@ -252,7 +278,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let user : PFUser = data[path!.row] as! PFUser
         destination.username = user.username!
-        destination.navigationItem.title = user.username!
+		
+		destination.navigationItem.title = capFirstLetter(user.username!)
+
     }
 
 }

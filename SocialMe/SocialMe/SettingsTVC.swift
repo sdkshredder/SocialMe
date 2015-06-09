@@ -10,13 +10,12 @@ import UIKit
 import Parse
 
 class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
-    
-    
+	
+	@IBOutlet weak var relationshipSegments: UISegmentedControl!
     var homeButtons = [UIButton]()
     var schoolButtons = [UIButton]()
     var occButtons = [UIButton]()
-    
-    
+	
     @IBOutlet weak var lowerAge: UIPickerView!
     @IBOutlet weak var upperAge: UIPickerView!
     @IBOutlet weak var distanceValue: UILabel!
@@ -39,12 +38,42 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
 
     }
     
+	@IBAction func relatOptionChanged(sender: UISegmentedControl) {
+		var aAlpha = 1
+		var bAlpha = 1
+		var cAlpha = 1
+		
+		if sender.selectedSegmentIndex == 0 {
+			bAlpha = 0
+			cAlpha = 0
+		} else if sender.selectedSegmentIndex == 1 {
+			aAlpha = 0
+			cAlpha = 0
+		} else {
+			aAlpha = 0
+			bAlpha = 0
+		}
+		
+		UIView.animateWithDuration(0.2, animations: {
+			for button in self.homeButtons {
+				button.alpha = CGFloat(aAlpha)
+			}
+			for button in self.schoolButtons {
+				button.alpha = CGFloat(bAlpha)
+			}
+			for button in self.occButtons {
+				button.alpha = CGFloat(cAlpha)
+			}
+		})
+
+		
+	}
     @IBAction func controlSwitch(sender: UISegmentedControl) {
-        
+		
         var aAlpha = 1
         var bAlpha = 1
         var cAlpha = 1
-        
+		
         if sender.selectedSegmentIndex == 0 {
             bAlpha = 0
             cAlpha = 0
@@ -383,6 +412,11 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                 user!.setObject(self.segment.titleForSegmentAtIndex(self.segment.selectedSegmentIndex)!, forKey:"genderFilter")
                 change = 1
             }
+			
+			if self.relationshipSegments.titleForSegmentAtIndex(self.relationshipSegments.selectedSegmentIndex) != user?.objectForKey("relationshipGoal") as? String {
+				user!.setObject(self.relationshipSegments.titleForSegmentAtIndex(self.relationshipSegments.selectedSegmentIndex)!, forKey: "relationshipGoal")
+				change = 1
+			}
             
             if change == 1 {
                 user?.save()
@@ -419,6 +453,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         let distance = user?.objectForKey("distanceFilter") as! Int
         slider.value = Float(distance)
         distanceValue.text = "\(distance) ft"
+		
+		//lookingForPicker.selectRow((user?.objectForKey("lookingForStatus") as! Int), inComponent: 0, animated: true )
         lowerAge.delegate = self
         lowerAge.dataSource = self
         lowerAge.selectRow((user?.objectForKey("lowerAgeFilter") as! Int) - 18, inComponent: 0, animated: true)
@@ -434,6 +470,23 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             default:
                 segment.selectedSegmentIndex = 2
         }
+		if let relationshipGoal = user?.objectForKey("relationshipGoal") as? String {
+			switch relationshipGoal {
+			case "Business":
+				relationshipSegments.selectedSegmentIndex = 1
+			case "Romantic":
+				relationshipSegments.selectedSegmentIndex = 2
+			case "Social":
+				relationshipSegments.selectedSegmentIndex = 0
+			default:
+				relationshipSegments.selectedSegmentIndex = 3
+			}
+		} else {
+			relationshipSegments.selectedSegmentIndex = 3
+
+		}
+		
+
         keyword.delegate = self
         if keySeg.selectedSegmentIndex == -1 {
             keySeg.selectedSegmentIndex = 0
