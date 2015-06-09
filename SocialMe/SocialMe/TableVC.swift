@@ -17,6 +17,7 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     let locationManager = CLLocationManager()
     let picker = UIImagePickerController()
     
+    @IBOutlet weak var navTitle: UIButton!
     @IBOutlet weak var constraint: NSLayoutConstraint!
     @IBOutlet weak var table: UITableView!
     var editingAge = false
@@ -98,6 +99,20 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
         return 8
     }
     
+    @IBAction func navTap(sender: UIButton) {
+        
+        let a = (UINib(nibName: "swagView", bundle: nil
+            ).instantiateWithOwner(nil, options: nil)[0] as? SwagView)!
+
+        a.frame = CGRectMake(view.frame.width/2.0 - 140, -100, 280, 200)
+        view.addSubview(a)
+        
+        UIView.animateWithDuration(1, delay: 0.0, usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 0.4, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            a.frame.origin = CGPointMake(a.frame.origin.x, 140)
+        }, completion: nil)
+    
+    }
     
     @IBAction func cancel(sender: UIBarButtonItem) {
         NSNotificationCenter.defaultCenter().postNotificationName("hideSettings", object: nil)
@@ -306,12 +321,12 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CLL
     
     func handleImageNotification(notification: NSNotification) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        actionSheet.addAction(UIAlertAction(title:"Upload Photo", style:UIAlertActionStyle.Default, handler:{ action in
-            let type = UIImagePickerControllerSourceType.PhotoLibrary
+        actionSheet.addAction(UIAlertAction(title:"Take Photo", style:UIAlertActionStyle.Default, handler:{ action in
+            let type = UIImagePickerControllerSourceType.Camera
             self.presentPicker(type)
         }))
-        actionSheet.addAction(UIAlertAction(title:"Take a Picture", style:UIAlertActionStyle.Default, handler:{ action in
-            let type = UIImagePickerControllerSourceType.Camera
+        actionSheet.addAction(UIAlertAction(title:"Photo Library", style:UIAlertActionStyle.Default, handler:{ action in
+            let type = UIImagePickerControllerSourceType.PhotoLibrary
             self.presentPicker(type)
         }))
         actionSheet.addAction(UIAlertAction(title:"Cancel", style:UIAlertActionStyle.Cancel, handler:nil))

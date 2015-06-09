@@ -182,6 +182,11 @@ class SocialMapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegat
             let annotation = CustomAnnotation()
             annotation.title = person.username
             annotation.imageName = "smilez-0.png"
+            if let gender = person["gender"] as? String {
+                if gender == "Female" {
+                    annotation.imageName = "map-iconn.png"
+                }
+            }
             annotation.index = index
             annotation.username = person.username! 
             if let occupation = person["Occupation"] as? String {

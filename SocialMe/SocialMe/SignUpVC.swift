@@ -116,26 +116,32 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         user.setObject(PFGeoPoint(latitude: 0, longitude: 0), forKey: "location")
         
         let age = getAge()
-        user.setObject(age, forKey: "Age")
         
-        
-        var gender = "Both"
-        if genderSegmentControl.selectedSegmentIndex == 0 {
-            gender = "Male"
+        if age > 18 {
+            let alert = UIAlertView(title: "Ops!", message: "Looks like your too young to use this service.", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
         } else {
-            gender = "Female"
-        }
-        user.setObject(gender, forKey: "gender")
-        
-        user.signUpInBackgroundWithBlock {
-            (succeeded, error) -> Void in
-            if error == nil {
-                println("Sign up success for user \(user.username).")
-                self.navigationController?.setNavigationBarHidden(true, animated: true)
-                self.performSegueWithIdentifier("signup", sender: self)
+            user.setObject(age, forKey: "Age")
+            
+            
+            var gender = "Both"
+            if genderSegmentControl.selectedSegmentIndex == 0 {
+                gender = "Male"
             } else {
-                let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
-                alert.show()
+                gender = "Female"
+            }
+            user.setObject(gender, forKey: "gender")
+            
+            user.signUpInBackgroundWithBlock {
+                (succeeded, error) -> Void in
+                if error == nil {
+                    println("Sign up success for user \(user.username).")
+                    self.navigationController?.setNavigationBarHidden(true, animated: true)
+                    self.performSegueWithIdentifier("signup", sender: self)
+                } else {
+                    let alert = UIAlertView(title: "Error", message: error?.description, delegate: self, cancelButtonTitle: "okay")
+                    alert.show()
+                }
             }
         }
     }
