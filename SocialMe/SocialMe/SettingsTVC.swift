@@ -25,7 +25,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var keyword: UITextField!
     @IBOutlet weak var keySeg: UISegmentedControl!
     @IBOutlet weak var keyCell: UIView!
-    //@IBOutlet var keyTVC: UITableViewCell!
+    @IBOutlet var keyTVC: UITableViewCell!
 
     @IBOutlet var noContentLabel: UILabel!
     
@@ -98,6 +98,22 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
             }
         })
     }
+    /*
+    func capFirstLetter(name: String) -> String {
+        if (name.isEmpty) {
+            return name
+        }
+        var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+        capLet = capLet.uppercaseString
+        let needle: Character = " "
+        if let idx = find(name, needle){
+            let pos = distance(name,stateIndex, idx)
+            var rest = capFirstLetter(
+            
+        } else {
+            var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+            return (capLet as String) + (rest as String)
+    }*/
     
     func deleteKey(sender: UIButton) {
         println("Deleting key")
@@ -534,18 +550,18 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         return true
     }
     
-    /*
+    
     func setupDistanceSwitch() {
         distanceSwitch.layer.cornerRadius = 4
         distanceSwitch.layer.borderColor = UIColor.purpleColor().CGColor
         distanceSwitch.layer.borderWidth = 1
         distanceSwitch.clipsToBounds = true
         
-    }*/
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupDistanceSwitch()
+        setupDistanceSwitch()
         
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
