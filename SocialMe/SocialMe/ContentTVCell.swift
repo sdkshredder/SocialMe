@@ -37,19 +37,6 @@ class ContentTVCell: UITableViewCell {
 		NSNotificationCenter.defaultCenter().postNotificationName("cellNotification", object: nil, userInfo: info)
 		handleTextField()
 	}
-	
-	
-    override func awakeFromNib() {
-        println("yooo yo yo!")
-    }
-
-    @IBAction func messageTap(sender: UIButton) {
-        
-    }
-	
-    @IBAction func profileTap(sender: UIButton) {
-        
-    }
     
 	func showImg(username: NSString) {
 		let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
