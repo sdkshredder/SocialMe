@@ -85,13 +85,23 @@ class ContactTVC: UITableViewController, UITableViewDelegate, UITableViewDataSou
         return 1
     }
 	
+	func capFirstLetter(name: String) -> String {
+		if (name.isEmpty) {
+			return name
+		}
+		var capLet = name.substringWithRange(Range<String.Index>(start: name.startIndex , end: advance(name.startIndex, 1))) as NSString
+		capLet = capLet.uppercaseString
+		var rest =  name.substringFromIndex(advance(name.startIndex, 1)) as NSString
+		return (capLet as String) + (rest as String)
+	}
 	
 	
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("contact") as! ContentTVCell
 		if let user = data[indexPath.row] as? PFUser {
-			let username = user.objectForKey("username") as! String!
-			cell.nameLabel.text = username.uppercaseString
+			var username = user.objectForKey("username") as! String!
+			username = capFirstLetter(username)
+			cell.nameLabel.text = username
 			cell.specAttrLabel.text = "Occupation"
 			cell.specAttrContentLabel.text = user.objectForKey("Occupation") as! String!
 			cell.expandInfoButton.tag = indexPath.row

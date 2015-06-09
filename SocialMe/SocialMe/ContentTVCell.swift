@@ -50,17 +50,19 @@ class ContentTVCell: UITableViewCell {
 			var userQuery = PFUser.query()
 			userQuery?.whereKey("username", equalTo: username)
 			var userArr = userQuery?.findObjects() as! [PFUser]
-			var user = userArr[0]
-			
-			var profImg : UIImage
-			if let userImageFile = user.objectForKey("photo") as? PFFile {
-				var imageData = userImageFile.getData() as NSData!
-				profImg =  UIImage(data:imageData!)!
-			} else {
-				profImg = UIImage(named: "swag-60@2x.png")!
+			if (userArr.count > 0 ) {
+				var user = userArr[0]
+				
+				var profImg : UIImage
+				if let userImageFile = user.objectForKey("photo") as? PFFile {
+					var imageData = userImageFile.getData() as NSData!
+					profImg =  UIImage(data:imageData!)!
+				} else {
+					profImg = UIImage(named: "swag-60@2x.png")!
+				}
+				self.friendPicture.image = profImg
+				self.friendPicture.contentMode = .ScaleAspectFill
 			}
-			self.friendPicture.image = profImg
-			self.friendPicture.contentMode = .ScaleAspectFill
 			dispatch_group_leave(downloadGroup)
 			dispatch_group_wait(downloadGroup, 5000)
 		}
