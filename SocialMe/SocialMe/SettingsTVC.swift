@@ -25,7 +25,7 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var keyword: UITextField!
     @IBOutlet weak var keySeg: UISegmentedControl!
     @IBOutlet weak var keyCell: UIView!
-    @IBOutlet var keyTVC: UITableViewCell!
+    //@IBOutlet var keyTVC: UITableViewCell!
 
     @IBOutlet var noContentLabel: UILabel!
     
@@ -534,18 +534,18 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         return true
     }
     
-    
+    /*
     func setupDistanceSwitch() {
         distanceSwitch.layer.cornerRadius = 4
         distanceSwitch.layer.borderColor = UIColor.purpleColor().CGColor
         distanceSwitch.layer.borderWidth = 1
         distanceSwitch.clipsToBounds = true
         
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDistanceSwitch()
+        //setupDistanceSwitch()
         
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
