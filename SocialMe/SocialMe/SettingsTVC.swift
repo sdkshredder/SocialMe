@@ -15,7 +15,8 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     var homeButtons = [UIButton]()
     var schoolButtons = [UIButton]()
     var occButtons = [UIButton]()
-	
+	var center = NSNotificationCenter.defaultCenter()
+    
     @IBOutlet weak var lowerAge: UIPickerView!
     @IBOutlet weak var upperAge: UIPickerView!
     @IBOutlet weak var distanceValue: UILabel!
@@ -29,9 +30,10 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
 
     @IBOutlet var noContentLabel: UILabel!
     
-    
+    @IBOutlet var distanceSwitch: UIButton!
+    var distanceEnabled = true
     var pickerData = [18]
-    
+    var purple = UIColor(red: 59.0/255.0, green: 45.0/255.0, blue: 128.0/255.0, alpha: 1)
     @IBAction func valueDidChange(sender: UISlider) {
         var distance = Int(sender.value)
         distanceValue.text = "\(distance) ft"
@@ -242,6 +244,37 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    @IBAction func distanceSwitched(sender: UIButton) {
+        let title = sender.titleForState(.Normal)?.lowercaseString
+        var hello = String()
+        var color = UIColor()
+        var tColor = UIColor()
+        distanceEnabled = !distanceEnabled
+        var info = [String : Bool]()
+        info["value"] = distanceEnabled
+        center.postNotificationName("distanceNote", object: nil, userInfo: info)
+        
+        if title == "disabled" {
+            hello = "Enabled"
+            color = UIColor.whiteColor()
+            tColor = purple
+            
+        } else {
+            hello = "Disabled"
+            color = purple
+            tColor = UIColor.whiteColor()
+            // sender.setTitle("Disabled", forState: .Normal)
+            
+        }
+        
+        UIView.animateWithDuration(0.2, animations: {
+            sender.setTitle(hello, forState: .Normal)
+            sender.backgroundColor = color
+            sender.setTitleColor(tColor, forState: .Normal)
+        })
+        
+        
+    }
 
     
     @IBAction func addKey(sender: UITextField) {
@@ -442,10 +475,18 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
     }
     
     
-
+    func setupDistanceSwitch() {
+        distanceSwitch.layer.cornerRadius = 4
+        distanceSwitch.layer.borderColor = UIColor.purpleColor().CGColor
+        distanceSwitch.layer.borderWidth = 1
+        distanceSwitch.clipsToBounds = true
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDistanceSwitch()
+        
         let backButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
         initData()
@@ -515,8 +556,6 @@ class SettingsTVC: UITableViewController, UIPickerViewDelegate, UIPickerViewData
                         self.homeButtons.removeAll(keepCapacity: false)
                         
                         for keyword in filter {
-                            println("Count is...")
-                            println(Double(self.homeButtons.count))
                             self.addButton(keyword as! String, type: type)
                         }
                         if self.homeButtons.count == 0 {
