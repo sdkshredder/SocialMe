@@ -489,7 +489,7 @@
                                                     <color key="tintColor" red="0.22352941176470587" green="0.11372549019607843" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="controlSwitch:" destination="Xmk-0W-le7" eventType="valueChanged" id="4Bq-fT-dUd"/>
-                                                        <action selector="switchKeySeg:" destination="Xmk-0W-le7" eventType="valueChanged" id="dCv-d2-E0Q"/>
+                                                        <action selector="loadKeys:" destination="Xmk-0W-le7" eventType="valueChanged" id="yZ1-b3-Kh8"/>
                                                     </connections>
                                                 </segmentedControl>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Current Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7r-st-1LR">
